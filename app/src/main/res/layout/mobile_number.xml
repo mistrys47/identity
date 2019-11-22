@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#11141B"
+
+    tools:context=".mobile_number">
+
+
+    <TextView
+        android:id="@+id/t1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="76dp"
+        android:text="@string/mobile_number"
+        android:textColor="#7F99A7"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/t2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/mobile_number2"
+        android:textColor="#4F5761"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/t1" />
+
+    <EditText
+        android:id="@+id/letter1"
+        android:layout_width="wrap_content"
+        android:inputType="number"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:maxLength="10"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="40dp"
+        android:hint="@string/mobile_number3"
+        android:textColor="#ffffff"
+        android:textColorHint="#292C35"
+        android:textSize="27sp"
+        android:background="@null"
+        android:textCursorDrawable="@drawable/blue_cursor"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/t2" />
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="674dp"
+        android:layout_marginTop="200dp"
+        android:topLeftRadius="2dp"
+        android:id="@+id/accept"
+        app:layout_constraintCircleRadius="2dp"
+        android:layout_marginLeft="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/letter1"
+        android:background="#141821"
+        >
+
+        <CheckBox
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="20dp"
+            android:buttonTint="#ffffff"
+            android:id="@+id/checkbox"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginStart="30dp" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginLeft="24dp"
+            android:textSize="16sp"
+            android:textColor="#4F535C"
+
+            android:text="@string/mobile_number4"
+            app:layout_constraintStart_toEndOf="@+id/checkbox"
+            app:layout_constraintTop_toTopOf="@+id/checkbox" />
+
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="30dp"
+
+            android:onClick="go"
+            android:text="@string/accept_amp_continue"
+            app:layout_constraintCircleRadius="1dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/checkbox" />
+
+
+    </android.support.constraint.ConstraintLayout>
+
+
+</android.support.constraint.ConstraintLayout>
