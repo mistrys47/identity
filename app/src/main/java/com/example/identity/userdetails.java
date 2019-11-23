@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 
 /**
@@ -69,6 +70,9 @@ public class userdetails extends Fragment {
         database db = new database(getActivity());
         SQLiteDatabase db1 = db.getWritableDatabase();
         Cursor c=db.getuserdetails(db1);
+        while (c.moveToNext()){
+            Toast.makeText(getContext(),c.getString(0),Toast.LENGTH_LONG).show();
+        }
         return inflater.inflate(R.layout.fragment_userdetails, container, false);
     }
 

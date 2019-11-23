@@ -37,6 +37,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
+                android:id="@+id/ll1"
                 android:layout_weight="2">
 
             </LinearLayout>
@@ -44,6 +45,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
+                android:id="@+id/ll2"
                 android:layout_weight="2">
 
             </LinearLayout>
@@ -51,6 +53,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
+                android:id="@+id/ll3"
                 android:layout_weight="1">
 
             </LinearLayout>
