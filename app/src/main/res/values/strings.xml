@@ -19,4 +19,5 @@
     <string name="enter_otp">Enter OTP received</string>
     <string name="single_digit">0</string>
     <string name="verify_otp"><![CDATA[Verify OTP]]></string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

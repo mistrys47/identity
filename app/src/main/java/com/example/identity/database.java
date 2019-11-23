@@ -63,7 +63,10 @@ class database extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS "+TABLE_NAME1);
         return true;
     }
-
+    public Cursor getuserdetails(SQLiteDatabase db){
+        Cursor c=db.rawQuery("select * from " +TABLE_NAME1,null);
+        return c;
+    }
 }
 
 
