@@ -75,7 +75,7 @@ TextView t1,t2,t3,t4;
     }
     public void go1(View v)
     {
-        Intent newact1=new Intent(MainActivity.this,mobile_number.class);
+        Intent newact1=new Intent(MainActivity.this,home.class);
         startActivity(newact1);
     }
 

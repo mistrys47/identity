@@ -12,7 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".verify_mobile" />
+        <activity android:name=".verify_mobile"></activity>
         <activity android:name=".verify_email" />
         <activity android:name=".email_input" />
         <activity android:name=".mobile_number" />
