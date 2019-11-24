@@ -188,14 +188,6 @@ FrameLayout f1;
             fragmentManager.beginTransaction().replace(R.id.fl1,(Fragment) new userdetails()).addToBackStack(null).commit();
         } else if (id == R.id.nav_gallery) {
 
-            on_scan frag = new on_scan();
-            Bundle b = new Bundle();
-            b.putString("user", "steve");
-            frag.setArguments(b);
-
-            FragmentManager fragmentManager=getSupportFragmentManager();
-            fragmentManager.beginTransaction().replace(R.id.fl1,frag).addToBackStack(null).commit();
-
 
         } else if (id == R.id.nav_slideshow) {
 
