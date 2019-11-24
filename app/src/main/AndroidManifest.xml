@@ -15,6 +15,10 @@
         <activity android:name=".verify_mobile"></activity>
         <activity android:name=".verify_email" />
         <activity android:name=".email_input" />
+        <activity
+            android:name=".home"
+            android:label="@string/title_activity_home"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity android:name=".mobile_number" />
         <activity android:name=".MainActivity">
             <intent-filter>

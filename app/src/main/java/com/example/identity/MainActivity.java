@@ -76,7 +76,11 @@ TextView t1,t2,t3,t4;
     public void go1(View v)
     {
         Intent newact1=new Intent(MainActivity.this,home.class);
-        startActivity(newact1);
+        try{startActivity(newact1);}
+        catch (Exception e)
+        {
+            Toast.makeText(MainActivity.this,e+"",Toast.LENGTH_LONG).show();
+        }
     }
 
 }

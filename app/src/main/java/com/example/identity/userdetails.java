@@ -3,115 +3,131 @@ package com.example.identity;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link userdetails.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link userdetails#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class userdetails extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    private OnFragmentInteractionListener mListener;
 
     public userdetails() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment userdetails.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static userdetails newInstance(String param1, String param2) {
-        userdetails fragment = new userdetails();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+        //Toast.makeText(getContext(),"hii",Toast.LENGTH_LONG).show();
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        database db = new database(getActivity());
-        SQLiteDatabase db1 = db.getWritableDatabase();
-        Cursor c=db.getuserdetails(db1);
-        while (c.moveToNext()){
-            Toast.makeText(getContext(),c.getString(0),Toast.LENGTH_LONG).show();
-        }
         return inflater.inflate(R.layout.fragment_userdetails, container, false);
     }
-
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
-
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        database db = new database(getActivity());
+        SQLiteDatabase db1 = db.getWritableDatabase();
+        LinearLayout ll11 = view.findViewById(R.id.ll11);
+        LinearLayout ll12 = view.findViewById(R.id.ll12);
+        LinearLayout ll13 = view.findViewById(R.id.ll13);
+        LinearLayout ll21 = view.findViewById(R.id.ll21);
+        LinearLayout ll22 = view.findViewById(R.id.ll22);
+        float scale = getResources().getDisplayMetrics().density;
+        int leftpadding = (int) (5*scale + 0.5f);
+        boolean flag1=false,flag2=false;
+        Cursor c = db.getuserdetails(db1);
+        while (c.moveToNext()) {
+            if (c.getString(2) == "false") {
+                TextView t1 = new TextView(getActivity());
+                t1.setText(c.getString(0));
+                t1.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.FILL_PARENT,
+                        FrameLayout.LayoutParams.WRAP_CONTENT));
+                t1.setPadding(leftpadding, 0, 0, 0);
+                t1.setTextSize(15);
+                t1.setTypeface(null, Typeface.BOLD);
+                t1.setTextColor(Color.BLUE);
+                ll11.addView(t1);
+
+                TextView t2 = new TextView(getActivity());
+                t2.setText(c.getString(1));
+                t2.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.FILL_PARENT,
+                        FrameLayout.LayoutParams.WRAP_CONTENT));
+                t2.setPadding(leftpadding, 0, 0, 0);
+                t2.setTextSize(15);
+                ll12.addView(t2);
+
+                TextView t3 = new TextView(getActivity());
+                t3.setText(c.getString(3));
+                t3.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.FILL_PARENT,
+                        FrameLayout.LayoutParams.WRAP_CONTENT));
+                t3.setPadding(leftpadding, 0, 0, 0);
+                t3.setTextSize(15);
+                ll13.addView(t3);
+                flag1=true;
+            }
+            else
+            {
+                TextView t1 = new TextView(getActivity());
+                t1.setText(c.getString(0));
+                t1.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.FILL_PARENT,
+                        FrameLayout.LayoutParams.WRAP_CONTENT));
+                t1.setPadding(leftpadding, 0, 0, 0);
+                t1.setTextSize(15);
+                t1.setTypeface(null, Typeface.BOLD);
+                t1.setTextColor(Color.BLUE);
+                ll21.addView(t1);
+
+                TextView t2 = new TextView(getActivity());
+                t2.setText(c.getString(1));
+                t2.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.FILL_PARENT,
+                        FrameLayout.LayoutParams.WRAP_CONTENT));
+                t2.setPadding(leftpadding, 0, 0, 0);
+                t2.setTextSize(15);
+                ll22.addView(t2);
+                flag2=true;
+            }
         }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+        if(flag1==false)
+        {
+            LinearLayout l1=view.findViewById(R.id.l1);
+            l1.removeAllViews();
+            TextView t1=new TextView(getActivity());
+            t1.setText("No items");
+            t1.setGravity(Gravity.CENTER);
+            t1.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.FILL_PARENT,
+                    FrameLayout.LayoutParams.WRAP_CONTENT));
+            t1.setTextSize(15);
+            l1.addView(t1);
+        }
+        if(flag2==false)
+        {
+            LinearLayout l2=view.findViewById(R.id.l2);
+            l2.removeAllViews();
+            TextView t1=new TextView(getActivity());
+            t1.setText("No items");
+            t1.setGravity(Gravity.CENTER);
+            t1.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.FILL_PARENT,
+                    FrameLayout.LayoutParams.WRAP_CONTENT));
+            t1.setTextSize(15);
+            l2.addView(t1);
+        }
     }
 }
