@@ -34,11 +34,7 @@ public class on_scan extends Fragment {
 
     @Override
     public  void onResume() {
-        try {
-            //   ((Main2Activity) getActivity()).getSupportActionBar().setTitle("hi");
-        } catch (Exception e) {
-            Log.e("action bar error::", String.valueOf(e));
-        }
+
         super.onResume();
     }
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
@@ -47,6 +43,7 @@ public class on_scan extends Fragment {
         Toast.makeText(getContext(),args.toString(),Toast.LENGTH_LONG).show();
         database db = new database(getActivity());
         SQLiteDatabase db1 = db.getWritableDatabase();
+
 
     }
 

@@ -110,11 +110,12 @@ Boolean done;
     }
     private View.OnClickListener findtext = new View.OnClickListener() {
         public void onClick(View v) {
-            qrScan.initiateScan();
-         //   new home.AsyncLogin().execute();
+          //  qrScan.initiateScan();
+            //data.getStr
+           new home.AsyncLogin().execute();
         //    String str_result= new RunInBackGround().execute();
-            while(!done)
-         call(data1);
+        //    while(!done)
+      //   call(data1);
             Toast.makeText(v.getContext(),"hello",Toast.LENGTH_LONG).show();
         }
     };
@@ -132,11 +133,12 @@ Boolean done;
         protected String doInBackground(String... params) {
 
             qrScan.initiateScan();
+            while(!done);
             return "";
         }
         @Override
         protected void onPostExecute(String result) {
-            if(done)
+           // if(done)
             call(data1);
         }
     }
