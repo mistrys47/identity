@@ -7,9 +7,21 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".home"
     tools:showIn="@layout/app_bar_home">
+
     <FrameLayout
+        android:id="@+id/fl1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/fl1"
-        />
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="74dp">
+
+        <Button
+            android:id="@+id/Scan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="160dp"
+            android:layout_marginLeft="160dp"
+            android:layout_marginBottom="48dp"
+            android:text="Submit" />
+    </FrameLayout>
 </android.support.constraint.ConstraintLayout>

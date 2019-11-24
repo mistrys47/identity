@@ -150,7 +150,7 @@ public class verify_mobile extends AppCompatActivity {
         l4.addTextChangedListener(new TextWatcher() {
 
             public void afterTextChanged(Editable s) {
-                m4=s.toString();
+                //m4=s.toString();
             }
 
             public void beforeTextChanged(CharSequence s, int start,
