@@ -62,6 +62,28 @@ class database extends SQLiteOpenHelper {
         }
         else return false;
     }
+    public int checkfield(SQLiteDatabase db,String s){
+        Cursor cursor = db.query(TABLE_NAME1,new String[]{"field_name","verified"},"field_name=? AND verified=?",new String[]{s,"true"},null,null,null  );
+        if(cursor.getCount()>0)
+        {
+            return 1;
+        }
+        cursor = db.query(TABLE_NAME1,new String[]{"field_name","verified"},"field_name=? AND verified=?",new String[]{s,"false"},null,null,null  );
+        if(cursor.getCount()>0)
+        {
+            return 0;
+        }
+        return -1;
+    }
+    public String getvalue(SQLiteDatabase db,String s){
+        Cursor cursor=db.query(TABLE_NAME1,new String[]{"value"},"field_name=?",new String[]{s},null,null,null  );
+        String s1="";
+        while(cursor.moveToNext())
+        {
+            s1=cursor.getString(0);
+        }
+        return s1;
+    }
     public boolean deletetable(SQLiteDatabase db){
         db.execSQL("DROP TABLE IF EXISTS "+TABLE_NAME1);
         return true;
