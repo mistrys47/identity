@@ -18,6 +18,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import com.google.zxing.integration.android.IntentIntegrator;
@@ -31,6 +32,7 @@ public class home extends AppCompatActivity
 Button scan_qr;
 String data1;
 Boolean done;
+FrameLayout f1;
 
     private IntentIntegrator qrScan;
     @Override
@@ -41,7 +43,7 @@ Boolean done;
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
+        f1=(FrameLayout)findViewById(R.id.fl1);
         scan_qr=(Button)findViewById(R.id.Scan);
         // email_id=(EditText)findViewById(R.id.email_id);
         scan_qr.setOnClickListener(findtext);
@@ -105,6 +107,7 @@ Boolean done;
         frag.setArguments(b);
 
         FragmentManager fragmentManager=getSupportFragmentManager();
+        f1.removeAllViews();
         fragmentManager.beginTransaction().replace(R.id.fl1,frag).addToBackStack(null).commit();
 
     }
