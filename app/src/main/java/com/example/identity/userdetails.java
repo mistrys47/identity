@@ -61,13 +61,13 @@ public class userdetails extends Fragment {
             l1.setLayoutParams(new FrameLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                     height));
             l1.setOrientation(LinearLayout.HORIZONTAL);
-
-            if (c.getString(2) == "false") {
+            String x=c.getString(2);
+            if (x.equals("false")) {
                 //field1
                 l1.setWeightSum(9);
                 LinearLayout f1 = new LinearLayout(getActivity());
                 f1.setLayoutParams(new LinearLayout.LayoutParams(0,
-                        LinearLayout.LayoutParams.WRAP_CONTENT,2));
+                        LinearLayout.LayoutParams.MATCH_PARENT,2));
                 f1.setOrientation(LinearLayout.VERTICAL);
 
                 TextView t1 = new TextView(getActivity());
@@ -76,52 +76,65 @@ public class userdetails extends Fragment {
                         FrameLayout.LayoutParams.MATCH_PARENT));
                 t1.setPadding(leftpadding, 0, 0, 0);
                 t1.setTextSize(15);
+                t1.setGravity(Gravity.CENTER_VERTICAL);
                 t1.setTypeface(null, Typeface.BOLD);
                 t1.setTextColor(Color.BLUE);
                 f1.addView(t1);
 
                 //field2
                 LinearLayout f2 = new LinearLayout(getActivity());
-                f2.setLayoutParams(new FrameLayout.LayoutParams(0,
-                        FrameLayout.LayoutParams.MATCH_PARENT,3));
+                f2.setLayoutParams(new LinearLayout.LayoutParams(0,
+                        LinearLayout.LayoutParams.MATCH_PARENT,3));
                 f2.setOrientation(LinearLayout.VERTICAL);
 
                 TextView t2 = new TextView(getActivity());
                 t2.setText(c.getString(1));
                 t2.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.FILL_PARENT,
                         FrameLayout.LayoutParams.MATCH_PARENT));
+                t2.setGravity(Gravity.CENTER_VERTICAL);
                 t2.setPadding(leftpadding, 0, 0, 0);
                 t2.setTextSize(15);
                 f2.addView(t2);
 
                 //field3
                 LinearLayout f3 = new LinearLayout(getActivity());
-                f3.setLayoutParams(new FrameLayout.LayoutParams(0,
-                        FrameLayout.LayoutParams.MATCH_PARENT,2));
+                f3.setLayoutParams(new LinearLayout.LayoutParams(0,
+                        LinearLayout.LayoutParams.MATCH_PARENT,2));
                 f3.setOrientation(LinearLayout.VERTICAL);
                 TextView t3 = new TextView(getActivity());
                 t3.setText(c.getString(3));
                 t3.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.FILL_PARENT,
                         FrameLayout.LayoutParams.MATCH_PARENT));
+                t3.setGravity(Gravity.CENTER_VERTICAL);
                 t3.setPadding(leftpadding, 0, 0, 0);
                 t3.setTextSize(15);
                 f3.addView(t3);
 
                 //field4
                 LinearLayout f4 = new LinearLayout(getActivity());
-                f4.setLayoutParams(new FrameLayout.LayoutParams(0,
-                        FrameLayout.LayoutParams.MATCH_PARENT,2));
+                f4.setLayoutParams(new LinearLayout.LayoutParams(0,
+                        LinearLayout.LayoutParams.MATCH_PARENT,2));
                 f4.setOrientation(LinearLayout.VERTICAL);
                 Button b1 = new Button(getActivity());
                 b1.setText("Update");
                 b1.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT,FrameLayout.LayoutParams.WRAP_CONTENT));
                 b1.setGravity(Gravity.CENTER);
+                b1.setBackgroundColor(Color.TRANSPARENT);
+                final String s = c.getString(0);
+                final String s1 = c.getString(1);
                 b1.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-
+                        update_field_value frag = new update_field_value();
+                        Bundle b = new Bundle();
+                        b.putString("field", s);
+                        b.putString("value",s1);
+                        frag.setArguments(b);
+                        FragmentManager fragmentManager = getFragmentManager();
+                        fragmentManager.beginTransaction().replace(R.id.fl1,frag).addToBackStack(null).commit();
                     }
                 });
+                if(!s.equals("email") && !s.equals("mobile"))
                 f4.addView(b1);
 
                 l1.addView(f1);
@@ -176,6 +189,7 @@ public class userdetails extends Fragment {
                 b1.setBackgroundColor(Color.TRANSPARENT);
                 final String s=c.getString(0);
                 final String s1=c.getString(1);
+
                 b1.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -188,6 +202,7 @@ public class userdetails extends Fragment {
                         fragmentManager.beginTransaction().replace(R.id.fl1,frag).addToBackStack(null).commit();
                     }
                 });
+                if(!s.equals("email") && !s.equals("mobile"))
                 f4.addView(b1);
 
                 l1.addView(f1);

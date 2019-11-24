@@ -90,7 +90,7 @@ class database extends SQLiteOpenHelper {
         contentValues.put(COL3,"false");
         long re=db.update(TABLE_NAME1,
                 contentValues,
-                "field_name " + " = ? ",
+                "field_name" + " = ? ",
                 new String[]{field});
         if(re == -1)
             return false;

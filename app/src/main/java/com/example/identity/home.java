@@ -184,6 +184,7 @@ FrameLayout f1;
         // Handle navigation view item clicks here.
         int id = item.getItemId();
         if (id == R.id.nav_camera) {
+            f1.removeAllViews();
             FragmentManager fragmentManager=getSupportFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.fl1,(Fragment) new userdetails()).addToBackStack(null).commit();
         } else if (id == R.id.nav_gallery) {
