@@ -64,7 +64,7 @@ public class add_user_details extends Fragment {
         arr.put("name");
         arr.put("email");
         arr.put("mobile");
-        arr.put("aadhar");
+        arr.put("voterid");
 
         JSONArray jsonArray1;
         final ArrayList<String> spinnerArray = new ArrayList<String>();
@@ -183,7 +183,6 @@ public class add_user_details extends Fragment {
                         return;
                     }
                     String item = spinner.getSelectedItem().toString();
-                    submit.setText(submit.getText().toString()+e.getText().toString());
                     if(items.containsKey(item)) {
                         ((TextView)spinner.getSelectedView()).setError("Message");
                         return;
