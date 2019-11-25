@@ -33,11 +33,11 @@ class database extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public boolean insert1(SQLiteDatabase db,String field_name,String value,String verifier) {
+    public boolean insert1(SQLiteDatabase db,String field_name,String value,String verifier,String verified) {
         ContentValues contentValues = new ContentValues();
         contentValues.put(COL1,field_name);
         contentValues.put(COL2,value);
-        contentValues.put(COL3,"true");
+        contentValues.put(COL3,verified);
         contentValues.put(COL4,verifier);
         long x=db.insert(TABLE_NAME1,null,contentValues);
         if(x==-1)

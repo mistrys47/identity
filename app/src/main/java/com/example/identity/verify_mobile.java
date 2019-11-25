@@ -231,7 +231,7 @@ public class verify_mobile extends AppCompatActivity {
             boolean isFound = result.indexOf("true") !=-1? true: false;
             if (isFound ) {
                 Intent intent=new Intent(verify_mobile.this,MainActivity.class);
-                boolean x=db.insert1(db1,"mobile",m4,"admin");
+                boolean x=db.insert1(db1,"mobile",m4,"admin","true");
                 if(x==true)
                 {
                     Toast.makeText(verify_mobile.this,"success",Toast.LENGTH_LONG).show();

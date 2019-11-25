@@ -188,8 +188,9 @@ FrameLayout f1;
             FragmentManager fragmentManager=getSupportFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.fl1,(Fragment) new userdetails()).addToBackStack(null).commit();
         } else if (id == R.id.nav_gallery) {
-
-
+            f1.removeAllViews();
+            FragmentManager fragmentManager=getSupportFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.fl1,(Fragment) new add_user_details()).addToBackStack(null).commit();
         } else if (id == R.id.nav_slideshow) {
 
         } else if (id == R.id.nav_manage) {
