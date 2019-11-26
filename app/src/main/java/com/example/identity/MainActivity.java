@@ -74,5 +74,9 @@ TextView t1,t2,t3,t4;
             Toast.makeText(MainActivity.this,e+"",Toast.LENGTH_LONG).show();
         }
     }
+    public void go2(View v){
+        Intent i1=new Intent(MainActivity.this,fingerprint.class);
+        startActivity(i1);
+    }
 
 }

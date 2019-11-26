@@ -4,6 +4,7 @@
     package="com.example.identity">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.USE_FINGERPRINT"/>
 
     <application
         android:allowBackup="true"
@@ -12,15 +13,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".verify_mobile"></activity>
+        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".verify_mobile" />
         <activity android:name=".verify_email" />
         <activity android:name=".email_input" />
         <activity
             android:name=".home"
             android:label="@string/title_activity_home"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".mobile_number" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".fingerprint">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
