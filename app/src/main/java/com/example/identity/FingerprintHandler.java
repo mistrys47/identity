@@ -72,7 +72,7 @@ public class FingerprintHandler extends FingerprintManager.AuthenticationCallbac
 
             paraLabel.setTextColor(ContextCompat.getColor(context, R.color.colorPrimary));
             imageView.setImageResource(R.mipmap.ic_launcher_done);
-            Intent i1 = new Intent(context,MainActivity.class);
+            Intent i1 = new Intent(context,home.class);
             context.startActivity(i1);
         }
 

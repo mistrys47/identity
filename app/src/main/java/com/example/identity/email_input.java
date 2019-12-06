@@ -39,7 +39,7 @@ public class email_input extends AppCompatActivity {
         boolean x2=db.checkmobile(db1);
         if(x1==true && x2==true)
         {
-            Intent intent=new Intent(email_input.this,MainActivity.class);
+            Intent intent=new Intent(email_input.this,home.class);
             startActivity(intent);
         }
         else if(x1==true)

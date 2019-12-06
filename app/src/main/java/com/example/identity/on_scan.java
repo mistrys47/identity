@@ -61,8 +61,9 @@ LinearLayout l1,l2,l3,l4;
         SQLiteDatabase db1 = db.getWritableDatabase();
         Gson gson = new Gson();
         qr_code_data json = gson.fromJson(strtext,qr_code_data.class);
-        t1.setText(t1.getText().toString()+" "+json.website);
-        qr_info_data all_info[]=json.info;
+        t1.setText(t1.getText().toString()+" "+json.name+json.url);
+
+        qr_info_data all_info[]=json.fields;
         String s="";
 
         for(int i=0;i<all_info.length;i++) {
@@ -120,7 +121,13 @@ LinearLayout l1,l2,l3,l4;
                         LinearLayout.LayoutParams.MATCH_PARENT, 2));
                 f1.setOrientation(LinearLayout.VERTICAL);
                 t1 = new TextView(getActivity());
-                t1.setText(all_info[i].required);
+                if(all_info[i].required) {
+                    t1.setText("True");
+                }
+                else
+                {
+                    t1.setText("False");
+                }
                 t1.setLayoutParams(new FrameLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                         100));
                 t1.setPadding(10, 0, 0, 0);
@@ -204,7 +211,13 @@ LinearLayout l1,l2,l3,l4;
                         LinearLayout.LayoutParams.MATCH_PARENT,2));
                 f1.setOrientation(LinearLayout.VERTICAL);
                 t1 = new TextView(getActivity());
-                t1.setText(all_info[i].required);
+                if(all_info[i].required) {
+                    t1.setText("True");
+                }
+                else
+                {
+                    t1.setText("False");
+                }
                 t1.setLayoutParams(new FrameLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                         100));
                 t1.setPadding(10, 0, 0, 0);
@@ -283,7 +296,13 @@ LinearLayout l1,l2,l3,l4;
                         LinearLayout.LayoutParams.MATCH_PARENT,2));
                 f1.setOrientation(LinearLayout.VERTICAL);
                 t1 = new TextView(getActivity());
-                t1.setText(all_info[i].required);
+                if(all_info[i].required) {
+                    t1.setText("True");
+                }
+                else
+                {
+                    t1.setText("False");
+                }
                 t1.setLayoutParams(new FrameLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                         100));
                 t1.setPadding(10, 0, 0, 0);

@@ -2,6 +2,7 @@ package com.example.identity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -19,6 +20,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.google.zxing.integration.android.IntentIntegrator;
@@ -29,10 +31,12 @@ import org.json.JSONObject;
 
 public class home extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-Button scan_qr;
+ImageButton scan_qr;
 String data1;
 Boolean done;
 FrameLayout f1;
+    database db=new database(this);
+    SQLiteDatabase db1;
 
     private IntentIntegrator qrScan;
     @Override
@@ -44,7 +48,21 @@ FrameLayout f1;
         setSupportActionBar(toolbar);
 
         f1=(FrameLayout)findViewById(R.id.fl1);
-        scan_qr=(Button)findViewById(R.id.Scan);
+        scan_qr=(ImageButton)findViewById(R.id.Scan);
+        db1 = db.getWritableDatabase();
+        boolean x1=db.checkemail(db1);
+        boolean x2=db.checkmobile(db1);
+        if(x1==true && x2==true)
+        {
+           // Intent intent=new Intent(this,home.class);
+           // startActivity(intent);
+        }
+        else
+        {
+            Intent intent=new Intent(this,email_input.class);
+            startActivity(intent);
+        }
+
         // email_id=(EditText)findViewById(R.id.email_id);
         scan_qr.setOnClickListener(findtext);
         qrScan = new IntentIntegrator(this);
@@ -74,7 +92,7 @@ FrameLayout f1;
                     JSONObject obj = new JSONObject(result.getContents());
                     data1=result.getContents();
                     done=true;
-                   Toast.makeText(this, result.getContents(), Toast.LENGTH_LONG).show();
+                   Toast.makeText(this,"m1"+ result.getContents(), Toast.LENGTH_LONG).show();
                  //   Toast.makeText(this,"tried to change",Toast.LENGTH_LONG).show();
 //                   on_scan frag = new on_scan();
 //                    Bundle b = new Bundle();
@@ -152,6 +170,10 @@ FrameLayout f1;
             drawer.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
+            Intent goToMainActivity = new Intent(getApplicationContext(), MainActivity.class);
+            goToMainActivity.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); // Will clear out your activity history stack till now
+            startActivity(goToMainActivity);
+            //super.onBackPressed();
         }
     }
 
@@ -183,22 +205,17 @@ FrameLayout f1;
         Fragment fragment = null;
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-        if (id == R.id.nav_camera) {
+        if (id == R.id.profile) {
             f1.removeAllViews();
             FragmentManager fragmentManager=getSupportFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.fl1,(Fragment) new userdetails()).addToBackStack(null).commit();
-        } else if (id == R.id.nav_gallery) {
+        } else if (id == R.id.details) {
             f1.removeAllViews();
             FragmentManager fragmentManager=getSupportFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.fl1,(Fragment) new add_user_details()).addToBackStack(null).commit();
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
+        }
+        else if (id == R.id.scan_qr1) {
+            new home.AsyncLogin().execute();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
