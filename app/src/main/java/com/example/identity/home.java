@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -18,9 +19,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.zxing.integration.android.IntentIntegrator;
@@ -34,6 +37,7 @@ public class home extends AppCompatActivity
 ImageButton scan_qr;
 String data1;
 Boolean done;
+
 FrameLayout f1;
     database db=new database(this);
     SQLiteDatabase db1;
@@ -44,16 +48,35 @@ FrameLayout f1;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home);
         done=false;
+        if(Build.VERSION.SDK_INT>=21){
+            Window window=this.getWindow();
+            window.setStatusBarColor(this.getResources().getColor(R.color.number_background));}
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         f1=(FrameLayout)findViewById(R.id.fl1);
         scan_qr=(ImageButton)findViewById(R.id.Scan);
+
         db1 = db.getWritableDatabase();
         boolean x1=db.checkemail(db1);
+        FragmentManager fragmentManager=getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.fl1,(Fragment) new userdetails()).addToBackStack(null).commit();
+
         boolean x2=db.checkmobile(db1);
         if(x1==true && x2==true)
         {
+            try {
+                NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+                View headerView = navigationView.getHeaderView(0);
+                TextView t1 = (TextView) headerView.findViewById(R.id.Email_id);
+                t1.setText(db.getvalue(db1, "email"));
+                t1 = (TextView) headerView.findViewById(R.id.contactnumber);
+                t1.setText(db.getvalue(db1, "mobile"));
+            }
+            catch (Exception e)
+            {
+                Toast.makeText(this,""+e,Toast.LENGTH_LONG).show();
+            }
            // Intent intent=new Intent(this,home.class);
            // startActivity(intent);
         }
@@ -169,11 +192,11 @@ FrameLayout f1;
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
+          //  super.onBackPressed();
+            //Intent goToMainActivity = new Intent(getApplicationContext(), MainActivity.class);
+            //goToMainActivity.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); // Will clear out your activity history stack till now
+            //startActivity(goToMainActivity);
             super.onBackPressed();
-            Intent goToMainActivity = new Intent(getApplicationContext(), MainActivity.class);
-            goToMainActivity.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); // Will clear out your activity history stack till now
-            startActivity(goToMainActivity);
-            //super.onBackPressed();
         }
     }
 
@@ -198,7 +221,11 @@ FrameLayout f1;
 
         return super.onOptionsItemSelected(item);
     }
-
+    public void m1(View v){
+        Intent i1=new Intent(this,MainActivity.class);
+        startActivity(i1);
+        Toast.makeText(this,"hi",Toast.LENGTH_LONG).show();
+    }
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -206,7 +233,7 @@ FrameLayout f1;
         // Handle navigation view item clicks here.
         int id = item.getItemId();
         if (id == R.id.profile) {
-            f1.removeAllViews();
+           // f1.removeAllViews();
             FragmentManager fragmentManager=getSupportFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.fl1,(Fragment) new userdetails()).addToBackStack(null).commit();
         } else if (id == R.id.details) {
@@ -222,4 +249,5 @@ FrameLayout f1;
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
 }

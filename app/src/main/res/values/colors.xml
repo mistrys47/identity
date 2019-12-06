@@ -4,5 +4,9 @@
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
     <color name="number_background">#11141B</color>
+    <color name="drawer_back">#C5C9C9</color>
+    <color name="m1">#2B2B2B</color>
+    <color name="m2">#919191</color>
+
 
 </resources>

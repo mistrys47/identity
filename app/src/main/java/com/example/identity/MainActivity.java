@@ -1,6 +1,8 @@
 package com.example.identity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -14,6 +16,12 @@ import com.google.zxing.integration.android.IntentResult;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity {
 Button verify_email;
@@ -75,8 +83,58 @@ TextView t1,t2,t3,t4;
         }
     }
     public void go2(View v){
-        Intent i1=new Intent(MainActivity.this,fingerprint.class);
-        startActivity(i1);
+        new MainActivity.AsyncLogin().execute();
     }
+    private class AsyncLogin extends AsyncTask<String, String, String>
+    {
+        ProgressDialog pdLoading = new ProgressDialog(MainActivity.this);
 
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+            //this method will be running on UI thread
+            pdLoading.setMessage("\tSending...");
+            pdLoading.setCancelable(false);
+            pdLoading.show();
+
+        }
+        @Override
+        protected String doInBackground(String... params) {
+            try {
+
+                OkHttpClient client = new OkHttpClient().newBuilder()
+                        .build();
+                MediaType mediaType = MediaType.parse("application/x-www-form-urlencoded");
+                JSONObject jo1 = new JSONObject();
+                jo1.put("email","adi1@gmail.com");
+                jo1.put( "name", "shubham");
+                jo1.put( "password", "shubham");
+
+
+                jo1.put("phone_no","9284959664");
+                RequestBody body = RequestBody.create( jo1.toString(),okhttp3.MediaType.parse("application/json; charset=utf-8"));
+                Request request = new Request.Builder()
+                        .url("https://uidserver.herokuapp.com/service_provider/register")
+                        .method("POST", body)
+                        .addHeader("Content-Type", "application/x-www-form-urlencoded")
+                        .build();
+                Response response = client.newCall(request).execute();
+                // Toast.makeText(email_input.this,"hello"+response,Toast.LENGTH_LONG).show();
+                return response.body().string();
+            }catch (Exception e)
+            {
+                return "error"+e;
+            }
+
+        }
+        @Override
+        protected void onPostExecute(String result) {
+
+            Toast.makeText(MainActivity.this,"hello"+result,Toast.LENGTH_LONG).show();
+            //this method will be running on UI thread
+            pdLoading.dismiss();
+        }
+    }
 }
