@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+<!-- <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> -->
+<!-- <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> -->
+<style>
+.bod{
+  background-color: black;
+}
+.register{
+    background: -webkit-linear-gradient(left, #000000, #1f1f1f);
+    margin-top: 3%;
+    padding: 3%;
+    width:auto;
+    height: auto;
+}
+.register-left{
+    text-align: center;
+    color: #fff;
+    margin-top: 4%;
+}
+.register-left input{
+    border: none;
+    border-radius: 1.5rem;
+    padding: 2%;
+    width: 60%;
+    background: #f8f9fa;
+    font-weight: bold;
+    color: #383d41;
+    margin-top: 30%;
+    margin-bottom: 3%;
+    cursor: pointer;
+}
+.register-right{
+    background: #141212;
+    border-top-left-radius: 10% 50%;
+    border-bottom-left-radius: 10% 50%;
+}
+.register-left img{
+    margin-top: 15%;
+    margin-bottom: 5%;
+    width: 25%;
+    -webkit-animation: mover 2s infinite  alternate;
+    animation: mover 1s infinite  alternate;
+}
+@-webkit-keyframes mover {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-20px); }
+}
+@keyframes mover {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-20px); }
+}
+.register-left p{
+    font-weight: lighter;
+    padding: 12%;
+    margin-top: -9%;
+}
+.register .register-form{
+    padding: 10%;
+    margin-top: 10%;
+    background-color: white;
+}
+.btnRegister{
+    float: right;
+    margin-top: 10%;
+    border: none;
+    border-radius: 1.5rem;
+    padding: 2%;
+    background: #0062cc;
+    color: #fff;
+    font-weight: 600;
+    width: 50%;
+    cursor: pointer;
+}
+.register .nav-tabs{
+    margin-top: 3%;
+    border: none;
+    background: #a1a1a1;
+    border-radius: 1.5rem;
+    width: 28%;
+    float: right;
+}
+.register .nav-tabs .nav-link{
+    padding: 2%;
+    height: 34px;
+    font-weight: 600;
+    color: #fff;
+    border-top-right-radius: 1.5rem;
+    border-bottom-right-radius: 1.5rem;
+}
+.register .nav-tabs .nav-link:hover{
+    border: none;
+}
+.register .nav-tabs .nav-link.active{
+    width: 100px;
+    color: #0062cc;
+    border: 2px solid #0062cc;
+    border-top-left-radius: 1.5rem;
+    border-bottom-left-radius: 1.5rem;
+}
+.register-heading{
+    text-align: center;
+    margin-top: 8%;
+    margin-bottom: -15%;
+    color: #495057;
+}
+
+</style>
+</head>
+<body class="bod">
+  <div class="container register">
+                <div class="row">
+                    <div class="col-md-3 register-left">
+                        <img src="logo_white.png" alt=""/>
+                        <h3>Company Registration</h3>
+                        <p>Register your company here</p>
+                        <input type="submit" name="login" value="Login" onclick="window.location.href = 'login.html';"/><br/>
+                    </div>
+                    <div class="col-md-9 register-right">
+                        <div class="tab-content" id="myTabContent">
+                            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                <div class="row register-form">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" name="name" id="name" placeholder="Name of Company" value="" />
+                                        </div>
+                                        <div class="form-group">
+
+                                            <input type="textarea" class="form-control" name="address" id="address" placeholder="Postal Address" value="" />
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="url" class="form-control" name="url" id="url" placeholder="Company URL" value="" />
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="number" class="form-control" name="cin" id="cin" placeholder="CIN Number(21 digit)" value="" />
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="number" class="form-control" name="contact" id="contact" placeholder="Company Contact" value="" />
+                                        </div>
+                                        <div class="form-group">
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                      <div class="form-group">
+                                          <input type="email" class="form-control" id="email" placeholder="Company Email ID" value="" />
+                                      </div>
+                                      <div class="form-group">
+                                          <input type="password" class="form-control" id="pw"  placeholder=" Enter Password *" value="" />
+                                      </div>
+                                      <div class="form-group">
+                                          <input type="password" class="form-control" id="pw1" placeholder="Confirm Password *" value="" />
+                                      </div>
+                                        <input type="submit" class="btnRegister" id="submit"  value="Register" onclick="fn1()"/>
+                                        <div id="div1"></div>
+                                    </div>
+                                </div>
+                            </div>
+                          </div>
+                                    </div>
+                                </div>
+                            </div>
+
+</body>
+</html>
+
+<script>
+function validateEmail(email) {
+    if(email==""){
+      return false;
+    }
+    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase());
+}
+function validatenumber(num,le)
+{
+  if(c.length==len)
+  {
+    return true;
+  }
+  return false;
+}
+function submitdata()
+{
+  var f=true;
+  var email=document.getElementById('email').value;
+  var status=validateEmail(email);
+  if(!status){
+    alert("Enter correct email");
+    return false;
+  }
+  var con=document.getElementById('contact').value;
+  //status=validatenumber(con,10);
+  /*if(!status){
+    alert("Enter correct contact");
+    return false;
+  }*/
+
+  fn1();
+}
+
+
+function PostData() {
+    // 1. Create XHR instance - Start
+    alert("Called");
+    var email = document.getElementById("email").value;
+    var cin = document.getElementById("cin").value;
+
+    var xhr;
+    if (window.XMLHttpRequest) {
+        xhr = new XMLHttpRequest();
+    }
+    else if (window.ActiveXObject) {
+        xhr = new ActiveXObject("Msxml2.XMLHTTP");
+    }
+    else {
+        throw new Error("Ajax is not supported by this browser");
+    }
+    // 1. Create XHR instance - End
+
+    // 2. Define what to do when XHR feed you the response from the server - Start
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4) {
+            if (xhr.status == 200 && xhr.status < 300) {
+
+                alert(xhr.responseText);
+            }
+        }
+    }
+    // 2. Define what to do when XHR feed you the response from the server - Start
+
+//    var otp = "3009";
+
+
+    // 3. Specify your action, location and Send to the server - Start
+    xhr.open('POST', 'https://uidserver.herokuapp.com/verify/email/check');
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    xhr.send(x);
+    // 3. Specify your action, location and Send to the server - End
+}
+function fn()
+{
+  alert("here");
+  var name = document.getElementById("name").value;
+  var email = document.getElementById("email").value;
+  var password = document.getElementById("pw").value;
+  var contact = document.getElementById("contact").value;
+  var xhr = new XMLHttpRequest();
+var url = "https://uidserver.herokuapp.com/service_provider/register";
+xhr.open("POST", url);
+xhr.setRequestHeader("Content-Type", "application/json");
+xhr.onreadystatechange = function () {
+    if (xhr.readyState != 4 && xhr.status != 200) {
+      alert("Server error");
+    }
+    if (xhr.readyState === 4 && xhr.status === 200) {
+        var json = JSON.parse(xhr.responseText);
+        alert(xhr.responseText);
+        // console.log(json.email + ", " + json.otp);
+    }
+}
+var data = JSON.stringify({"email": email, "name": name,"password":password, "mobile_no":contact });
+xhr.send(data);
+}
+
+function fn1(){
+  header('Access-Control-Allow-Origin: *');
+  var name = document.getElementById("name").value;
+  var email = document.getElementById("email").value;
+  var password = document.getElementById("pw").value;
+  var contact = document.getElementById("contact").value;
+  // var data = "{\n    \"name\": \"Dev\",\n    \"password\": \"user1\",\n    \"email\": \"dev@gmail.com\",\n    \"phone_no\": \"9969999999\"\n}";
+// var data = "{"name":name, "password":password, "email":email, "mobile_no":contact }";
+var data = JSON.stringify({"email": email, "name": name,"password":password, "phone_no":contact });
+var xhr = new XMLHttpRequest();
+xhr.withCredentials = true;
+
+xhr.addEventListener("readystatechange", function() {
+  if(this.readyState === 4) {
+    console.log(this.responseText);
+    alert(this.responseText);
+  }
+});
+
+xhr.open("POST", "https://uidserver.herokuapp.com/service_provider/register");
+xhr.setRequestHeader("Content-Type", "application/json");
+
+xhr.send(data);
+}
+</script>
