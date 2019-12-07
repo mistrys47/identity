@@ -21,7 +21,7 @@ import java.util.List;
 
 public class user_details_card extends Fragment {
 
-    RecyclerView recyclerView;
+    RecyclerView subjectList;
     useradapter usera;
     List<User_details> pr1;
     public user_details_card() {
@@ -37,7 +37,7 @@ public class user_details_card extends Fragment {
 //        recyclerView.setHasFixedSize(true);
 //
         try {
-            RecyclerView subjectList;
+//            RecyclerView subjectList;
 
             subjectList = (RecyclerView) view.findViewById(R.id.rec1);
             final FragmentActivity c = getActivity();
@@ -55,11 +55,19 @@ public class user_details_card extends Fragment {
 
                     subjects.add(new User_details(s, s1, x));
 
+
             }
+
 //            subjects.add(new User_details("email", "value", "m1"));
 
-            useradapter subject_list_adapter = new useradapter(subjects, getContext());
-            subjectList.setAdapter(subject_list_adapter);
+            usera = new useradapter(subjects, getContext());
+            subjectList.setAdapter(usera);
+            usera.setOnItemClickListner(new useradapter.OnItemClickListner() {
+                @Override
+                public void onItemClick(int position) {
+                    Toast.makeText(getContext(),""+position,Toast.LENGTH_LONG).show();
+                }
+            });
 
         }catch (Exception e)
         {

@@ -81,16 +81,8 @@ public class add_user_details extends Fragment {
         add = getView().findViewById(R.id.add);
         remove = getView().findViewById(R.id.remove);
         submit = getView().findViewById(R.id.submit);
-        JSONArray arr = new JSONArray();
-        arr.put("name");
-        arr.put("email");
-        arr.put("mobile");
-        arr.put("voterid");
-        Gson gson = new Gson();
 
-        JSONArray jsonArray1;
 
-        JSONObject obj1 = new JSONObject();
 
 
         final ArrayList<String> spinnerarray1 = spinnerArray;
@@ -193,7 +185,7 @@ public class add_user_details extends Fragment {
             super.onPreExecute();
 
             //this method will be running on UI thread
-            pdLoading.setMessage("\tSending...");
+            pdLoading.setMessage("\tLoading...");
             pdLoading.setCancelable(false);
             pdLoading.show();
 

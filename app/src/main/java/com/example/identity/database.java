@@ -119,6 +119,19 @@ class database extends SQLiteOpenHelper {
             return true;
         return false;
     }
+    public boolean updatevalue1(SQLiteDatabase db,String field,String value){
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COL2,value);
+        contentValues.put(COL3,"true");
+        long re=db.update(TABLE_NAME1,
+                contentValues,
+                "field_name" + " = ? ",
+                new String[]{field});
+        if(re == -1)
+            return false;
+        else
+            return true;
+    }
 }
 
 

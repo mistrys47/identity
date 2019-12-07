@@ -1,10 +1,12 @@
 package com.example.identity;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -26,11 +28,18 @@ import com.google.gson.Gson;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+
 
 public class on_scan extends Fragment {
 
 TextView t1;
 LinearLayout l1,l2,l3,l4;
+String URL1;
 
     public on_scan() {
     }
@@ -61,15 +70,18 @@ LinearLayout l1,l2,l3,l4;
         SQLiteDatabase db1 = db.getWritableDatabase();
         Gson gson = new Gson();
         qr_code_data json = gson.fromJson(strtext,qr_code_data.class);
-        t1.setText(t1.getText().toString()+" "+json.name+json.url);
-
+        t1.setText(t1.getText().toString()+" "+json.name+json.url+json.sid);
+        Boolean bm1=db.check_serviceprovider(db1,json.url);
+        URL1=json.url;
         qr_info_data all_info[]=json.fields;
         String s="";
-
+        int cm11=all_info.length;
+        JSONObject jo = new JSONObject();
         for(int i=0;i<all_info.length;i++) {
             // all_info[i].field;
             int exist = db.checkfield(db1, all_info[i].field);
             if (exist == 1) {
+                cm11--;
 
 
 //field
@@ -104,6 +116,12 @@ LinearLayout l1,l2,l3,l4;
                 t1 = new TextView(getActivity());
 
                 String val = db.getvalue(db1, all_info[i].field);
+                try {
+                      jo.put(all_info[i].field, val);
+            }catch (Exception e)
+            {
+               Toast.makeText(getContext(),""+e,Toast.LENGTH_LONG).show();
+            }
                 t1.setText(val);
                 t1.setLayoutParams(new FrameLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                         100));
@@ -123,6 +141,7 @@ LinearLayout l1,l2,l3,l4;
                 t1 = new TextView(getActivity());
                 if(all_info[i].required) {
                     t1.setText("True");
+                   // c1--;
                 }
                 else
                 {
@@ -153,6 +172,58 @@ LinearLayout l1,l2,l3,l4;
 
 
             }
+        }
+        if(cm11==0)
+        {
+            Button c1 = new Button(getActivity());
+           // c1.setChecked(true);
+            c1.setGravity(Gravity.CENTER);
+            c1.setText("Submit");
+            c1.setLayoutParams(new FrameLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+                    40));
+           // c1.setOnClickListener();
+            final JSONObject jo2 = jo;
+            final String m1=json.sid;
+            String b2;
+            if(bm1)
+            {
+                 b2="false";
+            }
+            else
+            {
+                 b2="true";
+            }
+            final String b3=b2;
+            c1.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+
+                    JSONObject jo1 = new JSONObject();
+                    try {
+                        jo1.put("data", jo2.toString());
+                        jo1.put("sid", m1);
+
+                        if (b3.equals("true"))
+                            jo1.put("signup", true);
+
+                        else
+                            jo1.put("signup", false);
+                        Toast.makeText(getContext(),""+jo1.toString(),Toast.LENGTH_LONG).show();
+
+                    }
+                    catch (Exception e)
+                    {
+                        Toast.makeText(getContext(),""+e,Toast.LENGTH_LONG).show();
+                    }
+
+                   new on_scan.AsyncLogin().execute(jo1.toString(),m1,b3);
+                }
+            });
+          //  f1.addView(c1);
+           // f.addView(f1);
+            l1.addView(c1);
+
         }
         for(int i=0;i<all_info.length;i++)
         {
@@ -331,6 +402,70 @@ LinearLayout l1,l2,l3,l4;
 
        // Toast.makeText(getContext(),s,Toast.LENGTH_LONG).show();
 
+    }
+    private class AsyncLogin extends AsyncTask<String, String, String>
+    {
+        ProgressDialog pdLoading = new ProgressDialog(getContext());
+
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+            //this method will be running on UI thread
+            pdLoading.setMessage("\tLoading...");
+            pdLoading.setCancelable(false);
+            pdLoading.show();
+
+        }
+        @Override
+        protected String doInBackground(String... params) {
+            try {
+
+                OkHttpClient client = new OkHttpClient().newBuilder()
+                        .build();
+                MediaType mediaType = MediaType.parse("application/x-www-form-urlencoded");
+                JSONObject jo1 = new JSONObject();
+
+
+                jo1.put( "sid", params[1]);
+
+                if(params[2].equals("true")) {
+                    jo1.put( "data", params[0]);
+                    jo1.put("signup", true);
+
+                }else
+                    jo1.put("signup",false);
+
+
+                RequestBody body = RequestBody.create( jo1.toString(),okhttp3.MediaType.parse("application/json; charset=utf-8"));
+                Request request = new Request.Builder()
+                        .url("https://uidserver.herokuapp.com/service_provider/user/tempdata")
+                        .method("POST", body)
+                        .addHeader("Content-Type", "application/x-www-form-urlencoded")
+                        .build();
+                Response response = client.newCall(request).execute();
+                return response.body().string();
+            }catch (Exception e)
+            {
+                return "error"+e;
+            }
+
+        }
+        @Override
+        protected void onPostExecute(String result) {
+           // res1 = result;
+            boolean isFound = result.indexOf("success") !=-1? true: false;
+            Toast.makeText(getContext(),""+result,Toast.LENGTH_LONG).show();
+            final database db = new database(getActivity());
+            final SQLiteDatabase db1 = db.getWritableDatabase();
+            if(isFound)
+            {
+                db.insert2(db1,URL1);
+
+            }
+            pdLoading.dismiss();
+        }
     }
 
 }

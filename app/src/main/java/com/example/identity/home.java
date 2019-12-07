@@ -59,8 +59,14 @@ FrameLayout f1;
 
         db1 = db.getWritableDatabase();
         boolean x1=db.checkemail(db1);
+        //
+        //Doing manual setting for name(Updating value)
+        db.updatevalue1(db1,"name","shubham");
+
+
+        //
         FragmentManager fragmentManager=getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.fl1,(Fragment) new userdetails()).addToBackStack(null).commit();
+        fragmentManager.beginTransaction().replace(R.id.fl1,(Fragment) new user_details_card()).addToBackStack(null).commit();
 
         boolean x2=db.checkmobile(db1);
         if(x1==true && x2==true)
@@ -235,7 +241,7 @@ FrameLayout f1;
         if (id == R.id.profile) {
            // f1.removeAllViews();
             FragmentManager fragmentManager=getSupportFragmentManager();
-            fragmentManager.beginTransaction().replace(R.id.fl1,(Fragment) new userdetails()).addToBackStack(null).commit();
+            fragmentManager.beginTransaction().replace(R.id.fl1,(Fragment) new user_details_card()).addToBackStack(null).commit();
         } else if (id == R.id.details) {
             f1.removeAllViews();
             FragmentManager fragmentManager=getSupportFragmentManager();

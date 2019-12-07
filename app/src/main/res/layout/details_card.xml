@@ -1,14 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="120dp">
+    android:layout_height="100dp">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+
+        android:elevation="7dp"
+        android:translationZ="7dp"
+        android:layout_height="wrap_content">
     <android.support.v7.widget.CardView
         android:id="@+id/card_view"
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:layout_gravity="center"
-        android:elevation="7dp"
-        android:translationZ="7dp"
+
 
         >
 
@@ -17,31 +24,45 @@
             android:layout_height="match_parent">
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_weight="1"
+            android:layout_weight="10"
             android:orientation="horizontal"
             android:layout_height="100dp">
-            <ImageButton
+            <ImageView
                 android:id="@+id/bb1"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-               android:src="@drawable/minus"
-                android:clickable="true"
+                android:layout_height="50dp"
+                android:src="@drawable/minus"
+
+               android:layout_marginTop="20dp"
                 android:background="@null"
                 android:scaleType="fitCenter"
 
                  />
         </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:layout_height="100dp">
+        </LinearLayout>
             <LinearLayout
                 android:layout_width="0dp"
-                android:layout_weight="2"
+                android:layout_weight="20"
                 android:orientation="vertical"
                 android:layout_height="100dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="8dp"
+                    android:orientation="vertical"
+                    >
+                </LinearLayout>
             <TextView
                 android:id="@+id/bb2"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="40dp"
                 android:layout_below="@id/bb1"
-                android:textAlignment="center"
+
+                android:layout_centerVertical="true"
                 android:text="hello"
                  />
 
@@ -50,13 +71,22 @@
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_below="@id/bb2"
-                    android:text="hello"
-                    android:textAlignment="center" />
 
+                    android:text="hello"
+                    android:textStyle="bold"
+                    android:textColor="#000000"
+                    />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:orientation="vertical"
+                android:background="@color/m2">
+
+            </LinearLayout>
             </LinearLayout>
 
         </LinearLayout>
 
     </android.support.v7.widget.CardView>
-
+    </LinearLayout>
 </LinearLayout>

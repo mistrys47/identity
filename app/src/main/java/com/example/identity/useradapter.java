@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -74,21 +75,38 @@ public class useradapter extends RecyclerView.Adapter<useradapter.userviewholder
 }
 */
 public class useradapter extends RecyclerView.Adapter<useradapter.MyViewHolder> {
-
+private OnItemClickListner mlistner;
+    public interface OnItemClickListner{
+        void onItemClick(int position);
+    }
+    public  void setOnItemClickListner(OnItemClickListner listner)
+    {
+        mlistner=listner;
+    }
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
-        public ImageButton i1;
+        public ImageView i1;
         public TextView field,info,totalHeld;
 
-        public MyViewHolder(View itemView) {
+
+        public MyViewHolder(View itemView, final OnItemClickListner listner) {
             super(itemView);
-           this.i1 = (ImageButton) itemView.findViewById(R.id.bb1);
+           this.i1 = (ImageView) itemView.findViewById(R.id.bb1);
             this.field = (TextView) itemView.findViewById(R.id.bb2);
             this.info = (TextView) itemView.findViewById(R.id.bb3);
-          //  this.category=(ImageView) itemView.findViewById(R.id.category);
-           // this.subname=(TextView) itemView.findViewById(R.id.subjectname);
-            //this.totalAttended=(TextView) itemView.findViewById(R.id.Attendencecount);
-            //this.totalHeld=(TextView) itemView.findViewById(R.id.totalheld);
+           itemView.setOnClickListener(new View.OnClickListener() {
+               @Override
+               public void onClick(View v) {
+                   if(listner!=null)
+                   {
+                       int position=getAdapterPosition();
+                       if(position!=RecyclerView.NO_POSITION)
+                       {
+                           listner.onItemClick(position);
+                       }
+                   }
+               }
+           });
 
         }
     }
@@ -102,24 +120,25 @@ public class useradapter extends RecyclerView.Adapter<useradapter.MyViewHolder> 
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.details_card, parent, false);
 
-        return new useradapter.MyViewHolder(itemView);}
+        return new useradapter.MyViewHolder(itemView,mlistner);}
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, int position) {
+    public void onBindViewHolder(MyViewHolder holder, final int position) {
 
         User_details  tempobj=categoriesList.get(position);
         if(tempobj.getVerified().equals("false")) {
-            holder.i1.setImageResource(R.drawable.minus);
-            holder.i1.setBackground(null);
+            holder.i1.setImageResource(R.drawable.wrong);
+
+
 
         }
         else
         {
-            holder.i1.setImageResource(R.drawable.plus);
+            holder.i1.setImageResource(R.drawable.tick);
         }
 
         //holder.subname.setText(tempobj.getSubname());
-        holder.field.setText((tempobj.getfields()));
+        holder.field.setText((tempobj.getfields().toUpperCase() ));
         holder.info.setText((tempobj.getInfo()));
 
      //   holder.totalHeld.setText(Integer.toString(tempobj.getTotalheld()));
