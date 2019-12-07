@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="120dp">
+    <android.support.v7.widget.CardView
+        android:id="@+id/card_view"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_gravity="center"
+        android:elevation="7dp"
+        android:translationZ="7dp"
+
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:layout_height="100dp">
+            <ImageButton
+                android:id="@+id/bb1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+               android:src="@drawable/minus"
+                android:clickable="true"
+                android:background="@null"
+                android:scaleType="fitCenter"
+
+                 />
+        </LinearLayout>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="2"
+                android:orientation="vertical"
+                android:layout_height="100dp">
+            <TextView
+                android:id="@+id/bb2"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_below="@id/bb1"
+                android:textAlignment="center"
+                android:text="hello"
+                 />
+
+                <TextView
+                    android:id="@+id/bb3"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_below="@id/bb2"
+                    android:text="hello"
+                    android:textAlignment="center" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>

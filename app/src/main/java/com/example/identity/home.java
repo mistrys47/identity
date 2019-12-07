@@ -244,6 +244,18 @@ FrameLayout f1;
         else if (id == R.id.scan_qr1) {
             new home.AsyncLogin().execute();
         }
+        else if(id== R.id.Showdetails1)
+        {
+            try {
+                f1.removeAllViews();
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                fragmentManager.beginTransaction().replace(R.id.fl1, (Fragment) new user_details_card()).addToBackStack(null).commit();
+            }
+            catch (Exception e)
+            {
+                Toast.makeText(this,""+e,Toast.LENGTH_LONG).show();
+            }
+        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

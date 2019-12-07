@@ -30,18 +30,18 @@
     app:layout_constraintBottom_toBottomOf="parent"
 
     app:layout_constraintEnd_toEndOf="parent">
-    <ImageButton
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"
 
+    <ImageButton
         android:id="@+id/Scan"
-        android:src="@drawable/qr15"
+        android:layout_width="55dp"
+
+        android:layout_height="55dp"
+        android:layout_centerInParent="true"
         android:background="@null"
+        android:contentDescription="TODO"
         android:scaleType="fitCenter"
+        android:src="@drawable/qr17"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:contentDescription="TODO" />
+        app:layout_constraintTop_toTopOf="parent" />
 </RelativeLayout>
 </android.support.constraint.ConstraintLayout>
