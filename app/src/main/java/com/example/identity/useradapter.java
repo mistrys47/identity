@@ -13,67 +13,7 @@ import android.widget.Toast;
 
 import java.util.List;
 import java.util.zip.Inflater;
-/*
-public class useradapter extends RecyclerView.Adapter<useradapter.userviewholder> {
-    private Context mctx;
-    private List<User_details> userlist;
 
-    public useradapter(Context mctx, List<User_details> userlist) {
-        this.mctx = mctx;
-        this.userlist = userlist;
-    }
-
-    @NonNull
-    @Override
-    public userviewholder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        try {
-            LayoutInflater inflater = LayoutInflater.from(mctx);
-            View v = inflater.inflate(R.layout.details_card, null);
-            userviewholder holder = new userviewholder(v);
-            return holder;
-        } catch (Exception e) {
-            Toast.makeText(mctx, "" + e, Toast.LENGTH_LONG).show();
-        }
-        return null;
-
-    }
-
-    @Override
-    public void onBindViewHolder(@NonNull userviewholder userviewholder, int i) {
-       try {
-           User_details u1 = userlist.get(i);
-           userviewholder.field.setText(u1.getfields());
-       }catch (Exception e)
-       {
-           Toast.makeText(mctx,""+e,Toast.LENGTH_LONG).show();
-       }
-
-    }
-
-    @Override
-    public int getItemCount() {
-        return userlist.size();
-    }
-
-    class userviewholder extends RecyclerView.ViewHolder{
-       public ImageButton i1;
-       public TextView field;
-        public TextView info;
-        public userviewholder(@NonNull View itemView) {
-            super(itemView);
-            try {
-                i1 = (ImageButton) itemView.findViewById(R.id.button1);
-                field = (TextView) itemView.findViewById(R.id.field);
-                info = (TextView) itemView.findViewById(R.id.info);
-            }
-            catch (Exception e)
-            {
-                Toast.makeText(mctx,""+e,Toast.LENGTH_LONG).show();
-            }
-        }
-    }
-}
-*/
 public class useradapter extends RecyclerView.Adapter<useradapter.MyViewHolder> {
 private OnItemClickListner mlistner;
     public interface OnItemClickListner{

@@ -255,7 +255,7 @@ FrameLayout f1;
             try {
                 f1.removeAllViews();
                 FragmentManager fragmentManager = getSupportFragmentManager();
-                fragmentManager.beginTransaction().replace(R.id.fl1, (Fragment) new user_details_card()).addToBackStack(null).commit();
+                fragmentManager.beginTransaction().replace(R.id.fl1, (Fragment) new allowed_websites()).addToBackStack(null).commit();
             }
             catch (Exception e)
             {
