@@ -230,7 +230,7 @@ public class verify_mobile extends AppCompatActivity {
             //this method will be running on UI thread
             boolean isFound = result.indexOf("true") !=-1? true: false;
             if (isFound ) {
-                Intent intent=new Intent(verify_mobile.this,MainActivity.class);
+                Intent intent=new Intent(verify_mobile.this,home.class);
                 boolean x=db.insert1(db1,"mobile",m4,"admin","true");
                 if(x==true)
                 {

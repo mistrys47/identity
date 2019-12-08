@@ -1,5 +1,6 @@
 package com.example.identity;
 
+import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
@@ -8,8 +9,10 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -36,7 +39,8 @@ public class home extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 ImageButton scan_qr;
 String data1;
-Boolean done;
+Integer Storagepermession=1;
+Boolean done,m;
 
 FrameLayout f1;
     database db=new database(this);
@@ -48,6 +52,7 @@ FrameLayout f1;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home);
         done=false;
+        m=checkpermissionstat();
         if(Build.VERSION.SDK_INT>=21){
             Window window=this.getWindow();
             window.setStatusBarColor(this.getResources().getColor(R.color.number_background));}
@@ -59,9 +64,10 @@ FrameLayout f1;
 
         db1 = db.getWritableDatabase();
         boolean x1=db.checkemail(db1);
+
         //
         //Doing manual setting for name(Updating value)
-        db.updatevalue1(db1,"name","shubham");
+        //db.updatevalue1(db1,"name","");
 
 
         //
@@ -69,7 +75,7 @@ FrameLayout f1;
         fragmentManager.beginTransaction().replace(R.id.fl1,(Fragment) new user_details_card()).addToBackStack(null).commit();
 
         boolean x2=db.checkmobile(db1);
-        if(x1==true && x2==true)
+       if(x1==true && x2==true)
         {
             try {
                 NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
@@ -192,6 +198,23 @@ FrameLayout f1;
             call(data1);
         }
     }
+    public boolean checkpermissionstat()
+    {
+        if(ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)==Storagepermession)
+        {
+            return true;
+        }
+        else
+        {
+            requestperm();
+            return false;
+        }
+    }
+    public boolean requestperm()
+    {
+        ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.CAMERA},Storagepermession);
+        return true;
+    }
             @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -249,6 +272,8 @@ FrameLayout f1;
         }
         else if (id == R.id.scan_qr1) {
             new home.AsyncLogin().execute();
+
+
         }
         else if(id== R.id.Showdetails1)
         {

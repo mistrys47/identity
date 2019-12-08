@@ -23,7 +23,7 @@ class database extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE " + TABLE_NAME1 +" (field_name TEXT,value TEXT,verified TEXT,verified_by TEXT)");
-        db.execSQL("CREATE TABLE " + TABLE_NAME2 +" (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT)");
+        db.execSQL("CREATE TABLE " + TABLE_NAME2 +" (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT,data TEXT)");
     }
 
     @Override
@@ -105,9 +105,10 @@ class database extends SQLiteOpenHelper {
         Cursor c=db.rawQuery("select * from " +TABLE_NAME1,null);
         return c;
     }
-    public boolean insert2(SQLiteDatabase db,String name){
+    public boolean insert2(SQLiteDatabase db,String name,String data){
         ContentValues contentValues = new ContentValues();
         contentValues.put(COL22,name);
+        contentValues.put("data",data);
         long x = db.insert(TABLE_NAME2,null,contentValues);
         if(x==-1)
             return false;
@@ -118,6 +119,10 @@ class database extends SQLiteOpenHelper {
         if(cursor.getCount()>0)
             return true;
         return false;
+    }
+    public Cursor getwebsitedetails(SQLiteDatabase db){
+        Cursor c=db.rawQuery("select * from " +TABLE_NAME2,null);
+        return c;
     }
     public boolean updatevalue1(SQLiteDatabase db,String field,String value){
         ContentValues contentValues = new ContentValues();

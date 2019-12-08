@@ -161,11 +161,15 @@ public class add_user_details extends Fragment {
                     Spinner spinner = getView().findViewWithTag(i);
                     String item = spinner.getSelectedItem().toString().toLowerCase();
                     String value = e.getText().toString();
+                    if((item.toLowerCase()).equals("name"))
+                    {
+                        db.insert1(db1,item,value,"user","true");
+                    }else
                     db.insert1(db1,item,value,"admin","false");
 
                     //decide where to send user after this is done
                     FragmentManager fragmentManager = getFragmentManager();
-                    fragmentManager.beginTransaction().replace(R.id.fl1,new userdetails()).addToBackStack(null).commit();
+                    fragmentManager.beginTransaction().replace(R.id.fl1,new user_details_card()).addToBackStack(null).commit();
                 }
             }
         });

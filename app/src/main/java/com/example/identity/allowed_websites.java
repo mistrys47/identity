@@ -44,11 +44,18 @@ public class allowed_websites extends Fragment {
             // subjectList.setItemAnimator(new DefaultItemAnimator());
             List<allowed_web_info> subjects = new ArrayList<allowed_web_info>();
          //  String s1[]={"data","name"};
+            database db = new database(getActivity());
+            SQLiteDatabase db1 = db.getWritableDatabase();
+            Cursor cm = db.getwebsitedetails(db1);
+            while (cm.moveToNext()) {
+                //  String x=cm.getString(2);
+                final String s = cm.getString(1);
+                final String s1 = cm.getString(2);
 
 
-                subjects.add(new allowed_web_info("google.com","name email"));
-            subjects.add(new allowed_web_info("amazon.com","pan card mobile"));
-
+                subjects.add(new allowed_web_info(s, s1));
+             //   subjects.add(new allowed_web_info("amazon.com", "pan card mobile"));
+            }
 
 
 //            subjects.add(new User_details("email", "value", "m1"));
