@@ -41,7 +41,7 @@ TextView t1;
 LinearLayout l1,l2,l3,l4;
 String URL1;
 String data1;
-String b4;
+String b4,emailmmm;
     Boolean bm1;
     qr_code_data json;
     String veri;
@@ -78,9 +78,10 @@ JSONObject jo ;
          json = gson.fromJson(strtext,qr_code_data.class);
         t1.setText(t1.getText().toString()+" "+json.url);
          bm1=db.check_serviceprovider(db1,json.url);
+
         URL1=json.url;
 
-
+        emailmmm = db.getvalue(db1, "email");
         qr_info_data all_info[]=json.fields;
         String s="";
         int cm11=all_info.length;
@@ -401,6 +402,7 @@ JSONObject jo ;
             {
                 b2="true";
             }
+
             final String b3=b2;
             c1.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -409,14 +411,19 @@ JSONObject jo ;
 
                     JSONObject jo1 = new JSONObject();
                     try {
-                        jo1.put("data", jo2.toString());
-                        jo1.put("sid", m1);
+                        //  jo1.put("data", jo2.toString());
+                        //  jo1.put("sid", m1);
 
-                        if (b3.equals("true"))
-                            jo1.put("signup", true);
+                        if (b3.equals("true")) {
+                            jo2.put("email",emailmmm);
+                            jo2.put("signup", true);
+                            jo1=jo2;
+                            //jo1.put("data",jo2.toString());
+                        }
 
-                        else
-                            jo1.put("signup", false);
+                        else{
+                            jo1.put("email",emailmmm);
+                            jo1.put("signup", false);}
                         Toast.makeText(getContext(),""+jo1.toString(),Toast.LENGTH_LONG).show();
 
                     }
@@ -424,9 +431,10 @@ JSONObject jo ;
                     {
                         Toast.makeText(getContext(),""+e,Toast.LENGTH_LONG).show();
                     }
+
                     data1=jo2.toString();
                     b4=b3;
-                    new on_scan.AsyncLogin().execute(jo2.toString(),m1,b3);
+                    new on_scan.AsyncLogin().execute(jo1.toString(),m1);
                 }
             });
             //  f1.addView(c1);
@@ -460,6 +468,7 @@ JSONObject jo ;
         {
             b2="true";
         }
+
         final String b3=b2;
         c1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -468,14 +477,18 @@ JSONObject jo ;
 
                 JSONObject jo1 = new JSONObject();
                 try {
-                    jo1.put("data", jo2.toString());
-                    jo1.put("sid", m1);
+                  //  jo1.put("data", jo2.toString());
+                  //  jo1.put("sid", m1);
 
-                    if (b3.equals("true"))
-                        jo1.put("signup", true);
+                    if (b3.equals("true")) {
+                        jo1.put("email",emailmmm);
+                        jo2.put("signup", true);
+                        jo1=jo2;
+                    }
 
-                    else
-                        jo1.put("signup", false);
+                    else{
+                        jo1.put("email",emailmmm);
+                        jo1.put("signup", false);}
                     Toast.makeText(getContext(),""+jo1.toString(),Toast.LENGTH_LONG).show();
 
                 }
@@ -483,9 +496,10 @@ JSONObject jo ;
                 {
                     Toast.makeText(getContext(),""+e,Toast.LENGTH_LONG).show();
                 }
+
                 data1=jo2.toString();
                 b4=b3;
-                new on_scan.AsyncLogin().execute(jo2.toString(),m1,b3);
+                new on_scan.AsyncLogin().execute(jo1.toString(),m1);
             }
         });
         //  f1.addView(c1);
@@ -519,12 +533,9 @@ JSONObject jo ;
 
                 jo1.put( "sid", params[1]);
 
-                if(params[2].equals("true")) {
                     jo1.put( "data", params[0]);
-                    jo1.put("signup", true);
+                   // jo1.put("signup", true);
 
-                }else
-                    jo1.put("signup",false);
 
 
                 RequestBody body = RequestBody.create( jo1.toString(),okhttp3.MediaType.parse("application/json; charset=utf-8"));
