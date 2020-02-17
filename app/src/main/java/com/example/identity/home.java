@@ -117,9 +117,10 @@ FrameLayout f1;
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
         if (result != null) {
-
+            done=true;
             if (result.getContents() == null) {
                 Toast.makeText(this, "Result Not Found", Toast.LENGTH_LONG).show();
+                data1="";
             } else {
 
                 try {
@@ -153,21 +154,27 @@ FrameLayout f1;
 
     public void call(String data)
     {
-        Toast.makeText(this,"tried to change",Toast.LENGTH_LONG).show();
-        on_scan frag = new on_scan();
-        Bundle b = new Bundle();
-        b.putString("user", data);
-        frag.setArguments(b);
+        if(data.equals(""))
+        {
 
-        FragmentManager fragmentManager=getSupportFragmentManager();
-        f1.removeAllViews();
-        fragmentManager.beginTransaction().replace(R.id.fl1,frag).addToBackStack(null).commit();
+        }
+        else {
+            Toast.makeText(this, "tried to change", Toast.LENGTH_LONG).show();
+            on_scan frag = new on_scan();
+            Bundle b = new Bundle();
+            b.putString("user", data);
+            frag.setArguments(b);
 
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            f1.removeAllViews();
+            fragmentManager.beginTransaction().replace(R.id.fl1, frag).addToBackStack(null).commit();
+        }
     }
     private View.OnClickListener findtext = new View.OnClickListener() {
         public void onClick(View v) {
           //  qrScan.initiateScan();
             //data.getStr
+            done=false;
            new home.AsyncLogin().execute();
         //    String str_result= new RunInBackGround().execute();
         //    while(!done)

@@ -13,6 +13,8 @@ class database extends SQLiteOpenHelper {
     public static final String COL2 = "value";
     public static final String COL3 = "verified";
     public static final String COL4 = "verified_by";
+    public static final String COL5 = "block_id";
+    public static final String COL6 = "expiry_date";
     public static final String TABLE_NAME2 = "serviceproviders";
     public static final String COL21 = "id";
     public static final String COL22 = "name";
@@ -22,7 +24,7 @@ class database extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("CREATE TABLE " + TABLE_NAME1 +" (field_name TEXT,value TEXT,verified TEXT,verified_by TEXT)");
+        db.execSQL("CREATE TABLE " + TABLE_NAME1 +" (field_name TEXT,value TEXT,verified TEXT,verified_by TEXT,block_id TEXT,expiry_date TEXT)");
         db.execSQL("CREATE TABLE " + TABLE_NAME2 +" (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT,data TEXT)");
     }
 
@@ -39,6 +41,8 @@ class database extends SQLiteOpenHelper {
         contentValues.put(COL2,value);
         contentValues.put(COL3,verified);
         contentValues.put(COL4,verifier);
+        contentValues.put(COL5,"");
+        contentValues.put(COL6,"");
         long x=db.insert(TABLE_NAME1,null,contentValues);
         if(x==-1)
         {
