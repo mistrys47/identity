@@ -229,13 +229,20 @@ public class add_user_details extends Fragment {
             String[] a1 = res1.split("\\[");
             String[] a2=a1[1].split("\\]");
             String[] a3=a2[0].split(",");
-
+            boolean flag=false;
             String m1="";
             for(String a : a3) {
                 int x = db.checkfield(db1,a.substring(1,a.length()-1).toLowerCase());
                 if(x==1 || x==0 )
                     continue;
                 spinnerArray.add(a.substring(1,a.length()-1));
+                flag=true;
+            }
+            if(!flag)
+            {
+                Toast.makeText(getContext(),"No fields...!!!",Toast.LENGTH_LONG).show();
+                FragmentManager fragmentManager = getFragmentManager();
+                fragmentManager.beginTransaction().replace(R.id.fl1,new user_details_card()).addToBackStack(null).commit();
             }
             cnt = 0;
             try

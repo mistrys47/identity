@@ -46,7 +46,7 @@ String b4,emailmmm;
     qr_code_data json;
     String veri;
 JSONObject jo ;
-
+Integer cnt=0,cnt1=0;
     public on_scan() {
     }
     @Override
@@ -65,6 +65,7 @@ JSONObject jo ;
         super.onResume();
     }
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        cnt=0;cnt1=0;
         t1=(TextView)getView().findViewById(R.id.t1);
         super.onViewCreated(view, savedInstanceState);
         Bundle args = getArguments();
@@ -78,23 +79,20 @@ JSONObject jo ;
          json = gson.fromJson(strtext,qr_code_data.class);
         t1.setText(t1.getText().toString()+" "+json.url);
          bm1=db.check_serviceprovider(db1,json.url);
-
         URL1=json.url;
-
         emailmmm = db.getvalue(db1, "email");
         qr_info_data all_info[]=json.fields;
         String s="";
         int cm11=all_info.length;
-
         for(int i=0;i<all_info.length;i++) {
             // all_info[i].field;
             int exist = db.checkfield(db1, all_info[i].field);
             if (exist == 1) {
                 cm11--;
-
-
-//field
-
+                if(all_info[i].required){
+                    cnt++;
+                    cnt1++;
+                }
                 LinearLayout f = new LinearLayout(getActivity());
                 f.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                         100));
@@ -181,6 +179,7 @@ JSONObject jo ;
                     public void onClick(View v) {
                         if (!c1.isChecked() && ve.equals("true"))
                         {
+                            cnt1--;
                             if((Button)getView().findViewWithTag("select_button")!=null){
                             Button b1=(Button)getView().findViewWithTag("select_button");
                             ViewGroup layout = (ViewGroup) b1.getParent();
@@ -189,11 +188,14 @@ JSONObject jo ;
 
                         }}
                         else if(c1.isChecked() && ve.equals("true")){
+                            cnt1++;
+                            if(cnt==cnt1)
                             fn();
                         }
                     }
                 });
                 c1.setGravity(Gravity.CENTER);
+                c1.setId(i);
                 c1.setLayoutParams(new FrameLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                         100));
                 f1.addView(c1);
@@ -443,7 +445,10 @@ JSONObject jo ;
 
         }
 
-       // Toast.makeText(getContext(),s,Toast.LENGTH_LONG).show();
+       if(bm1)
+       {
+           already_signedup();
+       }
 
     }
     public void fn()
@@ -505,6 +510,49 @@ JSONObject jo ;
         //  f1.addView(c1);
         // f.addView(f1);
         l1.addView(c1);}
+    }
+    public void already_signedup()
+    {
+        final JSONObject jo2 = jo;
+        final String m1=json.sid;
+        String b2;
+        if(bm1)
+        {
+            b2="false";
+        }
+        else
+        {
+            b2="true";
+        }
+
+        final String b3=b2;
+        JSONObject jo1 = new JSONObject();
+        try {
+            //  jo1.put("data", jo2.toString());
+            //  jo1.put("sid", m1);
+
+            if (b3.equals("true")) {
+                jo1.put("email",emailmmm);
+                jo2.put("signup", true);
+                jo1=jo2;
+            }
+
+            else{
+                jo1.put("email",emailmmm);
+                jo1.put("signup", false);}
+            Toast.makeText(getContext(),""+jo1.toString(),Toast.LENGTH_LONG).show();
+
+        }
+        catch (Exception e)
+        {
+            Toast.makeText(getContext(),""+e,Toast.LENGTH_LONG).show();
+        }
+
+        data1=jo2.toString();
+        b4=b3;
+        new on_scan.AsyncLogin().execute(jo1.toString(),m1);
+        FragmentManager fragmentManager = getFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.fl1,new user_details_card()).addToBackStack(null).commit();
     }
     private class AsyncLogin extends AsyncTask<String, String, String>
     {
@@ -572,6 +620,7 @@ JSONObject jo ;
 
             }
             pdLoading.dismiss();
+
         }
     }
 
