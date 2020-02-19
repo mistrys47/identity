@@ -29,24 +29,20 @@ private OnItemClickListner mlistner;
         public TextView field,info,totalHeld;
 
 
-        public MyViewHolder(View itemView, final OnItemClickListner listner) {
+        public MyViewHolder(final View itemView, final OnItemClickListner listner) {
             super(itemView);
            this.i1 = (ImageView) itemView.findViewById(R.id.bb1);
             this.field = (TextView) itemView.findViewById(R.id.bb2);
             this.info = (TextView) itemView.findViewById(R.id.bb3);
-           itemView.setOnClickListener(new View.OnClickListener() {
-               @Override
-               public void onClick(View v) {
-                   if(listner!=null)
-                   {
-                       int position=getAdapterPosition();
-                       if(position!=RecyclerView.NO_POSITION)
-                       {
-                           listner.onItemClick(position);
-                       }
-                   }
-               }
-           });
+            i1.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if(i1.getTag()!="verified")
+                    Toast.makeText(itemView.getContext(),i1.getTag()+"",Toast.LENGTH_LONG).show();
+
+                }
+            });
+
 
         }
     }
@@ -68,17 +64,17 @@ private OnItemClickListner mlistner;
         User_details  tempobj=categoriesList.get(position);
         if(tempobj.getVerified().equals("false")) {
             holder.i1.setImageResource(R.drawable.wrong);
-
-
-
+            holder.i1.setTag(tempobj.getfields());
         }
         else
         {
             holder.i1.setImageResource(R.drawable.tick);
+            holder.i1.setTag("verified");
         }
 
         //holder.subname.setText(tempobj.getSubname());
         holder.field.setText((tempobj.getfields().toUpperCase() ));
+
         holder.info.setText((tempobj.getInfo()));
 
      //   holder.totalHeld.setText(Integer.toString(tempobj.getTotalheld()));
