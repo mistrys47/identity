@@ -53,7 +53,7 @@ TextView t1,t2,t3,t4;
                     JSONObject obj = new JSONObject(result.getContents());
 
                 } catch (JSONException e) {
-                    e.printStackTrace();
+                    //e.printStackTrace();
 
                     Toast.makeText(this, result.getContents(), Toast.LENGTH_LONG).show();
                 }
@@ -65,7 +65,7 @@ TextView t1,t2,t3,t4;
     private View.OnClickListener verify_email_process = new View.OnClickListener() {
         public void onClick(View v) {
             qrScan.initiateScan();
-            Toast.makeText(v.getContext(),"hello",Toast.LENGTH_LONG).show();
+           // Toast.makeText(v.getContext(),"hello",Toast.LENGTH_LONG).show();
         }
     };
     public void go(View v)

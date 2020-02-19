@@ -80,4 +80,5 @@ public class user_details_card extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
 
     }
+
 }

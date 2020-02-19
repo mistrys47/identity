@@ -1,6 +1,10 @@
 package com.example.identity;
 
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,8 +15,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONObject;
+
 import java.util.List;
 import java.util.zip.Inflater;
+
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 public class useradapter extends RecyclerView.Adapter<useradapter.MyViewHolder> {
 private OnItemClickListner mlistner;
@@ -31,15 +43,21 @@ private OnItemClickListner mlistner;
 
         public MyViewHolder(final View itemView, final OnItemClickListner listner) {
             super(itemView);
+            final database db = new database(itemView.getContext());
+            final SQLiteDatabase db1 = db.getWritableDatabase();
            this.i1 = (ImageView) itemView.findViewById(R.id.bb1);
             this.field = (TextView) itemView.findViewById(R.id.bb2);
             this.info = (TextView) itemView.findViewById(R.id.bb3);
             i1.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if(i1.getTag()!="verified")
-                    Toast.makeText(itemView.getContext(),i1.getTag()+"",Toast.LENGTH_LONG).show();
+                    if(i1.getTag()!="verified") {
+                        Toast.makeText(itemView.getContext(), i1.getTag() + "", Toast.LENGTH_LONG).show();
+                        Cursor c=db.getuserdetails(db1);
+                        while(c.moveToNext()){
 
+                        }
+                    }
                 }
             });
 
@@ -92,5 +110,6 @@ private OnItemClickListner mlistner;
     public int getItemCount() {
         return categoriesList.size();
     }
+
 
 }
