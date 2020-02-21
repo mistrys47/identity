@@ -83,8 +83,6 @@ public class add_user_details extends Fragment {
         submit = getView().findViewById(R.id.submit);
 
 
-
-
         final ArrayList<String> spinnerarray1 = spinnerArray;
         add.setOnClickListener(new View.OnClickListener() {
             @Override

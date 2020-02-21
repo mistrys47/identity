@@ -62,12 +62,6 @@ public class user_details_card extends Fragment {
 
             usera = new useradapter(subjects, getContext());
             subjectList.setAdapter(usera);
-            usera.setOnItemClickListner(new useradapter.OnItemClickListner() {
-                @Override
-                public void onItemClick(int position) {
-                    Toast.makeText(getContext(),""+position,Toast.LENGTH_LONG).show();
-                }
-            });
 
         }catch (Exception e)
         {
@@ -80,5 +74,6 @@ public class user_details_card extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
 
     }
+
 
 }

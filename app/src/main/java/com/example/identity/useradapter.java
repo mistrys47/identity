@@ -6,6 +6,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
+import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,6 +29,7 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class useradapter extends RecyclerView.Adapter<useradapter.MyViewHolder> {
+    private Context context;
 private OnItemClickListner mlistner;
     public interface OnItemClickListner{
         void onItemClick(int position);
@@ -43,25 +46,63 @@ private OnItemClickListner mlistner;
 
         public MyViewHolder(final View itemView, final OnItemClickListner listner) {
             super(itemView);
-            final database db = new database(itemView.getContext());
-            final SQLiteDatabase db1 = db.getWritableDatabase();
            this.i1 = (ImageView) itemView.findViewById(R.id.bb1);
             this.field = (TextView) itemView.findViewById(R.id.bb2);
             this.info = (TextView) itemView.findViewById(R.id.bb3);
-            i1.setOnClickListener(new View.OnClickListener() {
+
+            itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     if(i1.getTag()!="verified") {
                         Toast.makeText(itemView.getContext(), i1.getTag() + "", Toast.LENGTH_LONG).show();
-                        Cursor c=db.getuserdetails(db1);
-                        while(c.moveToNext()){
-
-                        }
+                        context=itemView.getContext();
+                        new useradapter.AsyncLogin().execute();
+                        //FragmentManager fragmentManager = ((AppCompatActivity)context).getSupportFragmentManager();
+                        //fragmentManager.beginTransaction().replace(R.id.fl1,new update_field_value()).addToBackStack(null).commit();
                     }
                 }
             });
 
 
+        }
+
+    }
+    private class AsyncLogin extends AsyncTask<String, String, String>
+    {
+        ProgressDialog pdLoading = new ProgressDialog(context);
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+            //this method will be running on UI thread
+            pdLoading.setMessage("\tLoading...");
+            pdLoading.setCancelable(false);
+            pdLoading.show();
+
+        }
+        @Override
+        protected String doInBackground(String... params) {
+            try {
+
+                OkHttpClient client = new OkHttpClient().newBuilder()
+                        .build();
+                MediaType mediaType = MediaType.parse("application/x-www-form-urlencoded");
+
+
+                //Thread.sleep(1000);
+
+                return "";
+            }catch (Exception e)
+            {
+                return "error"+e;
+            }
+
+        }
+        @Override
+        protected void onPostExecute(String result) {
+            // res1 = result;
+           // Toast.makeText(context,"background",Toast.LENGTH_LONG).show();
+            pdLoading.dismiss();
         }
     }
     private List<User_details> categoriesList;

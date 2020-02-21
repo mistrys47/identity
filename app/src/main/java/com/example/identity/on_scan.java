@@ -85,7 +85,6 @@ Integer cnt=0,cnt1=0;
         String s="";
         int cm11=all_info.length;
         for(int i=0;i<all_info.length;i++) {
-            // all_info[i].field;
             int exist = db.checkfield(db1, all_info[i].field);
             if (exist == 1) {
                 cm11--;
@@ -113,7 +112,6 @@ Integer cnt=0,cnt1=0;
 
                 f1.addView(t1);
                 f.addView(f1);
-
 
                 //value
                 f1 = new LinearLayout(getActivity());
@@ -417,6 +415,7 @@ Integer cnt=0,cnt1=0;
                         //  jo1.put("sid", m1);
 
                         if (b3.equals("true")) {
+                            Toast.makeText(getContext(),"here...!!!",Toast.LENGTH_LONG).show();
                             jo2.put("email",emailmmm);
                             jo2.put("signup", true);
                             jo1=jo2;
@@ -491,17 +490,17 @@ Integer cnt=0,cnt1=0;
                         jo1=jo2;
                     }
 
-                    else{
+                    else {
                         jo1.put("email",emailmmm);
-                        jo1.put("signup", false);}
-                    Toast.makeText(getContext(),""+jo1.toString(),Toast.LENGTH_LONG).show();
+                        jo1.put("signup", false);
+                    }
+                   // Toast.makeText(getContext(),""+jo1.toString(),Toast.LENGTH_LONG).show();
 
                 }
                 catch (Exception e)
                 {
                     Toast.makeText(getContext(),""+e,Toast.LENGTH_LONG).show();
                 }
-
                 data1=jo2.toString();
                 b4=b3;
                 new on_scan.AsyncLogin().execute(jo1.toString(),m1);
@@ -528,18 +527,9 @@ Integer cnt=0,cnt1=0;
         final String b3=b2;
         JSONObject jo1 = new JSONObject();
         try {
-            //  jo1.put("data", jo2.toString());
-            //  jo1.put("sid", m1);
 
-            if (b3.equals("true")) {
-                jo1.put("email",emailmmm);
-                jo2.put("signup", true);
-                jo1=jo2;
-            }
-
-            else{
-                jo1.put("email",emailmmm);
-                jo1.put("signup", false);}
+            jo1.put("email",emailmmm);
+            jo1.put("signup", false);
             Toast.makeText(getContext(),""+jo1.toString(),Toast.LENGTH_LONG).show();
 
         }
@@ -553,6 +543,7 @@ Integer cnt=0,cnt1=0;
         new on_scan.AsyncLogin().execute(jo1.toString(),m1);
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.fl1,new user_details_card()).addToBackStack(null).commit();
+
     }
     private class AsyncLogin extends AsyncTask<String, String, String>
     {
@@ -573,18 +564,14 @@ Integer cnt=0,cnt1=0;
         protected String doInBackground(String... params) {
             try {
 
-                OkHttpClient client = new OkHttpClient().newBuilder()
-                        .build();
+                OkHttpClient client = new OkHttpClient().newBuilder().build();
                 MediaType mediaType = MediaType.parse("application/x-www-form-urlencoded");
                 JSONObject jo1 = new JSONObject();
 
-
                 jo1.put( "sid", params[1]);
 
-                    jo1.put( "data", params[0]);
-                   // jo1.put("signup", true);
-
-
+                jo1.put( "data", params[0]);
+                //jo1.put("signup", true);
 
                 RequestBody body = RequestBody.create( jo1.toString(),okhttp3.MediaType.parse("application/json; charset=utf-8"));
                 Request request = new Request.Builder()
@@ -604,17 +591,21 @@ Integer cnt=0,cnt1=0;
         protected void onPostExecute(String result) {
            // res1 = result;
             boolean isFound = result.indexOf("success") !=-1? true: false;
-            Toast.makeText(getContext(),""+result,Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(),"gsdgh"+result,Toast.LENGTH_LONG).show();
             final database db = new database(getActivity());
             final SQLiteDatabase db1 = db.getWritableDatabase();
             if(isFound)
             {
                 if(b4.equals("true"))
-                {boolean m1=db.insert2(db1,URL1,data1);
-                if(m1)
-                Toast.makeText(getContext(),"Signed Up",Toast.LENGTH_LONG).show();
+                {
+                     boolean m1=db.insert2(db1,URL1,data1);
+                    if(m1)
+                    {
+                        Toast.makeText(getContext(), "Signed Up" + m1, Toast.LENGTH_LONG).show();
+                    }
                 }
-                else{
+                else
+                {
                     Toast.makeText(getContext(),"Signed In",Toast.LENGTH_LONG).show();
                 }
 
