@@ -52,7 +52,6 @@ public class allowed_websites extends Fragment {
                 final String s = cm.getString(1);
                 final String s1 = cm.getString(2);
 
-
                 subjects.add(new allowed_web_info(s, s1));
              //   subjects.add(new allowed_web_info("amazon.com", "pan card mobile"));
             }
