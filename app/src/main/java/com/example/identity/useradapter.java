@@ -248,8 +248,8 @@ private OnItemClickListner mlistner;
         }
         @Override
         protected void onPostExecute(String result) {
-            boolean isFound = result.indexOf("true") !=-1? true: false;
-            if(isFound)
+            boolean isFound = result.indexOf("Not Found") !=-1? true: false;
+            if(!isFound)
             {
                 database db = new database(context);
 

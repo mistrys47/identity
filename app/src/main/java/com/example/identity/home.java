@@ -75,7 +75,7 @@ FrameLayout f1;
         fragmentManager.beginTransaction().replace(R.id.fl1,(Fragment) new user_details_card()).addToBackStack(null).commit();
 
         boolean x2=db.checkmobile(db1);
-       /*if(x1==true && x2==true)
+       if(x1==true && x2==true)
         {
             try {
                 NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
@@ -96,7 +96,7 @@ FrameLayout f1;
         {
             Intent intent=new Intent(this,email_input.class);
             startActivity(intent);
-        }*/
+        }
 
         // email_id=(EditText)findViewById(R.id.email_id);
         scan_qr.setOnClickListener(findtext);

@@ -182,6 +182,22 @@ class database extends SQLiteOpenHelper {
         else
             return true;
     }
+    public boolean insert11(SQLiteDatabase db,String field_name,String url,String value,String verifier,String verified,String key) {
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COL1,field_name);
+        contentValues.put(COL2,value);
+        contentValues.put(COL3,verified);
+        contentValues.put(COL4,verifier);
+        contentValues.put(COL5,key);
+        contentValues.put(COL7,url);
+
+        long x=db.insert(TABLE_NAME1,null,contentValues);
+        if(x==-1)
+        {
+            return false;
+        }
+        return true;
+    }
 }
 
 
