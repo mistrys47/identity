@@ -72,7 +72,7 @@ Integer cnt=0,cnt1=0;
         l1=(LinearLayout)getView().findViewById(R.id.l1);
         jo=new JSONObject();
         String strtext = getArguments().getString("user");
-        Toast.makeText(getContext(),args.toString(),Toast.LENGTH_LONG).show();
+        //Toast.makeText(getContext(),args.toString(),Toast.LENGTH_LONG).show();
         database db = new database(getActivity());
         SQLiteDatabase db1 = db.getWritableDatabase();
         Gson gson = new Gson();
@@ -121,7 +121,8 @@ Integer cnt=0,cnt1=0;
                 t1 = new TextView(getActivity());
 
                 String val = db.getvalue(db1, all_info[i].field);
-
+                String val1 = db.gettransaction_id(db1,all_info[i].field);
+                Toast.makeText(getContext(),""+val1,Toast.LENGTH_LONG).show();
                 t1.setText(val);
                 t1.setLayoutParams(new FrameLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                         100));
@@ -415,7 +416,7 @@ Integer cnt=0,cnt1=0;
                         //  jo1.put("sid", m1);
 
                         if (b3.equals("true")) {
-                            Toast.makeText(getContext(),"here...!!!",Toast.LENGTH_LONG).show();
+                            //Toast.makeText(getContext(),"here...!!!",Toast.LENGTH_LONG).show();
                             jo2.put("email",emailmmm);
                             jo2.put("signup", true);
                             jo1=jo2;
@@ -425,7 +426,7 @@ Integer cnt=0,cnt1=0;
                         else{
                             jo1.put("email",emailmmm);
                             jo1.put("signup", false);}
-                        Toast.makeText(getContext(),""+jo1.toString(),Toast.LENGTH_LONG).show();
+                     //   Toast.makeText(getContext(),""+jo1.toString(),Toast.LENGTH_LONG).show();
 
                     }
                     catch (Exception e)
@@ -530,7 +531,7 @@ Integer cnt=0,cnt1=0;
 
             jo1.put("email",emailmmm);
             jo1.put("signup", false);
-            Toast.makeText(getContext(),""+jo1.toString(),Toast.LENGTH_LONG).show();
+          //  Toast.makeText(getContext(),""+jo1.toString(),Toast.LENGTH_LONG).show();
 
         }
         catch (Exception e)
@@ -591,7 +592,7 @@ Integer cnt=0,cnt1=0;
         protected void onPostExecute(String result) {
            // res1 = result;
             boolean isFound = result.indexOf("success") !=-1? true: false;
-            Toast.makeText(getContext(),"gsdgh"+result,Toast.LENGTH_LONG).show();
+            //Toast.makeText(getContext(),"gsdgh"+result,Toast.LENGTH_LONG).show();
             final database db = new database(getActivity());
             final SQLiteDatabase db1 = db.getWritableDatabase();
             if(isFound)

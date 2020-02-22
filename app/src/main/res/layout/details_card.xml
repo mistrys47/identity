@@ -45,26 +45,27 @@
             android:orientation="horizontal"
             android:layout_height="100dp">
         </LinearLayout>
+
             <LinearLayout
+                android:id="@+id/ll1"
                 android:layout_width="0dp"
+                android:layout_height="100dp"
                 android:layout_weight="20"
-                android:orientation="vertical"
-                android:layout_height="100dp">
+                android:orientation="vertical">
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="8dp"
-                    android:orientation="vertical"
-                    >
-                </LinearLayout>
-            <TextView
-                android:id="@+id/bb2"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_below="@id/bb1"
+                    android:orientation="vertical"></LinearLayout>
 
-                android:layout_centerVertical="true"
-                android:text="hello"
-                 />
+                <TextView
+                    android:id="@+id/bb2"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_below="@id/bb1"
+
+                    android:layout_centerVertical="true"
+                    android:text="hello" />
 
                 <TextView
                     android:id="@+id/bb3"
@@ -73,16 +74,16 @@
                     android:layout_below="@id/bb2"
 
                     android:text="hello"
-                    android:textStyle="bold"
                     android:textColor="#000000"
-                    />
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:orientation="vertical"
-                android:background="@color/m2">
+                    android:textStyle="bold" />
 
-            </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="@color/m2"
+                    android:orientation="vertical">
+
+                </LinearLayout>
             </LinearLayout>
 
         </LinearLayout>

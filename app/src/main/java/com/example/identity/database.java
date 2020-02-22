@@ -13,18 +13,20 @@ class database extends SQLiteOpenHelper {
     public static final String COL2 = "value";
     public static final String COL3 = "verified";
     public static final String COL4 = "verified_by";
-    public static final String COL5 = "block_id";
+    public static final String COL5 = "transaction_id";
     public static final String COL6 = "expiry_date";
+    public static final String COL7 = "verifier_url";
     public static final String TABLE_NAME2 = "serviceproviders";
     public static final String COL21 = "id";
     public static final String COL22 = "name";
+
     public database(Context context) {
         super(context, DATABASE_NAME, null, 1);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("CREATE TABLE " + TABLE_NAME1 +" (field_name TEXT,value TEXT,verified TEXT,verified_by TEXT,block_id TEXT,expiry_date TEXT)");
+        db.execSQL("CREATE TABLE " + TABLE_NAME1 +" (field_name TEXT,value TEXT,verified TEXT,verified_by TEXT,transaction_id TEXT,verifier_url TEXT)");
         db.execSQL("CREATE TABLE " + TABLE_NAME2 +" (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT,data TEXT)");
     }
 
@@ -35,14 +37,15 @@ class database extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public boolean insert1(SQLiteDatabase db,String field_name,String value,String verifier,String verified) {
+    public boolean insert1(SQLiteDatabase db,String field_name,String url,String value,String verifier,String verified) {
         ContentValues contentValues = new ContentValues();
         contentValues.put(COL1,field_name);
         contentValues.put(COL2,value);
         contentValues.put(COL3,verified);
         contentValues.put(COL4,verifier);
         contentValues.put(COL5,"");
-        contentValues.put(COL6,"");
+        contentValues.put(COL7,url);
+
         long x=db.insert(TABLE_NAME1,null,contentValues);
         if(x==-1)
         {
@@ -88,6 +91,30 @@ class database extends SQLiteOpenHelper {
         }
         return s1;
     }
+    public String gettransaction_id(SQLiteDatabase db,String s){
+        Cursor cursor=db.query(TABLE_NAME1,new String[]{"transaction_id"},"field_name=?",new String[]{s},null,null,null  );
+        String s1="";
+
+        while(cursor.moveToNext())
+        {
+            s1=cursor.getString(0);
+        }
+        return s1;
+
+        //return s1;
+    }
+    public String geturl1(SQLiteDatabase db,String s){
+        Cursor cursor=db.query(TABLE_NAME1,new String[]{"verifier_url"},"field_name=?",new String[]{s},null,null,null  );
+        String s1="";
+
+        while(cursor.moveToNext())
+        {
+            s1=cursor.getString(0);
+        }
+        return s1;
+        //return s1;
+    }
+
     public boolean updatevalue(SQLiteDatabase db,String field,String value){
         ContentValues contentValues = new ContentValues();
         contentValues.put(COL2,value);
@@ -132,6 +159,20 @@ class database extends SQLiteOpenHelper {
         ContentValues contentValues = new ContentValues();
         contentValues.put(COL2,value);
         contentValues.put(COL3,"true");
+        long re=db.update(TABLE_NAME1,
+                contentValues,
+                "field_name" + " = ? ",
+                new String[]{field});
+        if(re == -1)
+            return false;
+        else
+            return true;
+    }
+    public boolean update1(SQLiteDatabase db,String field,String value)
+    {
+        ContentValues contentValues = new ContentValues();
+
+        contentValues.put(COL3,value);
         long re=db.update(TABLE_NAME1,
                 contentValues,
                 "field_name" + " = ? ",
