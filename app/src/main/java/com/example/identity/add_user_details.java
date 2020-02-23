@@ -187,7 +187,7 @@ public class add_user_details extends Fragment {
                 String s=verifier_url+"add";
                 RequestBody body = RequestBody.create( jo1.toString(),okhttp3.MediaType.parse("application/json; charset=utf-8"));
                 Request request = new Request.Builder()
-                        .url("https://a75f66f6.ngrok.io/details/add")
+                        .url(s)
                         .method("POST", body)
                         .addHeader("Content-Type", "application/x-www-form-urlencoded")
                         .build();

@@ -64,7 +64,7 @@ FrameLayout f1;
 
         db1 = db.getWritableDatabase();
         //boolean x=db.insert11(db1,"email","","guptashubham1798@gmail.com","admin","true","key1");
-        //boolean x33=db.insert11(db1,"mobile","","9284959664","admin","true","key2");
+
        // boolean x33=db.insert11(db1,"name","","shubham","admin","true","key3");
         boolean x1=db.checkemail(db1);
 

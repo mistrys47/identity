@@ -68,7 +68,7 @@ public class useradapter extends RecyclerView.Adapter<useradapter.MyViewHolder> 
                     if(i1.getTag()!="verified") {
                         context=itemView.getContext();
                         try {
-                            Toast.makeText(context,""+view.getId(),Toast.LENGTH_LONG).show();
+                        //    Toast.makeText(context,""+view.getId(),Toast.LENGTH_LONG).show();
                             database db = new database(context);
                             im=i1.getTag().toString();
                             SQLiteDatabase db1 = db.getWritableDatabase();
@@ -89,10 +89,16 @@ public class useradapter extends RecyclerView.Adapter<useradapter.MyViewHolder> 
                     if(i1.getTag()!="verified") {
                         context=itemView.getContext();
                         try {
-                            Toast.makeText(context, "" + view.getId(), Toast.LENGTH_LONG).show();
+                         //   Toast.makeText(context, "" + view.getId(), Toast.LENGTH_LONG).show();
                             database db = new database(context);
                             im = i1.getTag().toString();
-                            new useradapter.AsyncVerifier().execute();
+                            try{
+                                new useradapter.AsyncVerifier().execute();
+                            }
+                            catch (Exception e)
+                            {
+                                Toast.makeText(context,e+"",Toast.LENGTH_LONG).show();
+                            }
                         }
                         catch (Exception e)
                         {
@@ -145,7 +151,9 @@ public class useradapter extends RecyclerView.Adapter<useradapter.MyViewHolder> 
         }
         @Override
         protected void onPostExecute(String result) {
+            Toast.makeText(context,""+result,Toast.LENGTH_LONG).show();
             boolean isFound = result.indexOf("Not Found") !=-1? true: false;
+
             if(!isFound)
             {
                 database db = new database(context);
@@ -232,6 +240,13 @@ public class useradapter extends RecyclerView.Adapter<useradapter.MyViewHolder> 
                         Toast.makeText(mContext,""+item,Toast.LENGTH_LONG).show();
                         verifier_url = b.get(item).getUrl1();
                         verifier_name = b.get(item).getName1();
+                        try {
+                            new useradapter.AsyncAdd().execute();
+                        }
+                        catch (Exception e)
+                        {
+                            Toast.makeText(context,e+"",Toast.LENGTH_LONG).show();
+                        }
                         dialog.dismiss();
                     }
                 });
@@ -242,7 +257,7 @@ public class useradapter extends RecyclerView.Adapter<useradapter.MyViewHolder> 
             {
                 Toast.makeText(mContext,""+e,Toast.LENGTH_LONG).show();
             }
-            new useradapter.AsyncAdd().execute();
+
             pdLoading.dismiss();
         }
     }
@@ -275,7 +290,7 @@ public class useradapter extends RecyclerView.Adapter<useradapter.MyViewHolder> 
                 RequestBody body = RequestBody.create(jo1.toString(), okhttp3.MediaType.parse("application/json; charset=utf-8"));
                 //use s var
                 Request request = new Request.Builder()
-                        .url("https://a75f66f6.ngrok.io/details/add")
+                        .url(s)
                         .method("POST", body)
                         .addHeader("Content-Type", "application/x-www-form-urlencoded")
                         .build();
@@ -295,7 +310,13 @@ public class useradapter extends RecyclerView.Adapter<useradapter.MyViewHolder> 
             SQLiteDatabase db1 = db.getWritableDatabase();
             db.updatevalue(db1,"verified_by",verifier_name);
             db.updatevalue(db1,"verifier_url",result);
-            new useradapter.AsyncRemove().execute();
+            try {
+                new useradapter.AsyncRemove().execute();
+            }
+            catch (Exception e)
+            {
+                Toast.makeText(context,e+"",Toast.LENGTH_LONG).show();
+            }
             pdLoading.dismiss();
         }
     }
@@ -333,7 +354,7 @@ public class useradapter extends RecyclerView.Adapter<useradapter.MyViewHolder> 
 
                 //use s var
                 Request request = new Request.Builder()
-                        .url("https://a75f66f6.ngrok.io/details/remove")
+                        .url(s)
                         .method("POST", body)
                         .addHeader("Content-Type", "application/x-www-form-urlencoded")
                         .build();

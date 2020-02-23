@@ -110,7 +110,7 @@ Integer cnt=0,cnt1=0;
         String s="";
         int cm11=all_info.length;
         for(int i=0;i<all_info.length;i++) {
-            int exist = db.checkfield(db1, all_info[i].field);
+            int exist = db.checkfield(db1, all_info[i].field.toLowerCase());
             JSONObject jj=new JSONObject();
             if (exist == 1) {
                 cm11--;
@@ -145,8 +145,8 @@ Integer cnt=0,cnt1=0;
                 f1.setOrientation(LinearLayout.VERTICAL);
                 t1 = new TextView(getActivity());
 
-                String val = db.getvalue(db1, all_info[i].field);
-                String val1 = db.gettransaction_id(db1,all_info[i].field);
+                String val = db.getvalue(db1, all_info[i].field.toLowerCase());
+                String val1 = db.gettransaction_id(db1,all_info[i].field.toLowerCase());
                 Toast.makeText(getContext(),""+val1,Toast.LENGTH_LONG).show();
                 t1.setText(val);
                 t1.setLayoutParams(new FrameLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
@@ -170,10 +170,10 @@ Integer cnt=0,cnt1=0;
                     veri="true";
                     try {
 
-                        jj.put(all_info[i].field, val);
+                        jj.put("value", val);
                         jj.put("key",val1);
-                        if(!all_info[i].field.equals("email"))
-                        jj1.put(all_info[i].field,jj);
+                        if(!all_info[i].field.toLowerCase().equals("email"))
+                        jj1.put(all_info[i].field.toLowerCase(),jj);
                         Toast.makeText(getContext(),jj1.toString(),Toast.LENGTH_LONG).show();
                     }catch (Exception e)
                     {
@@ -249,7 +249,7 @@ Integer cnt=0,cnt1=0;
         for(int i=0;i<all_info.length;i++)
         {
             // all_info[i].field;
-            int exist=db.checkfield(db1,all_info[i].field);
+            int exist=db.checkfield(db1,all_info[i].field.toLowerCase());
         if(exist==-1)
             {
                 LinearLayout f = new LinearLayout(getActivity());
@@ -281,7 +281,7 @@ Integer cnt=0,cnt1=0;
                 b1.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT,FrameLayout.LayoutParams.MATCH_PARENT));
                 b1.setGravity(Gravity.CENTER);
                 b1.setBackgroundColor(Color.TRANSPARENT);
-                final String sm=all_info[i].field;
+                final String sm=all_info[i].field.toLowerCase();
 
                 b1.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -337,7 +337,7 @@ Integer cnt=0,cnt1=0;
         for(int i=0;i<all_info.length;i++)
         {
 
-            int exist=db.checkfield(db1,all_info[i].field);
+            int exist=db.checkfield(db1,all_info[i].field.toLowerCase());
             if(exist==0) {
                 LinearLayout f = new LinearLayout(getActivity());
                 f.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
@@ -368,7 +368,7 @@ Integer cnt=0,cnt1=0;
                 b1.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT,FrameLayout.LayoutParams.MATCH_PARENT));
                 b1.setGravity(Gravity.CENTER);
                 b1.setBackgroundColor(Color.TRANSPARENT);
-                final String sm=all_info[i].field;
+                final String sm=all_info[i].field.toLowerCase();
 
                 b1.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -567,7 +567,7 @@ Integer cnt=0,cnt1=0;
         protected void onPostExecute(String result) {
            // res1 = result;
             Toast.makeText(getContext(),""+check1111,Toast.LENGTH_LONG).show();
-            boolean isFound = result.indexOf("success") !=-1? true: false;
+            boolean isFound = result.indexOf("true") !=-1? true: false;
             //Toast.makeText(getContext(),"gsdgh"+result,Toast.LENGTH_LONG).show();
             final database db = new database(getActivity());
             final SQLiteDatabase db1 = db.getWritableDatabase();
