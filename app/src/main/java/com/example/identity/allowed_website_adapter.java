@@ -78,11 +78,11 @@ public class allowed_website_adapter extends RecyclerView.Adapter<allowed_websit
             for(int i=0;i<jo1.names().length();i++)
             {
                 String s1 = jo1.names().getString(i);
-                String s2 = jo1.getString(s1);
+               // String s2 = jo1.getString(s1);
                 if(s1.equals("signup"))
                     continue;
                 TextView t1 = new TextView(mContext);
-                t1.setText(s1+" : "+s2);
+                t1.setText(s1);
                 holder.ll.addView(t1);
             }
         }catch (Exception e)

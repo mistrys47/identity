@@ -622,7 +622,7 @@ Integer cnt=0,cnt1=0;
         @Override
         protected void onPostExecute(String result) {
            // res1 = result;
-            Toast.makeText(getContext(),""+result,Toast.LENGTH_LONG).show();
+           // Toast.makeText(getContext(),""+result,Toast.LENGTH_LONG).show();
             try{
             boolean isFound = result.indexOf("true") !=-1? true: false;
             //Toast.makeText(getContext(),"gsdgh"+result,Toast.LENGTH_LONG).show();

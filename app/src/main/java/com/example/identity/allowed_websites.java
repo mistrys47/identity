@@ -51,7 +51,7 @@ public class allowed_websites extends Fragment {
 
                 final String s = cm.getString(1);
                 final String s1 = cm.getString(2);
-                Toast.makeText(getContext(),s1,Toast.LENGTH_LONG).show();
+               // Toast.makeText(getContext(),s1,Toast.LENGTH_LONG).show();
                 subjects.add(new allowed_web_info(s, s1));
              //   subjects.add(new allowed_web_info("amazon.com", "pan card mobile"));
             }

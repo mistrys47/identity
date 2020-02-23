@@ -44,7 +44,7 @@ public class verify_email extends AppCompatActivity {
             window.setStatusBarColor(this.getResources().getColor(R.color.number_background));}
         db1 = db.getWritableDatabase();
         m4= getIntent().getStringExtra("email_id");
-        Toast.makeText(this,m4,Toast.LENGTH_LONG).show();
+       // Toast.makeText(this,m4,Toast.LENGTH_LONG).show();
         l1=(EditText)findViewById(R.id.letter1);
         l2=(EditText)findViewById(R.id.letter2);
         l3=(EditText)findViewById(R.id.letter3);
@@ -176,7 +176,7 @@ public class verify_email extends AppCompatActivity {
         if(l1.getText().length()==1 && l2.getText().length()==1 && l3.getText().length()==1 && l4.getText().length()==1 )
         {
             String s=l1.getText().toString()+l2.getText().toString()+l3.getText().toString()+l4.getText().toString();
-            Toast.makeText(verify_email.this, "{\n    \"email\": \""+m4+"\",\n    \"otp\": \""+s+"\"\n}",Toast.LENGTH_LONG).show();
+          //  Toast.makeText(verify_email.this, "{\n    \"email\": \""+m4+"\",\n    \"otp\": \""+s+"\"\n}",Toast.LENGTH_LONG).show();
 
            new verify_email.AsyncLogin().execute(m4,s);
         }
@@ -195,7 +195,7 @@ public class verify_email extends AppCompatActivity {
             super.onPreExecute();
 
             //this method will be running on UI thread
-            pdLoading.setMessage("\tSending...");
+            pdLoading.setMessage("\tVerifying...");
             pdLoading.setCancelable(false);
             pdLoading.show();
 
@@ -231,7 +231,7 @@ public class verify_email extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result) {
 
-            Toast.makeText(verify_email.this,"hello"+result,Toast.LENGTH_LONG).show();
+          //  Toast.makeText(verify_email.this,"hello"+result,Toast.LENGTH_LONG).show();
             //this method will be running on UI thread
             String s="";
             try {
@@ -247,9 +247,9 @@ public class verify_email extends AppCompatActivity {
             // boolean isFound = result.indexOf("true") !=-1? true: false;
             if (!s.equals("")) {
                // Toast.makeText(verify_email.this,""+s,Toast.LENGTH_LONG).show();
-                Intent newact1 = new Intent(verify_email.this, home.class);
+                Intent newact1 = new Intent(verify_email.this, mobile_number.class);
                 boolean x=db.insert11(db1,"email","",m4,"admin","true",s);
-                boolean x33=db.insert11(db1,"mobile","","9284959664","admin","true","key2");
+             //   boolean x33=db.insert11(db1,"mobile","","9284959664","admin","true","key2");
 
                 if(x==true)
                 {
@@ -264,7 +264,7 @@ public class verify_email extends AppCompatActivity {
                 pdLoading.dismiss();
             }
             else{
-                //Toast.makeText(verify_email.this,"some error occured",Toast.LENGTH_LONG).show();
+                Toast.makeText(verify_email.this,"some error occured",Toast.LENGTH_LONG).show();
                pdLoading.dismiss();
             }
 

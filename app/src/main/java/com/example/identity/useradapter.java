@@ -155,7 +155,7 @@ public class useradapter extends RecyclerView.Adapter<useradapter.MyViewHolder> 
         }
         @Override
         protected void onPostExecute(String result) {
-            Toast.makeText(context,""+result,Toast.LENGTH_LONG).show();
+           // Toast.makeText(context,""+result,Toast.LENGTH_LONG).show();
             boolean isFound = result.indexOf("Not Found") !=-1? true: false;
 
             if(!isFound)
@@ -250,7 +250,7 @@ public class useradapter extends RecyclerView.Adapter<useradapter.MyViewHolder> 
                         }
                         catch (Exception e)
                         {
-                            Toast.makeText(context,e+"",Toast.LENGTH_LONG).show();
+                            Toast.makeText(context,e+"in user adapter asyncadd",Toast.LENGTH_LONG).show();
                         }
                         dialog.dismiss();
                     }
@@ -274,7 +274,7 @@ public class useradapter extends RecyclerView.Adapter<useradapter.MyViewHolder> 
             super.onPreExecute();
 
             //this method will be running on UI thread
-            pdLoading.setMessage("\tLoading...");
+            pdLoading.setMessage("\tAdding Verifier...");
             pdLoading.setCancelable(false);
             pdLoading.show();
 
@@ -345,7 +345,7 @@ public class useradapter extends RecyclerView.Adapter<useradapter.MyViewHolder> 
             super.onPreExecute();
 
             //this method will be running on UI thread
-            pdLoading.setMessage("\tLoading...");
+            pdLoading.setMessage("\tUpdating Verifier...");
             pdLoading.setCancelable(false);
             pdLoading.show();
 

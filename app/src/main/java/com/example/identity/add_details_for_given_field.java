@@ -30,7 +30,7 @@ public class add_details_for_given_field extends Fragment {
 
         String m1 = getArguments().getString("field");
 
-        Toast.makeText(getContext(),"Hi"+m1,Toast.LENGTH_LONG).show();
+       // Toast.makeText(getContext(),"Hi"+m1,Toast.LENGTH_LONG).show();
         final View view= inflater.inflate(R.layout.fragment_add_details_for_given_field, container, false);
 
         return view;

@@ -40,8 +40,8 @@ public class verify_mobile extends AppCompatActivity {
             window.setStatusBarColor(this.getResources().getColor(R.color.number_background));}
         db1 = db.getWritableDatabase();
         m4= getIntent().getStringExtra("number");
-        Toast.makeText(verify_mobile.this,""+m4,Toast.LENGTH_LONG).show();
-        Toast.makeText(this,m4,Toast.LENGTH_LONG).show();
+       // Toast.makeText(verify_mobile.this,""+m4,Toast.LENGTH_LONG).show();
+       // Toast.makeText(this,m4,Toast.LENGTH_LONG).show();
         l1=(EditText)findViewById(R.id.letter1);
         l2=(EditText)findViewById(R.id.letter2);
         l3=(EditText)findViewById(R.id.letter3);
@@ -191,7 +191,7 @@ public class verify_mobile extends AppCompatActivity {
             super.onPreExecute();
 
             //this method will be running on UI thread
-            pdLoading.setMessage("\tSending...");
+            pdLoading.setMessage("\tVerifying...");
             pdLoading.setCancelable(false);
             pdLoading.show();
 
@@ -257,7 +257,7 @@ public class verify_mobile extends AppCompatActivity {
                 pdLoading.dismiss();
             }
             else{
-               // Toast.makeText(verify_mobile.this,"some error occured"+c,Toast.LENGTH_LONG).show();
+                Toast.makeText(verify_mobile.this,"some error occured"+c,Toast.LENGTH_LONG).show();
                 pdLoading.dismiss();
             }
         }

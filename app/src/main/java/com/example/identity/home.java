@@ -131,7 +131,7 @@ FrameLayout f1;
                     JSONObject obj = new JSONObject(result.getContents());
                     data1=result.getContents();
                     done=true;
-                   Toast.makeText(this,"m1"+ result.getContents(), Toast.LENGTH_LONG).show();
+                 //  Toast.makeText(this,"m1"+ result.getContents(), Toast.LENGTH_LONG).show();
                  //   Toast.makeText(this,"tried to change",Toast.LENGTH_LONG).show();
 //                   on_scan frag = new on_scan();
 //                    Bundle b = new Bundle();
@@ -162,7 +162,7 @@ FrameLayout f1;
 
         }
         else {
-            Toast.makeText(this, "tried to change", Toast.LENGTH_LONG).show();
+         //   Toast.makeText(this, "tried to change", Toast.LENGTH_LONG).show();
             on_scan frag = new on_scan();
             Bundle b = new Bundle();
             b.putString("user", data);
@@ -182,7 +182,7 @@ FrameLayout f1;
         //    String str_result= new RunInBackGround().execute();
         //    while(!done)
       //   call(data1);
-            Toast.makeText(v.getContext(),"hello",Toast.LENGTH_LONG).show();
+         //   Toast.makeText(v.getContext(),"hello",Toast.LENGTH_LONG).show();
         }
     };
 
@@ -263,7 +263,7 @@ FrameLayout f1;
     public void m1(View v){
         Intent i1=new Intent(this,MainActivity.class);
         startActivity(i1);
-        Toast.makeText(this,"hi",Toast.LENGTH_LONG).show();
+       // Toast.makeText(this,"hi",Toast.LENGTH_LONG).show();
     }
     @SuppressWarnings("StatementWithEmptyBody")
     @Override

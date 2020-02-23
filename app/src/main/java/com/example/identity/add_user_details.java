@@ -215,7 +215,7 @@ public class add_user_details extends Fragment {
         @Override
         protected void onPostExecute(String result) {
 
-            Toast.makeText(getContext(),result,Toast.LENGTH_LONG).show();
+           // Toast.makeText(getContext(),result,Toast.LENGTH_LONG).show();
             database db = new database(getActivity());
             SQLiteDatabase db1 = db.getWritableDatabase();
             db.insert1(db1,it11,result,it22,verifier_name,"false");
@@ -275,7 +275,7 @@ public class add_user_details extends Fragment {
             try {
                 JSONObject jo1 = new JSONObject(result);
                String sm= jo1.getString("verifiers");
-                Toast.makeText(getContext(),""+sm,Toast.LENGTH_LONG).show();
+             //   Toast.makeText(getContext(),""+sm,Toast.LENGTH_LONG).show();
                 JSONArray jo2=new JSONArray(sm);
                 List<verifier_info> a = new ArrayList<verifier_info>();
                // List< verifier_info> a=new verifier_info[100];
@@ -287,7 +287,7 @@ public class add_user_details extends Fragment {
                     a.add(new verifier_info(jm2.getString("name"),jm2.getString("url")));
                   //  a[i].setName1(jm2.getString("name"));
                     //  a[i].setUrl1(jm2.getString("url"));
-                    Toast.makeText(getContext(),""+jm2.getString("name"),Toast.LENGTH_LONG).show();
+                //    Toast.makeText(getContext(),""+jm2.getString("name"),Toast.LENGTH_LONG).show();
                    // lm1.add(jo2.getString(i));
                 }
 
@@ -303,7 +303,7 @@ public class add_user_details extends Fragment {
 
                         verifier_url=b.get(item).getUrl1();
                         verifier_name=b.get(item).getName1();
-                        Toast.makeText(getContext(),verifier_url,Toast.LENGTH_LONG).show();
+                //        Toast.makeText(getContext(),verifier_url,Toast.LENGTH_LONG).show();
 
                         database db = new database(getActivity());
                         SQLiteDatabase db1 = db.getWritableDatabase();
@@ -339,7 +339,7 @@ public class add_user_details extends Fragment {
             super.onPreExecute();
 
             //this method will be running on UI thread
-            pdLoading.setMessage("\tLoading...");
+            pdLoading.setMessage("\tGetting Fields...");
             pdLoading.setCancelable(false);
             pdLoading.show();
 
@@ -430,7 +430,7 @@ public class add_user_details extends Fragment {
                 e.printStackTrace();
             }
 
-            Toast.makeText(getContext(),"hello"+m1,Toast.LENGTH_LONG).show();
+           // Toast.makeText(getContext(),"hello"+m1,Toast.LENGTH_LONG).show();
             //this method will be running on UI thread
             pdLoading.dismiss();
         }
