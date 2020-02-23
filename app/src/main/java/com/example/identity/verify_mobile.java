@@ -209,8 +209,11 @@ public class verify_mobile extends AppCompatActivity {
                 jo1.put("otp",params[1]);c= jo1.toString();
 
                 RequestBody body = RequestBody.create( jo1.toString(),okhttp3.MediaType.parse("application/json; charset=utf-8"));
+                server a=new server();
+                String name=a.getServer_name();
+                String urll=name+"/verify/mobile/check";
                 Request request = new Request.Builder()
-                        .url("https://uidserver.herokuapp.com/verify/mobile/check")
+                        .url(urll)
                         .method("POST", body)
                         .addHeader("Content-Type", "application/x-www-form-urlencoded")
                         .build();

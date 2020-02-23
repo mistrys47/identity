@@ -451,7 +451,7 @@ Integer cnt=0,cnt1=0;
 
 
 
-                        Toast.makeText(getContext(), "8"+jj4.toString(), Toast.LENGTH_LONG).show();
+                      //  Toast.makeText(getContext(), ""+jj4.toString(), Toast.LENGTH_LONG).show();
                          new on_scan.AsyncLogin().execute(jj4.toString(),m1);
                 }
             });
@@ -492,13 +492,7 @@ Integer cnt=0,cnt1=0;
             @Override
             public void onClick(View view) {
 
-                try {
-                    Toast.makeText(getContext(), "1"+jj4.toString(), Toast.LENGTH_LONG).show();
-                }
-                catch (Exception e)
-                {
-                    Toast.makeText(getContext(),"2"+e,Toast.LENGTH_LONG).show();
-                }
+
                 new on_scan.AsyncLogin().execute(jj4.toString(),m1);
             }
         });
@@ -518,7 +512,7 @@ Integer cnt=0,cnt1=0;
             jj3=jj1;
         }
         final JSONObject jj4=jj3;
-        Toast.makeText(getContext(),jj4.toString(),Toast.LENGTH_LONG).show();
+      //  Toast.makeText(getContext(),jj4.toString(),Toast.LENGTH_LONG).show();
         new on_scan.AsyncLogin().execute(jj4.toString(),m1);
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.fl1,new user_details_card()).addToBackStack(null).commit();
@@ -552,9 +546,12 @@ Integer cnt=0,cnt1=0;
                 jo1.put( "data", params[0]);
                 //jo1.put("signup", true);
                 check1111=jo1.toString();
+                server a=new server();
+                String name=a.getServer_name();
+                String urll=name+"/service_provider/user/tempdata";
                 RequestBody body = RequestBody.create( jo1.toString(),okhttp3.MediaType.parse("application/json; charset=utf-8"));
                 Request request = new Request.Builder()
-                        .url("https://uidserver.herokuapp.com/service_provider/user/tempdata")
+                        .url(urll)
                         .method("POST", body)
                         .addHeader("Content-Type", "application/x-www-form-urlencoded")
                         .build();

@@ -103,8 +103,11 @@ EditText num;
                         .build();
                 MediaType mediaType = MediaType.parse("application/x-www-form-urlencoded");
                 RequestBody body = RequestBody.create( "mobile="+params[0],mediaType);
+                server a=new server();
+                String name=a.getServer_name();
+                String urll=name+"/verify/mobile/otp";
                 Request request = new Request.Builder()
-                        .url("https://uidserver.herokuapp.com/verify/mobile/otp")
+                        .url(urll)
                         .method("POST", body)
                         .addHeader("Content-Type", "application/x-www-form-urlencoded")
                         .build();

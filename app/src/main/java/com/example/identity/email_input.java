@@ -103,8 +103,11 @@ public class email_input extends AppCompatActivity {
                         .build();
                 MediaType mediaType = MediaType.parse("application/x-www-form-urlencoded");
                 RequestBody body = RequestBody.create( "email="+params[0],mediaType);
+                server a=new server();
+                String name=a.getServer_name();
+                String urll=name+"/verify/email/otp";
                 Request request = new Request.Builder()
-                        .url("https://uidserver.herokuapp.com/verify/email/otp")
+                        .url(urll)
                         .method("POST", body)
                         .addHeader("Content-Type", "application/x-www-form-urlencoded")
                         .build();

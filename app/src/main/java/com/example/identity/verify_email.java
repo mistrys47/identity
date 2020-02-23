@@ -211,8 +211,11 @@ public class verify_email extends AppCompatActivity {
                 jo1.put("email",params[0]);
                 jo1.put("otp",params[1]);
                 RequestBody body = RequestBody.create( jo1.toString(),okhttp3.MediaType.parse("application/json; charset=utf-8"));
+                server a=new server();
+                String name=a.getServer_name();
+                String urll=name+"/verify/email/check";
                 Request request = new Request.Builder()
-                        .url("https://uidserver.herokuapp.com/verify/email/check")
+                        .url(urll)
                         .method("POST", body)
                         .addHeader("Content-Type", "application/x-www-form-urlencoded")
                         .build();

@@ -249,9 +249,11 @@ public class add_user_details extends Fragment {
                         .build();
 
                 MediaType mediaType = MediaType.parse("application/x-www-form-urlencoded");
-
+                server a=new server();
+                String name=a.getServer_name();
+                String urll=name+"/service_provider/verifiers";
                 Request request = new Request.Builder()
-                        .url("https://uidserver.herokuapp.com/service_provider/verifiers")
+                        .url(urll)
                         .header("Accept", "application/json")
                         .header("Content-Type", "application/json")
                         .build();
@@ -349,9 +351,11 @@ public class add_user_details extends Fragment {
                 OkHttpClient client = new OkHttpClient().newBuilder()
                         .build();
                 MediaType mediaType = MediaType.parse("application/x-www-form-urlencoded");
-
+                server a=new server();
+                String name=a.getServer_name();
+                String urll=name+"/service_provider/fields";
                 Request request = new Request.Builder()
-                        .url("https://uidserver.herokuapp.com/service_provider/fields")
+                        .url(urll)
                         .header("Accept", "application/json")
                         .header("Content-Type", "application/json")
                         .build();
