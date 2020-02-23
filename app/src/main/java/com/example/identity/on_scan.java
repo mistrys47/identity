@@ -41,18 +41,19 @@ TextView t1;
 LinearLayout l1,l2,l3,l4;
 String URL1;
 String data1;
-String b4,emailmmm;
+String b4,emailmmm,emailkey;
     Boolean bm1;
     qr_code_data json;
+    String check1111;
     String veri;
-JSONObject jo ;
+JSONObject jj1,jj2,jo ;
 Integer cnt=0,cnt1=0;
     public on_scan() {
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+
         final View view= inflater.inflate(R.layout.fragment_on_scan, container, false);
 
         return view;
@@ -67,25 +68,50 @@ Integer cnt=0,cnt1=0;
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         cnt=0;cnt1=0;
         t1=(TextView)getView().findViewById(R.id.t1);
+
         super.onViewCreated(view, savedInstanceState);
+
         Bundle args = getArguments();
         l1=(LinearLayout)getView().findViewById(R.id.l1);
         jo=new JSONObject();
+        jj1=new JSONObject();
+        jj2=new JSONObject();
         String strtext = getArguments().getString("user");
-        //Toast.makeText(getContext(),args.toString(),Toast.LENGTH_LONG).show();
+
+        //database connection
         database db = new database(getActivity());
         SQLiteDatabase db1 = db.getWritableDatabase();
         Gson gson = new Gson();
-         json = gson.fromJson(strtext,qr_code_data.class);
+        json = gson.fromJson(strtext,qr_code_data.class);
         t1.setText(t1.getText().toString()+" "+json.url);
-         bm1=db.check_serviceprovider(db1,json.url);
+        bm1=db.check_serviceprovider(db1,json.url);
         URL1=json.url;
+
+
         emailmmm = db.getvalue(db1, "email");
+        emailkey=db.gettransaction_id(db1,"email");
+
+        try {
+            JSONObject om = new JSONObject();
+
+            om.put("key", emailkey);
+            om.put("value", emailmmm);
+            jj1.put("email",om);
+            jj2.put("email",om);
+            jj2.put("signup","false");
+            jj1.put("signup","true");
+
+        }catch (Exception e)
+        {
+            Toast.makeText(getContext(),""+e,Toast.LENGTH_LONG).show();
+        }
+
         qr_info_data all_info[]=json.fields;
         String s="";
         int cm11=all_info.length;
         for(int i=0;i<all_info.length;i++) {
             int exist = db.checkfield(db1, all_info[i].field);
+            JSONObject jj=new JSONObject();
             if (exist == 1) {
                 cm11--;
                 if(all_info[i].required){
@@ -113,7 +139,6 @@ Integer cnt=0,cnt1=0;
                 f1.addView(t1);
                 f.addView(f1);
 
-                //value
                 f1 = new LinearLayout(getActivity());
                 f1.setLayoutParams(new LinearLayout.LayoutParams(0,
                         LinearLayout.LayoutParams.MATCH_PARENT, 4));
@@ -144,12 +169,17 @@ Integer cnt=0,cnt1=0;
                     t1.setText("True");
                     veri="true";
                     try {
-                        jo.put(all_info[i].field, val);
+
+                        jj.put(all_info[i].field, val);
+                        jj.put("key",val1);
+                        if(!all_info[i].field.equals("email"))
+                        jj1.put(all_info[i].field,jj);
+                        Toast.makeText(getContext(),jj1.toString(),Toast.LENGTH_LONG).show();
                     }catch (Exception e)
                     {
                         Toast.makeText(getContext(),""+e,Toast.LENGTH_LONG).show();
                     }
-                   // c1--;
+
                 }
                 else
                 {
@@ -161,11 +191,11 @@ Integer cnt=0,cnt1=0;
                 t1.setPadding(10, 0, 0, 0);
                 t1.setTextSize(15);
                 t1.setTypeface(null, Typeface.BOLD);
-                //t1.setGravity(Gravity.CENTER);
+
                 f1.addView(t1);
                 f.addView(f1);
 
-                //checkbox
+
                 f1 = new LinearLayout(getActivity());
                 f1.setLayoutParams(new LinearLayout.LayoutParams(0,
                         LinearLayout.LayoutParams.MATCH_PARENT, 2));
@@ -176,6 +206,7 @@ Integer cnt=0,cnt1=0;
                 c1.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        try{
                         if (!c1.isChecked() && ve.equals("true"))
                         {
                             cnt1--;
@@ -188,10 +219,20 @@ Integer cnt=0,cnt1=0;
                         }}
                         else if(c1.isChecked() && ve.equals("true")){
                             cnt1++;
-                            if(cnt==cnt1)
-                            fn();
+                            if(cnt==cnt1) {
+                                try {
+                                    fn();
+                                }catch (Exception e)
+                                {
+                                    Toast.makeText(getContext(),""+e,Toast.LENGTH_LONG).show();
+                                }
+                            }
                         }
-                    }
+                    }catch (Exception e)
+                    {
+                        Toast.makeText(getContext(),""+e,Toast.LENGTH_LONG).show();
+                    }}
+
                 });
                 c1.setGravity(Gravity.CENTER);
                 c1.setId(i);
@@ -295,7 +336,7 @@ Integer cnt=0,cnt1=0;
             }}
         for(int i=0;i<all_info.length;i++)
         {
-            // all_info[i].field;
+
             int exist=db.checkfield(db1,all_info[i].field);
             if(exist==0) {
                 LinearLayout f = new LinearLayout(getActivity());
@@ -379,7 +420,6 @@ Integer cnt=0,cnt1=0;
                 f.addView(f1);
                 l1.addView(f);
             }
-          //  c1.setText();
 
         }
         if(cm11==0)
@@ -391,58 +431,31 @@ Integer cnt=0,cnt1=0;
             c1.setText("Submit");
             c1.setLayoutParams(new FrameLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                     100));
-            // c1.setOnClickListener();
-            final JSONObject jo2 = jo;
-            final String m1=json.sid;
-            String b2;
-            if(bm1)
-            {
-                b2="false";
-            }
-            else
-            {
-                b2="true";
-            }
 
-            final String b3=b2;
+            final String m1=json.sid;
+            JSONObject jj3;
+           if(bm1)
+           {
+               jj3=jj2;
+           }
+           else
+           {
+               jj3=jj1;
+           }
+            final JSONObject jj4=jj3;
+          // Toast.makeText(getContext(),jj2.toString(),Toast.LENGTH_LONG).show();
+
             c1.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
 
 
-                    JSONObject jo1 = new JSONObject();
-                    try {
-                        //  jo1.put("data", jo2.toString());
-                        //  jo1.put("sid", m1);
 
-                        if (b3.equals("true")) {
-                            //Toast.makeText(getContext(),"here...!!!",Toast.LENGTH_LONG).show();
-                            jo2.put("email",emailmmm);
-                            jo2.put("signup", true);
-                            jo1=jo2;
-                            //jo1.put("data",jo2.toString());
-                        }
-
-                        else{
-                            jo1.put("email",emailmmm);
-                            jo1.put("signup", false);}
-                     //   Toast.makeText(getContext(),""+jo1.toString(),Toast.LENGTH_LONG).show();
-
-                    }
-                    catch (Exception e)
-                    {
-                        Toast.makeText(getContext(),""+e,Toast.LENGTH_LONG).show();
-                    }
-
-                    data1=jo2.toString();
-                    b4=b3;
-                    new on_scan.AsyncLogin().execute(jo1.toString(),m1);
+                        Toast.makeText(getContext(), "8"+jj4.toString(), Toast.LENGTH_LONG).show();
+                         new on_scan.AsyncLogin().execute(jj4.toString(),m1);
                 }
             });
-            //  f1.addView(c1);
-            // f.addView(f1);
             l1.addView(c1);
-
         }
 
        if(bm1)
@@ -455,93 +468,58 @@ Integer cnt=0,cnt1=0;
     {
         if((Button)getView().findViewWithTag("select_button")==null){
         Button c1 = new Button(getActivity());
-        // c1.setChecked(true);
+
         c1.setTag("select_button");
         c1.setGravity(Gravity.CENTER);
         c1.setText("Submit");
         c1.setLayoutParams(new FrameLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                 100));
-        // c1.setOnClickListener();
-        final JSONObject jo2 = jo;
-        final String m1=json.sid;
-        String b2;
-        if(bm1)
-        {
-            b2="false";
-        }
-        else
-        {
-            b2="true";
-        }
 
-        final String b3=b2;
+
+                JSONObject jj3;
+                if (bm1) {
+                    jj3 = jj2;
+                } else {
+                    jj3 = jj1;
+                }
+                final JSONObject jj4=jj3;
+
+        final String m1=json.sid;
+
+
+       // final String b3=b2;
         c1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-
-                JSONObject jo1 = new JSONObject();
                 try {
-                  //  jo1.put("data", jo2.toString());
-                  //  jo1.put("sid", m1);
-
-                    if (b3.equals("true")) {
-                        jo1.put("email",emailmmm);
-                        jo2.put("signup", true);
-                        jo1=jo2;
-                    }
-
-                    else {
-                        jo1.put("email",emailmmm);
-                        jo1.put("signup", false);
-                    }
-                   // Toast.makeText(getContext(),""+jo1.toString(),Toast.LENGTH_LONG).show();
-
+                    Toast.makeText(getContext(), "1"+jj4.toString(), Toast.LENGTH_LONG).show();
                 }
                 catch (Exception e)
                 {
-                    Toast.makeText(getContext(),""+e,Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(),"2"+e,Toast.LENGTH_LONG).show();
                 }
-                data1=jo2.toString();
-                b4=b3;
-                new on_scan.AsyncLogin().execute(jo1.toString(),m1);
+                new on_scan.AsyncLogin().execute(jj4.toString(),m1);
             }
         });
-        //  f1.addView(c1);
-        // f.addView(f1);
+
         l1.addView(c1);}
     }
     public void already_signedup()
     {
-        final JSONObject jo2 = jo;
         final String m1=json.sid;
-        String b2;
+        JSONObject jj3 ;
         if(bm1)
         {
-            b2="false";
+            jj3=jj2;
         }
         else
         {
-            b2="true";
+            jj3=jj1;
         }
-
-        final String b3=b2;
-        JSONObject jo1 = new JSONObject();
-        try {
-
-            jo1.put("email",emailmmm);
-            jo1.put("signup", false);
-          //  Toast.makeText(getContext(),""+jo1.toString(),Toast.LENGTH_LONG).show();
-
-        }
-        catch (Exception e)
-        {
-            Toast.makeText(getContext(),""+e,Toast.LENGTH_LONG).show();
-        }
-
-        data1=jo2.toString();
-        b4=b3;
-        new on_scan.AsyncLogin().execute(jo1.toString(),m1);
+        final JSONObject jj4=jj3;
+        Toast.makeText(getContext(),jj4.toString(),Toast.LENGTH_LONG).show();
+        new on_scan.AsyncLogin().execute(jj4.toString(),m1);
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.fl1,new user_details_card()).addToBackStack(null).commit();
 
@@ -573,7 +551,7 @@ Integer cnt=0,cnt1=0;
 
                 jo1.put( "data", params[0]);
                 //jo1.put("signup", true);
-
+                check1111=jo1.toString();
                 RequestBody body = RequestBody.create( jo1.toString(),okhttp3.MediaType.parse("application/json; charset=utf-8"));
                 Request request = new Request.Builder()
                         .url("https://uidserver.herokuapp.com/service_provider/user/tempdata")
@@ -591,6 +569,7 @@ Integer cnt=0,cnt1=0;
         @Override
         protected void onPostExecute(String result) {
            // res1 = result;
+            Toast.makeText(getContext(),""+check1111,Toast.LENGTH_LONG).show();
             boolean isFound = result.indexOf("success") !=-1? true: false;
             //Toast.makeText(getContext(),"gsdgh"+result,Toast.LENGTH_LONG).show();
             final database db = new database(getActivity());
