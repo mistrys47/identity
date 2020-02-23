@@ -48,10 +48,10 @@ public class allowed_websites extends Fragment {
             SQLiteDatabase db1 = db.getWritableDatabase();
             Cursor cm = db.getwebsitedetails(db1);
             while (cm.moveToNext()) {
-                //  String x=cm.getString(2);
+
                 final String s = cm.getString(1);
                 final String s1 = cm.getString(2);
-
+                Toast.makeText(getContext(),s1,Toast.LENGTH_LONG).show();
                 subjects.add(new allowed_web_info(s, s1));
              //   subjects.add(new allowed_web_info("amazon.com", "pan card mobile"));
             }

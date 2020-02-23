@@ -142,7 +142,10 @@ public class useradapter extends RecyclerView.Adapter<useradapter.MyViewHolder> 
 
 
                 Response response = client.newCall(request).execute();
+                if(response.code()==200)
                 return response.body().string();
+                else
+                    return "Not Found";
 
             }catch (Exception e)
             {

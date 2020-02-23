@@ -70,8 +70,6 @@ public class allowed_website_adapter extends RecyclerView.Adapter<allowed_websit
     public void onBindViewHolder(MyViewHolder holder, final int position) {
 
         allowed_web_info  tempobj=categoriesList.get(position);
-
-
         //holder.subname.setText(tempobj.getSubname());
         holder.field.setText((tempobj.getWebsite_name() ));
         String x = tempobj.getRequested_details();
@@ -89,7 +87,7 @@ public class allowed_website_adapter extends RecyclerView.Adapter<allowed_websit
             }
         }catch (Exception e)
         {
-            Toast.makeText(mContext,e+"",Toast.LENGTH_LONG).show();
+            Toast.makeText(mContext,x+e+"eroor",Toast.LENGTH_LONG).show();
         }
     }
 

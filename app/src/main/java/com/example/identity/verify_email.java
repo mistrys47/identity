@@ -231,7 +231,7 @@ public class verify_email extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result) {
 
-            Toast.makeText(verify_email.this,"hello"+result+s1,Toast.LENGTH_LONG).show();
+            Toast.makeText(verify_email.this,"hello"+result,Toast.LENGTH_LONG).show();
             //this method will be running on UI thread
             String s="";
             try {

@@ -428,7 +428,7 @@ Integer cnt=0,cnt1=0;
             // c1.setChecked(true);
             c1.setTag("select_button");
             c1.setGravity(Gravity.CENTER);
-            c1.setText("Submit");
+            c1.setText("Allow");
             c1.setLayoutParams(new FrameLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                     100));
 
@@ -456,6 +456,26 @@ Integer cnt=0,cnt1=0;
                 }
             });
             l1.addView(c1);
+            Button c2 = new Button(getActivity());
+            // c1.setChecked(true);
+            c2.setTag("select_button");
+            c2.setGravity(Gravity.CENTER);
+            c2.setText("Deny");
+            c2.setLayoutParams(new FrameLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+                    100));
+            c2.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+
+                    FragmentManager fragmentManager = getFragmentManager();
+                    fragmentManager.beginTransaction().replace(R.id.fl1,new user_details_card()).addToBackStack(null).commit();
+
+                    //  Toast.makeText(getContext(), ""+jj4.toString(), Toast.LENGTH_LONG).show();
+
+                }
+            });
+            l1.addView(c2);
         }
 
        if(bm1)
@@ -497,7 +517,28 @@ Integer cnt=0,cnt1=0;
             }
         });
 
-        l1.addView(c1);}
+        l1.addView(c1);
+            Button c2 = new Button(getActivity());
+            // c1.setChecked(true);
+            c2.setTag("select_button");
+            c2.setGravity(Gravity.CENTER);
+            c2.setText("Deny");
+            c2.setLayoutParams(new FrameLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+                    100));
+            c2.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+
+                    FragmentManager fragmentManager = getFragmentManager();
+                    fragmentManager.beginTransaction().replace(R.id.fl1,new user_details_card()).addToBackStack(null).commit();
+
+                    //  Toast.makeText(getContext(), ""+jj4.toString(), Toast.LENGTH_LONG).show();
+
+                }
+            });
+            l1.addView(c2);
+        }
     }
     public void already_signedup()
     {
@@ -540,7 +581,7 @@ Integer cnt=0,cnt1=0;
                 JSONObject jo1 = new JSONObject();
 
                 jo1.put( "sid", params[1]);
-
+                data1=params[0];
                 jo1.put( "data", params[0]);
                 //jo1.put("signup", true);
                 check1111=jo1.toString();
@@ -575,6 +616,7 @@ Integer cnt=0,cnt1=0;
             {
                 if(!bm1)
                 {
+
                      boolean m1=db.insert2(db1,URL1,data1);
 
                    if(m1) {
