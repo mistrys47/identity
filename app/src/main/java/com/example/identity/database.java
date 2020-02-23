@@ -145,6 +145,18 @@ class database extends SQLiteOpenHelper {
         else
             return true;
     }
+    public boolean update(SQLiteDatabase db,String field,String value,String fn){
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(field,value);
+        long re=db.update(TABLE_NAME1,
+                contentValues,
+                "field_name" + " = ? ",
+                new String[]{fn});
+        if(re == -1)
+            return false;
+        else
+            return true;
+    }
     public boolean deletetable(SQLiteDatabase db){
         db.execSQL("DROP TABLE IF EXISTS "+TABLE_NAME1);
         return true;

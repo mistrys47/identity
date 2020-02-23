@@ -94,7 +94,7 @@ public class useradapter extends RecyclerView.Adapter<useradapter.MyViewHolder> 
                             im = i1.getTag().toString();
                             try{
                                 new useradapter.AsyncVerifier().execute();
-                                Toast.makeText(context,"calling verifier",Toast.LENGTH_LONG).show();
+                                //Toast.makeText(context,"calling verifier",Toast.LENGTH_LONG).show();
                             }
                             catch (Exception e)
                             {
@@ -314,8 +314,15 @@ public class useradapter extends RecyclerView.Adapter<useradapter.MyViewHolder> 
             int i = old_url.indexOf("=");
             old_id = old_url.substring(i+1);
             //Toast.makeText(context,old_url+old_id,Toast.LENGTH_LONG).show();
-            db.updatevalue(db1,"verified_by",verifier_name);
-            db.updatevalue(db1,"verifier_url",result);
+            boolean x12=db.update(db1,"verified_by",verifier_name,im);
+            boolean x11=db.update(db1,"verifier_url",result,im);
+            if(x11 )
+            {
+                if(x12)
+                {
+                    Toast.makeText(context,"db update",Toast.LENGTH_LONG).show();
+                }
+            }
             //Toast.makeText(context,"post adding",Toast.LENGTH_LONG).show();
             try {
                 new useradapter.AsyncRemove().execute();
@@ -370,7 +377,7 @@ public class useradapter extends RecyclerView.Adapter<useradapter.MyViewHolder> 
             //Toast.makeText(context,result,Toast.LENGTH_LONG).show();
             if(isFound)
             {
-
+                Toast.makeText(context,"updated",Toast.LENGTH_LONG).show();
             }
             else
             {
