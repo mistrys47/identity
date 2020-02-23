@@ -320,15 +320,18 @@ public class useradapter extends RecyclerView.Adapter<useradapter.MyViewHolder> 
             {
                 //old_verifier_name
                 //old_verifier_url
-                int i = old_verifier_url.indexOf("=");
-                //change for url
-                String old_id = old_verifier_url.substring(i+1);
-                String urll=old_verifier_url+"remove";
+                database db = new database(context);
+                SQLiteDatabase db1 = db.getWritableDatabase();
+                String old_url = db.getvalue(db1,"verifier_url");
+                int i = old_url.indexOf("=");
+                String old_id = old_url.substring(i+1);
+
+                String s=old_verifier_url+"remove";
                 Toast.makeText(context,old_id+"",Toast.LENGTH_LONG).show();
                 jo1.put("id",old_id );
                 RequestBody body = RequestBody.create( jo1.toString(),okhttp3.MediaType.parse("application/json; charset=utf-8"));
 
-                //use urll var
+                //use s var
                 Request request = new Request.Builder()
                         .url("https://a75f66f6.ngrok.io/details/remove")
                         .method("POST", body)
