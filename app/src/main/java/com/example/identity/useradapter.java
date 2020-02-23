@@ -181,8 +181,11 @@ public class useradapter extends RecyclerView.Adapter<useradapter.MyViewHolder> 
 
                 OkHttpClient client = new OkHttpClient().newBuilder().build();
                 MediaType mediaType = MediaType.parse("application/x-www-form-urlencoded");
+                server a=new server();
+                String name=a.getServer_name();
+                String urll=name+"/service_provider/verifiers";
                 Request request = new Request.Builder()
-                        .url("https://uidserver.herokuapp.com/service_provider/verifiers")
+                        .url(urll)
                         .header("Accept", "application/json")
                         .header("Content-Type", "application/json")
                         .build();
@@ -270,6 +273,7 @@ public class useradapter extends RecyclerView.Adapter<useradapter.MyViewHolder> 
                 jo1.put("email", email);
                 String s = verifier_url + "add";
                 RequestBody body = RequestBody.create(jo1.toString(), okhttp3.MediaType.parse("application/json; charset=utf-8"));
+                //use s var
                 Request request = new Request.Builder()
                         .url("https://a75f66f6.ngrok.io/details/add")
                         .method("POST", body)
@@ -317,10 +321,14 @@ public class useradapter extends RecyclerView.Adapter<useradapter.MyViewHolder> 
                 //old_verifier_name
                 //old_verifier_url
                 int i = old_verifier_url.indexOf("=");
+                //change for url
                 String old_id = old_verifier_url.substring(i+1);
+                String urll=old_verifier_url+"remove";
                 Toast.makeText(context,old_id+"",Toast.LENGTH_LONG).show();
                 jo1.put("id",old_id );
                 RequestBody body = RequestBody.create( jo1.toString(),okhttp3.MediaType.parse("application/json; charset=utf-8"));
+
+                //use urll var
                 Request request = new Request.Builder()
                         .url("https://a75f66f6.ngrok.io/details/remove")
                         .method("POST", body)
