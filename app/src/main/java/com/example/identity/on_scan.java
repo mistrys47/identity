@@ -147,7 +147,7 @@ Integer cnt=0,cnt1=0;
 
                 String val = db.getvalue(db1, all_info[i].field.toLowerCase());
                 String val1 = db.gettransaction_id(db1,all_info[i].field.toLowerCase());
-                Toast.makeText(getContext(),""+val1,Toast.LENGTH_LONG).show();
+                //Toast.makeText(getContext(),""+val1,Toast.LENGTH_LONG).show();
                 t1.setText(val);
                 t1.setLayoutParams(new FrameLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                         100));
@@ -174,7 +174,7 @@ Integer cnt=0,cnt1=0;
                         jj.put("key",val1);
                         if(!all_info[i].field.toLowerCase().equals("email"))
                         jj1.put(all_info[i].field.toLowerCase(),jj);
-                        Toast.makeText(getContext(),jj1.toString(),Toast.LENGTH_LONG).show();
+                        //Toast.makeText(getContext(),jj1.toString(),Toast.LENGTH_LONG).show();
                     }catch (Exception e)
                     {
                         Toast.makeText(getContext(),""+e,Toast.LENGTH_LONG).show();
@@ -424,14 +424,22 @@ Integer cnt=0,cnt1=0;
         }
         if(cm11==0)
         {
+            try{
+
             Button c1 = new Button(getActivity());
             // c1.setChecked(true);
             c1.setTag("select_button");
             c1.setGravity(Gravity.CENTER);
             c1.setText("Allow");
-            c1.setLayoutParams(new FrameLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
-                    100));
+                FrameLayout.LayoutParams fp1=new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,
+                        FrameLayout.LayoutParams.WRAP_CONTENT,1);
 
+                fp1.setMargins(20,10,20,0);
+            c1.setLayoutParams(fp1);
+            c1.setBackgroundColor(Color.parseColor("#21ba45"));
+                c1.setTextColor(Color.parseColor("#FFFFFF"));
+
+                l1.addView(c1);
             final String m1=json.sid;
             JSONObject jj3;
            if(bm1)
@@ -455,14 +463,14 @@ Integer cnt=0,cnt1=0;
                          new on_scan.AsyncLogin().execute(jj4.toString(),m1);
                 }
             });
-            l1.addView(c1);
             Button c2 = new Button(getActivity());
             // c1.setChecked(true);
             c2.setTag("select_button");
             c2.setGravity(Gravity.CENTER);
             c2.setText("Deny");
-            c2.setLayoutParams(new FrameLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
-                    100));
+            c2.setLayoutParams(fp1);
+            c2.setBackgroundColor(Color.parseColor("#dd4b39"));
+            c2.setTextColor(Color.parseColor("#FFFFFF"));
             c2.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -476,6 +484,12 @@ Integer cnt=0,cnt1=0;
                 }
             });
             l1.addView(c2);
+            //l1.addView(xx);
+            }
+            catch (Exception e)
+            {
+                Toast.makeText(getContext(),e+"",Toast.LENGTH_LONG).show();
+            }
         }
 
        if(bm1)
@@ -492,8 +506,9 @@ Integer cnt=0,cnt1=0;
         c1.setTag("select_button");
         c1.setGravity(Gravity.CENTER);
         c1.setText("Submit");
-        c1.setLayoutParams(new FrameLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
-                100));
+
+        c1.setLayoutParams(new FrameLayout.LayoutParams(0,
+                100,1));
 
 
                 JSONObject jj3;
@@ -523,8 +538,9 @@ Integer cnt=0,cnt1=0;
             c2.setTag("select_button");
             c2.setGravity(Gravity.CENTER);
             c2.setText("Deny");
-            c2.setLayoutParams(new FrameLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
-                    100));
+            c2.setLayoutParams(new FrameLayout.LayoutParams(0,
+                    100,1));
+
             c2.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -542,6 +558,7 @@ Integer cnt=0,cnt1=0;
     }
     public void already_signedup()
     {
+        //Toast.makeText(getContext(),"here",Toast.LENGTH_LONG).show();
         final String m1=json.sid;
         JSONObject jj3 ;
         if(bm1)
