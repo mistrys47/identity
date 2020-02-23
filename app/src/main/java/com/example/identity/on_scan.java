@@ -514,8 +514,6 @@ Integer cnt=0,cnt1=0;
         final JSONObject jj4=jj3;
       //  Toast.makeText(getContext(),jj4.toString(),Toast.LENGTH_LONG).show();
         new on_scan.AsyncLogin().execute(jj4.toString(),m1);
-        FragmentManager fragmentManager = getFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.fl1,new user_details_card()).addToBackStack(null).commit();
 
     }
     private class AsyncLogin extends AsyncTask<String, String, String>
@@ -566,19 +564,21 @@ Integer cnt=0,cnt1=0;
         @Override
         protected void onPostExecute(String result) {
            // res1 = result;
-            Toast.makeText(getContext(),""+check1111,Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(),""+result,Toast.LENGTH_LONG).show();
+            try{
             boolean isFound = result.indexOf("true") !=-1? true: false;
             //Toast.makeText(getContext(),"gsdgh"+result,Toast.LENGTH_LONG).show();
             final database db = new database(getActivity());
             final SQLiteDatabase db1 = db.getWritableDatabase();
+
             if(isFound)
             {
-                if(b4.equals("true"))
+                if(!bm1)
                 {
                      boolean m1=db.insert2(db1,URL1,data1);
-                    if(m1)
-                    {
-                        Toast.makeText(getContext(), "Signed Up" + m1, Toast.LENGTH_LONG).show();
+
+                   if(m1) {
+                        Toast.makeText(getContext(), "Signed Up" , Toast.LENGTH_LONG).show();
                     }
                 }
                 else
@@ -586,8 +586,16 @@ Integer cnt=0,cnt1=0;
                     Toast.makeText(getContext(),"Signed In",Toast.LENGTH_LONG).show();
                 }
 
+            }}
+            catch (Exception e)
+            {
+                Toast.makeText(getContext(),""+e,Toast.LENGTH_LONG).show();
             }
             pdLoading.dismiss();
+            FragmentManager fragmentManager = getFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.fl1,new user_details_card()).addToBackStack(null).commit();
+
+
 
         }
     }

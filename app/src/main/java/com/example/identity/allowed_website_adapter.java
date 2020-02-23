@@ -37,7 +37,7 @@ public class allowed_website_adapter extends RecyclerView.Adapter<allowed_websit
             super(itemView);
            // this.i1 = (ImageView) itemView.findViewById(R.id.bb1);
             this.field = (TextView) itemView.findViewById(R.id.d1);
-            this.ll = (LinearLayout) itemView.findViewById(R.id.ll2);
+            this.ll = (LinearLayout) itemView.findViewById(R.id.llm);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
