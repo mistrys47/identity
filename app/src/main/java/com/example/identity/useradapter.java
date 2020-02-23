@@ -36,7 +36,7 @@ import okhttp3.Response;
 
 public class useradapter extends RecyclerView.Adapter<useradapter.MyViewHolder> {
     private Context context;
-    public String im;
+    public String im,old_url,old_id;
     public List<String> lm1;
     private OnItemClickListner mlistner;
     public String verifier_url,verifier_name,old_verifier_url,old_verifier_name;
@@ -94,6 +94,7 @@ public class useradapter extends RecyclerView.Adapter<useradapter.MyViewHolder> 
                             im = i1.getTag().toString();
                             try{
                                 new useradapter.AsyncVerifier().execute();
+                                Toast.makeText(context,"calling verifier",Toast.LENGTH_LONG).show();
                             }
                             catch (Exception e)
                             {
@@ -217,6 +218,7 @@ public class useradapter extends RecyclerView.Adapter<useradapter.MyViewHolder> 
                 database db = new database(context);
                 SQLiteDatabase db1 = db.getWritableDatabase();
                 old_verifier_name = db.getverifier_name(db1,im);
+                lm1 = new ArrayList<String>();
                 for(int i=0;i<jo2.length();i++)
                 {
                     JSONObject jm2=new JSONObject(jo2.getString(i));
@@ -235,12 +237,12 @@ public class useradapter extends RecyclerView.Adapter<useradapter.MyViewHolder> 
                 final CharSequence[] values = listItems.toArray(new CharSequence[listItems.size()]);
                 AlertDialog dialog;
                 builder.setSingleChoiceItems(values, -1, new DialogInterface.OnClickListener() {
-
                     public void onClick(DialogInterface dialog, int item) {
-                        Toast.makeText(mContext,""+item,Toast.LENGTH_LONG).show();
+                        //Toast.makeText(mContext,""+item,Toast.LENGTH_LONG).show();
                         verifier_url = b.get(item).getUrl1();
                         verifier_name = b.get(item).getName1();
                         try {
+                            //Toast.makeText(context,"calling add",Toast.LENGTH_LONG).show();
                             new useradapter.AsyncAdd().execute();
                         }
                         catch (Exception e)
@@ -305,11 +307,16 @@ public class useradapter extends RecyclerView.Adapter<useradapter.MyViewHolder> 
         }
         @Override
         protected void onPostExecute(String result) {
-            Toast.makeText(context,result,Toast.LENGTH_LONG).show();
+            //Toast.makeText(context,result,Toast.LENGTH_LONG).show();
             database db = new database(context);
             SQLiteDatabase db1 = db.getWritableDatabase();
+            old_url = db.getverifier_url(db1,im);
+            int i = old_url.indexOf("=");
+            old_id = old_url.substring(i+1);
+            //Toast.makeText(context,old_url+old_id,Toast.LENGTH_LONG).show();
             db.updatevalue(db1,"verified_by",verifier_name);
             db.updatevalue(db1,"verifier_url",result);
+            //Toast.makeText(context,"post adding",Toast.LENGTH_LONG).show();
             try {
                 new useradapter.AsyncRemove().execute();
             }
@@ -339,17 +346,8 @@ public class useradapter extends RecyclerView.Adapter<useradapter.MyViewHolder> 
             JSONObject jo1 = new JSONObject();
             try
             {
-                //old_verifier_name
-                //old_verifier_url
-                database db = new database(context);
-                SQLiteDatabase db1 = db.getWritableDatabase();
-                String old_url = db.getvalue(db1,"verifier_url");
-                int i = old_url.indexOf("=");
-                String old_id = old_url.substring(i+1);
-
                 String s=old_verifier_url+"remove";
-                Toast.makeText(context,old_id+"",Toast.LENGTH_LONG).show();
-                jo1.put("id",old_id );
+                jo1.put("id",old_id);
                 RequestBody body = RequestBody.create( jo1.toString(),okhttp3.MediaType.parse("application/json; charset=utf-8"));
 
                 //use s var
@@ -369,7 +367,7 @@ public class useradapter extends RecyclerView.Adapter<useradapter.MyViewHolder> 
         @Override
         protected void onPostExecute(String result) {
             boolean isFound = result.indexOf("Success") !=-1? true: false;
-            Toast.makeText(context,result,Toast.LENGTH_LONG).show();
+            //Toast.makeText(context,result,Toast.LENGTH_LONG).show();
             if(isFound)
             {
 

@@ -123,7 +123,15 @@ class database extends SQLiteOpenHelper {
         }
         return s1;
     }
-
+    public String getverifier_url(SQLiteDatabase db,String s){
+        Cursor cursor=db.query(TABLE_NAME1,new String[]{"verifier_url"},"field_name=?",new String[]{s},null,null,null  );
+        String s1="";
+        while(cursor.moveToNext())
+        {
+            s1=cursor.getString(0);
+        }
+        return s1;
+    }
     public boolean updatevalue(SQLiteDatabase db,String field,String value){
         ContentValues contentValues = new ContentValues();
         contentValues.put(COL2,value);
