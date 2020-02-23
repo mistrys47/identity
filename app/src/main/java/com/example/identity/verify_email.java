@@ -212,7 +212,7 @@ public class verify_email extends AppCompatActivity {
                 jo1.put("otp",params[1]);
                 RequestBody body = RequestBody.create( jo1.toString(),okhttp3.MediaType.parse("application/json; charset=utf-8"));
                 Request request = new Request.Builder()
-                        .url("https://uidserver.herokuapp.com/verify/email/otp")
+                        .url("https://uidserver.herokuapp.com/verify/email/check")
                         .method("POST", body)
                         .addHeader("Content-Type", "application/x-www-form-urlencoded")
                         .build();
@@ -230,12 +230,23 @@ public class verify_email extends AppCompatActivity {
 
             Toast.makeText(verify_email.this,"hello"+result+s1,Toast.LENGTH_LONG).show();
             //this method will be running on UI thread
-            boolean isFound = result.indexOf("true") !=-1? true: false;
-//            // Toast.makeText(email_input.this,"hello"+result,Toast.LENGTH_LONG).show();
-            if (isFound ) {
+            String s="";
+            try {
+                JSONObject jo1 = new JSONObject(result);
+                s=jo1.getString("key");
+               // Toast.makeText(verify_email.this,""+s,Toast.LENGTH_LONG).show();
+            }
+            catch (Exception e)
+            {
 
+            }
+
+            // boolean isFound = result.indexOf("true") !=-1? true: false;
+            if (!s.equals("")) {
+               // Toast.makeText(verify_email.this,""+s,Toast.LENGTH_LONG).show();
                 Intent newact1 = new Intent(verify_email.this, mobile_number.class);
-                boolean x=db.insert1(db1,"email","",m4,"admin","true");
+                boolean x=db.insert11(db1,"email","",m4,"admin","true",s);
+
                 if(x==true)
                 {
                     Toast.makeText(verify_email.this,"success",Toast.LENGTH_LONG).show();
@@ -249,7 +260,7 @@ public class verify_email extends AppCompatActivity {
                 pdLoading.dismiss();
             }
             else{
-                Toast.makeText(verify_email.this,"some error occured",Toast.LENGTH_LONG).show();
+                //Toast.makeText(verify_email.this,"some error occured",Toast.LENGTH_LONG).show();
                pdLoading.dismiss();
             }
 

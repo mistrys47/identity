@@ -210,7 +210,7 @@ public class verify_mobile extends AppCompatActivity {
 
                 RequestBody body = RequestBody.create( jo1.toString(),okhttp3.MediaType.parse("application/json; charset=utf-8"));
                 Request request = new Request.Builder()
-                        .url("https://uidserver.herokuapp.com/verify/mobile/otp")
+                        .url("https://uidserver.herokuapp.com/verify/mobile/check")
                         .method("POST", body)
                         .addHeader("Content-Type", "application/x-www-form-urlencoded")
                         .build();
@@ -228,10 +228,20 @@ public class verify_mobile extends AppCompatActivity {
         protected void onPostExecute(String result) {
             Toast.makeText(verify_mobile.this,"hello"+result,Toast.LENGTH_LONG).show();
             //this method will be running on UI thread
-            boolean isFound = result.indexOf("true") !=-1? true: false;
-            if (isFound ) {
+            String s="";
+            try {
+                JSONObject jo1 = new JSONObject(result);
+                s=jo1.getString("key");
+              }
+              catch (Exception e)
+            {
+
+            }
+
+           // boolean isFound = result.indexOf("true") !=-1? true: false;
+            if (!s.equals("")) {
                 Intent intent=new Intent(verify_mobile.this,home.class);
-                boolean x=db.insert1(db1,"mobile","",m4,"admin","true");
+                boolean x=db.insert11(db1,"mobile","",m4,"admin","true",s);
                 if(x==true)
                 {
                     Toast.makeText(verify_mobile.this,"success",Toast.LENGTH_LONG).show();
