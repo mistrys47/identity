@@ -38,7 +38,8 @@ public class useradapter extends RecyclerView.Adapter<useradapter.MyViewHolder> 
     private Context context;
     public String im;
     public List<String> lm1;
-private OnItemClickListner mlistner;
+    private OnItemClickListner mlistner;
+    public String verifier_url,verifier_name,old_verifier_url,old_verifier_name;
     public interface OnItemClickListner{
         void onItemClick(int position);
     }
@@ -56,7 +57,7 @@ private OnItemClickListner mlistner;
         public MyViewHolder(final View itemView, final OnItemClickListner listner) {
             super(itemView);
             lm1=new ArrayList<String>();
-           this.i1 = (ImageView) itemView.findViewById(R.id.bb1);
+            this.i1 = (ImageView) itemView.findViewById(R.id.bb1);
             this.field = (TextView) itemView.findViewById(R.id.bb2);
             this.ll1=(LinearLayout)itemView.findViewById(R.id.ll1);
             this.info = (TextView) itemView.findViewById(R.id.bb3);
@@ -91,9 +92,7 @@ private OnItemClickListner mlistner;
                             Toast.makeText(context, "" + view.getId(), Toast.LENGTH_LONG).show();
                             database db = new database(context);
                             im = i1.getTag().toString();
-                            SQLiteDatabase db1 = db.getWritableDatabase();
-                            String url1 = db.geturl1(db1, i1.getTag().toString());
-                            new useradapter.AsyncVerifier().execute(url1);
+                            new useradapter.AsyncVerifier().execute();
                         }
                         catch (Exception e)
                         {
@@ -102,110 +101,9 @@ private OnItemClickListner mlistner;
                     }
                 }
                 });
-
-
-
-
-
-
         }
 
     }
-    private class AsyncVerifier extends AsyncTask<String, String, String>
-    {
-        ProgressDialog pdLoading = new ProgressDialog(mContext);
-
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-
-            //this method will be running on UI thread
-            pdLoading.setMessage("\tGetting Verifier list...");
-            pdLoading.setCancelable(false);
-            pdLoading.show();
-
-        }
-        @Override
-        protected String doInBackground(String... params) {
-            try {
-
-                OkHttpClient client = new OkHttpClient().newBuilder()
-                        .build();
-
-                MediaType mediaType = MediaType.parse("application/x-www-form-urlencoded");
-
-                Request request = new Request.Builder()
-                        .url("https://uidserver.herokuapp.com/service_provider/verifiers")
-                        .header("Accept", "application/json")
-                        .header("Content-Type", "application/json")
-                        .build();
-
-
-
-                Response response = client.newCall(request).execute();
-
-                return response.body().string();
-
-            }catch (Exception e)
-            {
-                return "error"+e;
-            }
-
-        }
-        @Override
-        protected void onPostExecute(String result) {
-            try {
-                JSONObject jo1 = new JSONObject(result);
-                String sm= jo1.getString("verifiers");
-              //  Toast.makeText(getContext(),""+sm,Toast.LENGTH_LONG).show();
-                JSONArray jo2=new JSONArray(sm);
-                List<verifier_info> a = new ArrayList<verifier_info>();
-                // List< verifier_info> a=new verifier_info[100];
-                for(int i=0;i<jo2.length();i++)
-                {
-
-                    JSONObject jm2=new JSONObject(jo2.getString(i));
-                    lm1.add(jm2.getString("name"));
-                    a.add(new verifier_info(jm2.getString("name"),jm2.getString("url")));
-                    //  a[i].setName1(jm2.getString("name"));
-                    //  a[i].setUrl1(jm2.getString("url"));
-                  //  Toast.makeText(getContext(),""+jm2.getString("name"),Toast.LENGTH_LONG).show();
-                    // lm1.add(jo2.getString(i));
-                }
-
-                final List<verifier_info> b=a;
-                List<String> listItems = lm1;
-                AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-                builder.setTitle("Choose a verifier");
-                final CharSequence[] values = listItems.toArray(new CharSequence[listItems.size()]);
-                AlertDialog dialog;
-                builder.setSingleChoiceItems(values, -1, new DialogInterface.OnClickListener() {
-
-                    public void onClick(DialogInterface dialog, int item) {
-
-                       Toast.makeText(mContext,""+item,Toast.LENGTH_LONG).show();
-
-                      //  new add_user_details.AsyncAdding().execute(it11,it22,em1);
-                        dialog.dismiss();
-                    }
-                });
-                dialog= builder.create();
-                dialog.show();
-
-
-
-            }catch (Exception e)
-            {
-                Toast.makeText(mContext,""+e,Toast.LENGTH_LONG).show();
-            }
-            //  done1=true;
-
-            //  Toast.makeText(getContext(),result,Toast.LENGTH_LONG).show();
-            pdLoading.dismiss();
-        }
-    }
-
     private class AsyncCheck extends AsyncTask<String, String, String>
     {
         ProgressDialog pdLoading = new ProgressDialog(context);
@@ -251,7 +149,6 @@ private OnItemClickListner mlistner;
             if(!isFound)
             {
                 database db = new database(context);
-
                 SQLiteDatabase db1 = db.getWritableDatabase();
                 db.update1(db1,im,"true");
                 db.update2(db1,im,result);
@@ -263,10 +160,195 @@ private OnItemClickListner mlistner;
             pdLoading.dismiss();
         }
     }
+    private class AsyncVerifier extends AsyncTask<String, String, String>
+    {
+        ProgressDialog pdLoading = new ProgressDialog(mContext);
 
 
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
 
+            //this method will be running on UI thread
+            pdLoading.setMessage("\tGetting Verifier list...");
+            pdLoading.setCancelable(false);
+            pdLoading.show();
 
+        }
+        @Override
+        protected String doInBackground(String... params) {
+            try {
+
+                OkHttpClient client = new OkHttpClient().newBuilder().build();
+                MediaType mediaType = MediaType.parse("application/x-www-form-urlencoded");
+                Request request = new Request.Builder()
+                        .url("https://uidserver.herokuapp.com/service_provider/verifiers")
+                        .header("Accept", "application/json")
+                        .header("Content-Type", "application/json")
+                        .build();
+                Response response = client.newCall(request).execute();
+                return response.body().string();
+
+            }catch (Exception e)
+            {
+                return "error"+e;
+            }
+
+        }
+        @Override
+        protected void onPostExecute(String result) {
+            try
+            {
+                JSONObject jo1 = new JSONObject(result);
+                String sm= jo1.getString("verifiers");
+                JSONArray jo2=new JSONArray(sm);
+                List<verifier_info> a = new ArrayList<verifier_info>();
+                database db = new database(context);
+                SQLiteDatabase db1 = db.getWritableDatabase();
+                old_verifier_name = db.getverifier_name(db1,im);
+                for(int i=0;i<jo2.length();i++)
+                {
+                    JSONObject jm2=new JSONObject(jo2.getString(i));
+                    lm1.add(jm2.getString("name"));
+                    a.add(new verifier_info(jm2.getString("name"),jm2.getString("url")));
+
+                    if(old_verifier_name.equals(jm2.getString("name")))
+                    {
+                        old_verifier_url = jm2.getString("url");
+                    }
+                }
+                final List<verifier_info> b=a;
+                List<String> listItems = lm1;
+                AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+                builder.setTitle("Choose a verifier");
+                final CharSequence[] values = listItems.toArray(new CharSequence[listItems.size()]);
+                AlertDialog dialog;
+                builder.setSingleChoiceItems(values, -1, new DialogInterface.OnClickListener() {
+
+                    public void onClick(DialogInterface dialog, int item) {
+                        Toast.makeText(mContext,""+item,Toast.LENGTH_LONG).show();
+                        verifier_url = b.get(item).getUrl1();
+                        verifier_name = b.get(item).getName1();
+                        dialog.dismiss();
+                    }
+                });
+                dialog= builder.create();
+                dialog.show();
+
+            }catch (Exception e)
+            {
+                Toast.makeText(mContext,""+e,Toast.LENGTH_LONG).show();
+            }
+            new useradapter.AsyncAdd().execute();
+            pdLoading.dismiss();
+        }
+    }
+    private class AsyncAdd extends AsyncTask<String, String, String>
+    {
+        ProgressDialog pdLoading = new ProgressDialog(context);
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+            //this method will be running on UI thread
+            pdLoading.setMessage("\tLoading...");
+            pdLoading.setCancelable(false);
+            pdLoading.show();
+
+        }
+        @Override
+        protected String doInBackground(String... params) {
+            OkHttpClient client = new OkHttpClient().newBuilder().build();
+            JSONObject jo1 = new JSONObject();
+            try {
+                database db = new database(context);
+                SQLiteDatabase db1 = db.getWritableDatabase();
+                String email = db.getvalue(db1, "email");
+                String value = db.getvalue(db1, im);
+                jo1.put("type", im);
+                jo1.put("value", value);
+                jo1.put("email", email);
+                String s = verifier_url + "add";
+                RequestBody body = RequestBody.create(jo1.toString(), okhttp3.MediaType.parse("application/json; charset=utf-8"));
+                Request request = new Request.Builder()
+                        .url("https://a75f66f6.ngrok.io/details/add")
+                        .method("POST", body)
+                        .addHeader("Content-Type", "application/x-www-form-urlencoded")
+                        .build();
+                Response response = client.newCall(request).execute();
+                return response.body().string();
+            }
+            catch (Exception e)
+            {
+                return e+"";
+            }
+
+        }
+        @Override
+        protected void onPostExecute(String result) {
+            Toast.makeText(context,result,Toast.LENGTH_LONG).show();
+            database db = new database(context);
+            SQLiteDatabase db1 = db.getWritableDatabase();
+            db.updatevalue(db1,"verified_by",verifier_name);
+            db.updatevalue(db1,"verifier_url",result);
+            new useradapter.AsyncRemove().execute();
+            pdLoading.dismiss();
+        }
+    }
+    private class AsyncRemove extends AsyncTask<String, String, String>
+    {
+        ProgressDialog pdLoading = new ProgressDialog(context);
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+            //this method will be running on UI thread
+            pdLoading.setMessage("\tLoading...");
+            pdLoading.setCancelable(false);
+            pdLoading.show();
+
+        }
+        @Override
+        protected String doInBackground(String... params) {
+            OkHttpClient client = new OkHttpClient().newBuilder().build();
+            JSONObject jo1 = new JSONObject();
+            try
+            {
+                //old_verifier_name
+                //old_verifier_url
+                int i = old_verifier_url.indexOf("=");
+                String old_id = old_verifier_url.substring(i+1);
+                Toast.makeText(context,old_id+"",Toast.LENGTH_LONG).show();
+                jo1.put("id",old_id );
+                RequestBody body = RequestBody.create( jo1.toString(),okhttp3.MediaType.parse("application/json; charset=utf-8"));
+                Request request = new Request.Builder()
+                        .url("https://a75f66f6.ngrok.io/details/remove")
+                        .method("POST", body)
+                        .addHeader("Content-Type", "application/x-www-form-urlencoded")
+                        .build();
+                Response response = client.newCall(request).execute();
+                return response.body().string();
+            }
+            catch (Exception e)
+            {
+                return e+"";
+            }
+        }
+        @Override
+        protected void onPostExecute(String result) {
+            boolean isFound = result.indexOf("Success") !=-1? true: false;
+            Toast.makeText(context,result,Toast.LENGTH_LONG).show();
+            if(isFound)
+            {
+
+            }
+            else
+            {
+                Toast.makeText(context,"Error removing previous verifier",Toast.LENGTH_LONG).show();
+            }
+            pdLoading.dismiss();
+        }
+    }
     private List<User_details> categoriesList;
     private Context mContext;
     public useradapter(List<User_details> moviesList) {
@@ -292,20 +374,14 @@ private OnItemClickListner mlistner;
             holder.i1.setImageResource(R.drawable.tick);
             holder.i1.setTag("verified");
         }
-
-        //holder.subname.setText(tempobj.getSubname());
         holder.field.setText((tempobj.getfields().toUpperCase() ));
-
         holder.info.setText((tempobj.getInfo()));
-
-     //   holder.totalHeld.setText(Integer.toString(tempobj.getTotalheld()));
     }
 
 
 
     public useradapter(List<User_details> categories, Context context) {
         this.mContext = context;
-
         this.categoriesList = categories;
     }
 
