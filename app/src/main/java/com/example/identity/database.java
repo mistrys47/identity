@@ -182,6 +182,20 @@ class database extends SQLiteOpenHelper {
         else
             return true;
     }
+    public boolean update2(SQLiteDatabase db,String field,String value)
+    {
+        ContentValues contentValues = new ContentValues();
+
+        contentValues.put(COL5,value);
+        long re=db.update(TABLE_NAME1,
+                contentValues,
+                "field_name" + " = ? ",
+                new String[]{field});
+        if(re == -1)
+            return false;
+        else
+            return true;
+    }
 }
 
 

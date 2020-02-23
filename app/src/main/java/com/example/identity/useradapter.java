@@ -237,7 +237,6 @@ private OnItemClickListner mlistner;
 
 
                 Response response = client.newCall(request).execute();
-
                 return response.body().string();
 
             }catch (Exception e)
@@ -248,14 +247,14 @@ private OnItemClickListner mlistner;
         }
         @Override
         protected void onPostExecute(String result) {
-            boolean isFound = result.indexOf("true") !=-1? true: false;
-            if(isFound)
+            boolean isFound = result.indexOf("Not Found") !=-1? true: false;
+            if(!isFound)
             {
                 database db = new database(context);
 
                 SQLiteDatabase db1 = db.getWritableDatabase();
                 db.update1(db1,im,"true");
-
+                db.update2(db1,im,result);
             }
             FragmentManager fragmentManager = ((AppCompatActivity)context).getSupportFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.fl1,new user_details_card()).addToBackStack(null).commit();
