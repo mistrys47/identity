@@ -128,7 +128,7 @@ public class email_input extends AppCompatActivity {
            // Toast.makeText(email_input.this,result,Toast.LENGTH_LONG).show();
          //   pdLoading.dismiss();
             boolean isFound = result.indexOf("true") !=-1? true: false;
-             Toast.makeText(email_input.this,""+result,Toast.LENGTH_LONG).show();
+             //Toast.makeText(email_input.this,""+result,Toast.LENGTH_LONG).show();
             if (isFound ) {
                 Intent newact1=new Intent(email_input.this,verify_email.class);
                 newact1.putExtra("email_id", em1);
