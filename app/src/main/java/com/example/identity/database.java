@@ -241,6 +241,11 @@ class database extends SQLiteOpenHelper {
         else
             return true;
     }
+    public void delete_table2(SQLiteDatabase db)
+    {
+        db.execSQL("DROP TABLE IF EXISTS "+TABLE_NAME2);
+        db.execSQL("CREATE TABLE " + TABLE_NAME2 +" (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT,data TEXT)");
+    }
 }
 
 

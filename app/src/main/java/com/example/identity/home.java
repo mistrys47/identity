@@ -285,6 +285,12 @@ FrameLayout f1;
 
 
         }
+        else if (id == R.id.Delete) {
+            db1 = db.getWritableDatabase();
+            db.delete_table2(db1);
+
+
+        }
         else if(id== R.id.Showdetails1)
         {
             try {
@@ -297,6 +303,7 @@ FrameLayout f1;
                 Toast.makeText(this,""+e,Toast.LENGTH_LONG).show();
             }
         }
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
