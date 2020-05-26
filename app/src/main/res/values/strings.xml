@@ -10,7 +10,8 @@
     <string name="email_id2">Email Id needs to be verified</string>
     <string name="email_id3">abc@gmail.com</string>
     <string name="email_id4">OTP will be sent to your email id</string>
-
+    <string name="expiry">Expiry Date</string>
+    <string name="value">Value</string>
     <string name="accept_amp_continue_email"><![CDATA[Verify Email]]></string>
 
     <string name="sent_email_id">We have sent an email \nto your registered email id</string>

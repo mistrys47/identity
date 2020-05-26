@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -336,15 +337,21 @@ public class add_user_details extends Fragment {
             {
                 final LinearLayout parent = new LinearLayout(getActivity());
                 parent.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-                parent.setOrientation(LinearLayout.HORIZONTAL);
+                parent.setOrientation(LinearLayout.VERTICAL);
 
                 LinearLayout ll1 = new LinearLayout(getActivity());
-                ll1.setLayoutParams(new LinearLayout.LayoutParams(0,LinearLayout.LayoutParams.WRAP_CONTENT,2));
+                LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                layoutParams.setMargins(60, 0, 60, 0);
+                ll1.setLayoutParams(layoutParams);
                 ll1.setOrientation(LinearLayout.VERTICAL);
                 s1 = new Spinner(getActivity());
                 ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_dropdown_item, spinnerArray);
                 s1.setAdapter(spinnerArrayAdapter);
-                s1.setLayoutParams(new Spinner.LayoutParams(Spinner.LayoutParams.MATCH_PARENT, Spinner.LayoutParams.WRAP_CONTENT));
+                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                params.gravity=Gravity.CENTER;
+                s1.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+                s1.setLayoutParams(params);
                 s1.setTag(cnt);
                 s1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
@@ -352,12 +359,12 @@ public class add_user_details extends Fragment {
                         if(expiry_index.contains(position))
                         {
                             EditText e = (EditText) parent.findViewWithTag("exp0");
-                            e.setEnabled(true);
+                            e.setVisibility(View.VISIBLE);
                         }
                         else
                         {
                             EditText e = (EditText) parent.findViewWithTag("exp0");
-                            e.setEnabled(false);
+                            e.setVisibility(View.GONE);
                         }
                     }
                     @Override
@@ -368,22 +375,23 @@ public class add_user_details extends Fragment {
                 parent.addView(ll1);
 
                 LinearLayout ll2 = new LinearLayout(getActivity());
-                ll2.setLayoutParams(new LinearLayout.LayoutParams(0,LinearLayout.LayoutParams.WRAP_CONTENT,3));
+                ll2.setLayoutParams(layoutParams);
                 ll2.setOrientation(LinearLayout.VERTICAL);
+                ll2.setWeightSum(4);
                 e1 = new EditText(getActivity());
                 e1.setTag("i" + cnt);
-                e1.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+                e1.setHint(R.string.value);
+                e1.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT,2));
                 ll2.addView(e1);
-                parent.addView(ll2);
 
-                LinearLayout ll3 = new LinearLayout(getActivity());
-                ll3.setLayoutParams(new LinearLayout.LayoutParams(0,LinearLayout.LayoutParams.WRAP_CONTENT,2));
-                ll3.setOrientation(LinearLayout.VERTICAL);
+
+
                 e2 = new EditText(getActivity());
                 e2.setTag("exp" + cnt);
-                e2.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+                e2.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT,2));
                 e2.setClickable(true);
                 e2.setFocusable(false);
+                e2.setHint(R.string.expiry);
                 e2.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -396,8 +404,8 @@ public class add_user_details extends Fragment {
                     e2.setEnabled(true);
                 else
                     e2.setEnabled(false);
-                ll3.addView(e2);
-                parent.addView(ll3);
+                ll2.addView(e2);
+                parent.addView(ll2);
 
                 l1.addView(parent);
                 cnt++;
