@@ -3,6 +3,7 @@ package com.example.identity;
 import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -35,6 +36,14 @@ import com.google.zxing.integration.android.IntentResult;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+
 public class home extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     ImageButton scan_qr;
@@ -61,11 +70,11 @@ public class home extends AppCompatActivity
 
         f1=(FrameLayout)findViewById(R.id.fl1);
         scan_qr=(ImageButton)findViewById(R.id.Scan);
-
-        db1 = db.getWritableDatabase();
+        check_for_expiry_fields();
+  //      db1 = db.getWritableDatabase();
 //        boolean x=db.insert11(db1,"email","","guptashubham1798@gmail.com","admin","true","key1","");
 //
-//        boolean x33=db.insert11(db1,"mobile","","9714948994","admin","true","key3","");
+        //boolean x33=db.insert11(db1,"mobile","","9284959664","admin","true","key3","");
         boolean x1=db.checkemail(db1);
         FragmentManager fragmentManager=getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.fl1,(Fragment) new user_details_card()).addToBackStack(null).commit();
@@ -300,6 +309,29 @@ public class home extends AppCompatActivity
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
+        return true;
+    }
+    void check_for_expiry_fields()
+    {
+        Date c = Calendar.getInstance().getTime();
+        SimpleDateFormat df =new SimpleDateFormat("dd-MM-yyyy");
+        String todays_date = df.format(c);
+        db1 = db.getWritableDatabase();
+        Cursor results=db.get_all_fields_with_expiry(db1);
+        List<String> Expired = new ArrayList<String>();
+        while (results.moveToNext()) {
+            String field=results.getString(0);
+            String Expiry_date=results.getString(6);
+            if(compare_todays_date_with_exp_date(Expiry_date,todays_date))
+            Expired.add(field+" exp is :"+Expiry_date);
+        }
+        Toast.makeText(this,""+Expired.toString(),Toast.LENGTH_LONG).show();
+    }
+    Boolean compare_todays_date_with_exp_date(String exp_date,String current_date)
+    {
+
+
+
         return true;
     }
 

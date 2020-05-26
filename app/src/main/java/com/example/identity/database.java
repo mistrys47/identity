@@ -260,6 +260,12 @@ class database extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS "+TABLE_NAME2);
         db.execSQL("CREATE TABLE " + TABLE_NAME2 +" (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT,data TEXT)");
     }
+
+    public Cursor get_all_fields_with_expiry(SQLiteDatabase db)
+    {
+        Cursor res = db.rawQuery("select * from "+TABLE_NAME1,null);
+        return res;
+    }
 }
 
 
