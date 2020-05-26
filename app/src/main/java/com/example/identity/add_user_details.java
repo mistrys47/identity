@@ -405,12 +405,13 @@ public class add_user_details extends Fragment {
                         new DatePickerDialog(getContext(), date, myCalendar
                                 .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
                                 myCalendar.get(Calendar.DAY_OF_MONTH)).show();
-                        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy",Locale.US);
-                        String todate= dateFormat.format(currentdate());
-                        e2.setText(todate);
+
                     }
                 });
                 e2.setEnabled(true);
+                DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy",Locale.US);
+                String todate= dateFormat.format(currentdate());
+                e2.setText(todate);
                 if(expiry_index.contains(0))
                     e2.setVisibility(View.GONE);
                 else
