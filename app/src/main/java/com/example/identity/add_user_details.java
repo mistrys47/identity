@@ -32,10 +32,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -91,6 +93,7 @@ public class add_user_details extends Fragment {
                 myCalendar.set(Calendar.YEAR, year);
                 myCalendar.set(Calendar.MONTH, monthOfYear);
                 myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+
                 updateLabel();
             }
 
@@ -104,7 +107,8 @@ public class add_user_details extends Fragment {
                     e1.setError("Required");
                     return;
                 }
-                if(e2.isEnabled())
+                int pos = s1.getSelectedItemPosition();
+                if(expiry_index.contains(pos))
                 if (e2.getText().toString().equals("")) {
                     e2.setError("Required");
                     return;
@@ -305,7 +309,7 @@ public class add_user_details extends Fragment {
                 //res1="[{\"name\":\"aadhar\",\"reqExpiry\":true},{\"name\":\"pan\",\"reqExpiry\":false}]";
                 JSONObject jj = new JSONObject(res1);
 
-                Toast.makeText(getContext(),res1,Toast.LENGTH_LONG).show();
+                //Toast.makeText(getContext(),res1,Toast.LENGTH_LONG).show();
                 JSONArray arr = jj.getJSONArray("fields");
                 for(int i=0;i<arr.length();i++)
                 {
@@ -401,6 +405,9 @@ public class add_user_details extends Fragment {
                         new DatePickerDialog(getContext(), date, myCalendar
                                 .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
                                 myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+                        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy",Locale.US);
+                        String todate= dateFormat.format(currentdate());
+                        e2.setText(todate);
                     }
                 });
                 e2.setEnabled(true);
@@ -427,5 +434,10 @@ public class add_user_details extends Fragment {
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
         e2.setText(sdf.format(myCalendar.getTime()));
         //Toast.makeText(getContext(),sdf.format(myCalendar.getTime()),Toast.LENGTH_LONG).show();
+    }
+    private Date currentdate() {
+        final Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.DATE, 0);
+        return cal.getTime();
     }
 }
