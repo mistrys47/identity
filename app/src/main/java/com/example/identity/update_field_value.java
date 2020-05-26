@@ -76,7 +76,7 @@ public class update_field_value extends Fragment {
                 values.add(c.getString(1));
 
                 if (c.getString(2).equals("")) {
-                    Toast.makeText(getContext(),c.getString(2)+":",Toast.LENGTH_LONG).show();
+                    //Toast.makeText(getContext(),c.getString(2)+":",Toast.LENGTH_LONG).show();
                     expiry_dates.add("-1");
                 } else
                     expiry_dates.add(c.getString(2));
@@ -111,6 +111,7 @@ public class update_field_value extends Fragment {
                   }
             });
             expiry.setClickable(true);
+            expiry.setFocusable(false);
             expiry.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -123,18 +124,21 @@ public class update_field_value extends Fragment {
                 @Override
                 public void onClick(View view) {
                     Boolean b, c;
+                    String last_verified_value;
                     if (expiry_dates.get(spinner.getSelectedItemPosition()) == "-1") {
-                        b = db.update1(db1, "last_verified_value", values.get(spinner.getSelectedItemPosition()) + ",");
+                        last_verified_value = values.get(spinner.getSelectedItemPosition()) + "#";
+                        b = db.update1(db1, "last_verified_value", last_verified_value);
                         c = db.update1(db1, "value", value.getText().toString());
                     } else {
-                        b = db.update1(db1, "last_verified_value", values.get(spinner.getSelectedItemPosition()) + "," + expiry_dates.get(spinner.getSelectedItemPosition()));
+                        last_verified_value = values.get(spinner.getSelectedItemPosition()) + "#" + expiry_dates.get(spinner.getSelectedItemPosition());
+                        b = db.update1(db1, "last_verified_value",last_verified_value );
                         c = db.update1(db1, "value", value.getText().toString());
                         c = c & db.update1(db1, "expiry_date", expiry.getText().toString());
                     }
                     if (b)
-                        Toast.makeText(getContext(), "Successful Updatation in last_verified value", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getContext(), "Successful Updatation in last_verified value" + last_verified_value, Toast.LENGTH_LONG).show();
                     if (c)
-                        Toast.makeText(getContext(), "Successful Updatation in new value", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getContext(), "Successful Updatation in new value"+db.getvalue(db1,spinnerArray.get(spinner.getSelectedItemPosition())), Toast.LENGTH_LONG).show();
 
                 }
             });
