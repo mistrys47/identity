@@ -146,6 +146,7 @@ Integer cnt=0,cnt1=0;
                 t1 = new TextView(getActivity());
 
                 String val = db.getvalue(db1, all_info[i].field.toLowerCase());
+                String exp=db.getexpiry(db1, all_info[i].field.toLowerCase());
                 String val1 = db.gettransaction_id(db1,all_info[i].field.toLowerCase());
                 //Toast.makeText(getContext(),""+val1,Toast.LENGTH_LONG).show();
                 t1.setText(val);
@@ -172,6 +173,7 @@ Integer cnt=0,cnt1=0;
 
                         jj.put("value", val);
                         jj.put("key",val1);
+                        jj.put("expiry",exp);
                         if(!all_info[i].field.toLowerCase().equals("email"))
                         jj1.put(all_info[i].field.toLowerCase(),jj);
                         //Toast.makeText(getContext(),jj1.toString(),Toast.LENGTH_LONG).show();
@@ -633,7 +635,6 @@ Integer cnt=0,cnt1=0;
             {
                 if(!bm1)
                 {
-
                      boolean m1=db.insert2(db1,URL1,data1);
 
                    if(m1) {
