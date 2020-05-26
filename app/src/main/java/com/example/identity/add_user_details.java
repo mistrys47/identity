@@ -187,7 +187,7 @@ public class add_user_details extends Fragment {
         protected void onPostExecute(String result) {
             database db = new database(getActivity());
             SQLiteDatabase db1 = db.getWritableDatabase();
-            db.insert1(db1,it11,result,it22,verifier_name,"false","");
+            db.insert1(db1,it11,result,it22,verifier_name,"false",it33);
             FragmentManager fragmentManager = getFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.fl1,new user_details_card()).addToBackStack(null).commit();
             pdLoading.dismiss();

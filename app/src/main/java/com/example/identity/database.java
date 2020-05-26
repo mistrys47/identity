@@ -105,7 +105,7 @@ class database extends SQLiteOpenHelper {
         return s1;
     }
     public Cursor getfields(SQLiteDatabase db){
-        Cursor cursor=db.rawQuery("select field_name from userdetails",null);
+        Cursor cursor=db.rawQuery("select field_name,value,expiry_date from userdetails",null);
         return cursor;
     }
     public String gettransaction_id(SQLiteDatabase db,String s){

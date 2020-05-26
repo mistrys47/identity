@@ -3,11 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_margin="10dp"
     tools:context=".update_field_value">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:orientation="vertical">
         <Spinner
             android:layout_width="match_parent"
@@ -19,19 +22,18 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
 
-            android:orientation="horizontal">
+            android:orientation="vertical">
             <EditText
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="value"
                 android:gravity="center"
-                android:layout_weight="2"
                 android:id="@+id/value"/>
             <EditText
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Expiry Date"
-                android:layout_weight="3"
+                android:gravity="center"
                 android:id="@+id/expiry"/>
 
         </LinearLayout>
@@ -39,7 +41,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Update"
-            android:id="@+id/b1"
+            android:id="@+id/submit"
             android:background="@color/zxing_transparent"
             android:layout_gravity="center">
         </Button>

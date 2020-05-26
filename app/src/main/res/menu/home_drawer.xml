@@ -25,6 +25,10 @@
             android:id="@+id/Delete"
             android:icon="@drawable/ic_menu_gallery"
             android:title="Delete signedup  websites"/>
+        <item
+            android:id="@+id/update_value"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="Update Value"/>
     </group>
 
 
