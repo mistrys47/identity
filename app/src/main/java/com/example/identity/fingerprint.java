@@ -11,11 +11,13 @@ import android.os.Build;
 import android.security.keystore.KeyGenParameterSpec;
 import android.security.keystore.KeyPermanentlyInvalidatedException;
 import android.security.keystore.KeyProperties;
+import android.support.annotation.RequiresApi;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.IOException;
 import java.security.InvalidAlgorithmParameterException;
@@ -33,6 +35,7 @@ import javax.crypto.KeyGenerator;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
 
+@RequiresApi(api = Build.VERSION_CODES.M)
 public class fingerprint extends AppCompatActivity {
 
 
@@ -61,7 +64,6 @@ public class fingerprint extends AppCompatActivity {
         // Check 3: Have permission to use fingerprint scanner in the app
         // Check 4: Lock screen is secured with atleast 1 type of lock
         // Check 5: Atleast 1 Fingerprint is registered
-
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 
             fingerprintManager = (FingerprintManager) getSystemService(FINGERPRINT_SERVICE);

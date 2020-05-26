@@ -248,7 +248,7 @@ public class verify_email extends AppCompatActivity {
             if (!s.equals("")) {
                // Toast.makeText(verify_email.this,""+s,Toast.LENGTH_LONG).show();
                 Intent newact1 = new Intent(verify_email.this, mobile_number.class);
-                boolean x=db.insert11(db1,"email","",m4,"admin","true",s);
+                boolean x=db.insert11(db1,"email","",m4,"admin","true",s,"");
              //   boolean x33=db.insert11(db1,"mobile","","9284959664","admin","true","key2");
 
                 if(x==true)

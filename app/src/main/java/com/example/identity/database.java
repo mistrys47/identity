@@ -16,6 +16,7 @@ class database extends SQLiteOpenHelper {
     public static final String COL5 = "transaction_id";
     public static final String COL6 = "expiry_date";
     public static final String COL7 = "verifier_url";
+    public static final String COL8 = "expiry_date";
     public static final String TABLE_NAME2 = "serviceproviders";
     public static final String COL21 = "id";
     public static final String COL22 = "name";
@@ -26,7 +27,7 @@ class database extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("CREATE TABLE " + TABLE_NAME1 +" (field_name TEXT,value TEXT,verified TEXT,verified_by TEXT,transaction_id TEXT,verifier_url TEXT)");
+        db.execSQL("CREATE TABLE " + TABLE_NAME1 +" (field_name TEXT,value TEXT,verified TEXT,verified_by TEXT,transaction_id TEXT,verifier_url TEXT,expiry_date TEXT)");
         db.execSQL("CREATE TABLE " + TABLE_NAME2 +" (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT,data TEXT)");
     }
 
@@ -37,7 +38,7 @@ class database extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public boolean insert1(SQLiteDatabase db,String field_name,String url,String value,String verifier,String verified) {
+    public boolean insert1(SQLiteDatabase db,String field_name,String url,String value,String verifier,String verified,String expiry_date) {
         ContentValues contentValues = new ContentValues();
         contentValues.put(COL1,field_name);
         contentValues.put(COL2,value);
@@ -45,7 +46,7 @@ class database extends SQLiteOpenHelper {
         contentValues.put(COL4,verifier);
         contentValues.put(COL5,"");
         contentValues.put(COL7,url);
-
+        contentValues.put(COL8,expiry_date);
         long x=db.insert(TABLE_NAME1,null,contentValues);
         if(x==-1)
         {
@@ -53,6 +54,7 @@ class database extends SQLiteOpenHelper {
         }
         return true;
     }
+
     public boolean checkemail(SQLiteDatabase db){
         Cursor cursor = db.query(TABLE_NAME1,new String[]{"field_name","verified" },"field_name=? AND verified=?",new String[]{"email","true"},null,null,null  );
         if(cursor.getCount()>0)
@@ -211,7 +213,7 @@ class database extends SQLiteOpenHelper {
         else
             return true;
     }
-    public boolean insert11(SQLiteDatabase db,String field_name,String url,String value,String verifier,String verified,String key) {
+    public boolean insert11(SQLiteDatabase db,String field_name,String url,String value,String verifier,String verified,String key,String expiry_date) {
         ContentValues contentValues = new ContentValues();
         contentValues.put(COL1,field_name);
         contentValues.put(COL2,value);
@@ -219,7 +221,7 @@ class database extends SQLiteOpenHelper {
         contentValues.put(COL4,verifier);
         contentValues.put(COL5,key);
         contentValues.put(COL7,url);
-
+        contentValues.put(COL8,expiry_date);
         long x=db.insert(TABLE_NAME1,null,contentValues);
         if(x==-1)
         {
@@ -227,6 +229,7 @@ class database extends SQLiteOpenHelper {
         }
         return true;
     }
+
     public boolean update2(SQLiteDatabase db,String field,String value)
     {
         ContentValues contentValues = new ContentValues();

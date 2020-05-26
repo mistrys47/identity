@@ -35,6 +35,8 @@ public class email_input extends AppCompatActivity {
             Window window=this.getWindow();
             window.setStatusBarColor(this.getResources().getColor(R.color.number_background));}
         db1 = db.getWritableDatabase();
+
+
         boolean x1=db.checkemail(db1);
 
         boolean x2=db.checkmobile(db1);

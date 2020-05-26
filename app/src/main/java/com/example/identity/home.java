@@ -37,12 +37,12 @@ import org.json.JSONObject;
 
 public class home extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-ImageButton scan_qr;
-String data1;
-Integer Storagepermession=1;
-Boolean done,m;
+    ImageButton scan_qr;
+    String data1;
+    Integer Storagepermession=1;
+    Boolean done,m;
 
-FrameLayout f1;
+    FrameLayout f1;
     database db=new database(this);
     SQLiteDatabase db1;
 
@@ -65,7 +65,7 @@ FrameLayout f1;
         db1 = db.getWritableDatabase();
         //boolean x=db.insert11(db1,"email","","guptashubham1798@gmail.com","admin","true","key1");
 
-       // boolean x33=db.insert11(db1,"name","","shubham","admin","true","key3");
+        // boolean x33=db.insert11(db1,"name","","shubham","admin","true","key3");
         boolean x1=db.checkemail(db1);
 
         //
@@ -78,7 +78,7 @@ FrameLayout f1;
         fragmentManager.beginTransaction().replace(R.id.fl1,(Fragment) new user_details_card()).addToBackStack(null).commit();
 
         boolean x2=db.checkmobile(db1);
-       if(x1==true && x2==true)
+        if(x1==true && x2==true)
         {
             try {
                 NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
@@ -92,8 +92,8 @@ FrameLayout f1;
             {
                 Toast.makeText(this,""+e,Toast.LENGTH_LONG).show();
             }
-           // Intent intent=new Intent(this,home.class);
-           // startActivity(intent);
+            // Intent intent=new Intent(this,home.class);
+            // startActivity(intent);
         }
         else
         {
@@ -131,8 +131,8 @@ FrameLayout f1;
                     JSONObject obj = new JSONObject(result.getContents());
                     data1=result.getContents();
                     done=true;
-                 //  Toast.makeText(this,"m1"+ result.getContents(), Toast.LENGTH_LONG).show();
-                 //   Toast.makeText(this,"tried to change",Toast.LENGTH_LONG).show();
+                    //  Toast.makeText(this,"m1"+ result.getContents(), Toast.LENGTH_LONG).show();
+                    //   Toast.makeText(this,"tried to change",Toast.LENGTH_LONG).show();
 //                   on_scan frag = new on_scan();
 //                    Bundle b = new Bundle();
 //                    b.putString("user", "steve");
@@ -162,7 +162,7 @@ FrameLayout f1;
 
         }
         else {
-         //   Toast.makeText(this, "tried to change", Toast.LENGTH_LONG).show();
+            //   Toast.makeText(this, "tried to change", Toast.LENGTH_LONG).show();
             on_scan frag = new on_scan();
             Bundle b = new Bundle();
             b.putString("user", data);
@@ -175,20 +175,20 @@ FrameLayout f1;
     }
     private View.OnClickListener findtext = new View.OnClickListener() {
         public void onClick(View v) {
-          //  qrScan.initiateScan();
+            //  qrScan.initiateScan();
             //data.getStr
             done=false;
-           new home.AsyncLogin().execute();
-        //    String str_result= new RunInBackGround().execute();
-        //    while(!done)
-      //   call(data1);
-         //   Toast.makeText(v.getContext(),"hello",Toast.LENGTH_LONG).show();
+            new home.AsyncLogin().execute();
+            //    String str_result= new RunInBackGround().execute();
+            //    while(!done)
+            //   call(data1);
+            //   Toast.makeText(v.getContext(),"hello",Toast.LENGTH_LONG).show();
         }
     };
 
     private class AsyncLogin extends AsyncTask<String, String, String>
     {
-      //  ProgressDialog pdLoading = new ProgressDialog(verify_mobile.this);
+        //  ProgressDialog pdLoading = new ProgressDialog(verify_mobile.this);
 
 
         @Override
@@ -204,7 +204,7 @@ FrameLayout f1;
         }
         @Override
         protected void onPostExecute(String result) {
-           // if(done)
+            // if(done)
             call(data1);
         }
     }
@@ -225,13 +225,13 @@ FrameLayout f1;
         ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.CAMERA},Storagepermession);
         return true;
     }
-            @Override
+    @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-          //  super.onBackPressed();
+            //  super.onBackPressed();
             //Intent goToMainActivity = new Intent(getApplicationContext(), MainActivity.class);
             //goToMainActivity.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); // Will clear out your activity history stack till now
             //startActivity(goToMainActivity);
@@ -263,7 +263,7 @@ FrameLayout f1;
     public void m1(View v){
         Intent i1=new Intent(this,MainActivity.class);
         startActivity(i1);
-       // Toast.makeText(this,"hi",Toast.LENGTH_LONG).show();
+        // Toast.makeText(this,"hi",Toast.LENGTH_LONG).show();
     }
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
@@ -272,7 +272,7 @@ FrameLayout f1;
         // Handle navigation view item clicks here.
         int id = item.getItemId();
         if (id == R.id.profile) {
-           // f1.removeAllViews();
+            // f1.removeAllViews();
             FragmentManager fragmentManager=getSupportFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.fl1,(Fragment) new user_details_card()).addToBackStack(null).commit();
         } else if (id == R.id.details) {
