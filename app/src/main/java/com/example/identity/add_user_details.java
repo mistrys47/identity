@@ -302,12 +302,15 @@ public class add_user_details extends Fragment {
             boolean flag = false;
             int no = 0;
             try {
-                res1="[{\"name\":\"aadhar\",\"reqExpiry\":true},{\"name\":\"pan\",\"reqExpiry\":false}]";
-                JSONArray arr = new JSONArray(res1);
+                //res1="[{\"name\":\"aadhar\",\"reqExpiry\":true},{\"name\":\"pan\",\"reqExpiry\":false}]";
+                JSONObject jj = new JSONObject(res1);
+
+                Toast.makeText(getContext(),res1,Toast.LENGTH_LONG).show();
+                JSONArray arr = jj.getJSONArray("fields");
                 for(int i=0;i<arr.length();i++)
                 {
                     JSONObject obj = arr.getJSONObject(i);
-                    Toast.makeText(getContext(),obj.getString("name")+""+obj.getBoolean("reqExpiry"),Toast.LENGTH_LONG).show();
+                    //Toast.makeText(getContext(),obj.getString("name")+""+obj.getBoolean("reqExpiry"),Toast.LENGTH_LONG).show();
                     int x = db.checkfield(db1, obj.getString("name").toLowerCase());
                     if(x == 1 || x == 0)
                         continue;
@@ -400,10 +403,11 @@ public class add_user_details extends Fragment {
                                 myCalendar.get(Calendar.DAY_OF_MONTH)).show();
                     }
                 });
+                e2.setEnabled(true);
                 if(expiry_index.contains(0))
-                    e2.setEnabled(true);
+                    e2.setVisibility(View.GONE);
                 else
-                    e2.setEnabled(false);
+                    e2.setVisibility(View.VISIBLE);
                 ll2.addView(e2);
                 parent.addView(ll2);
 
