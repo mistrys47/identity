@@ -17,9 +17,11 @@ class database extends SQLiteOpenHelper {
     public static final String COL6 = "expiry_date";
     public static final String COL7 = "verifier_url";
     public static final String COL8 = "expiry_date";
+    public static final String COL9 = "last_verified_value";
     public static final String TABLE_NAME2 = "serviceproviders";
     public static final String COL21 = "id";
     public static final String COL22 = "name";
+    public static final String COL23 = "url";
 
     public database(Context context) {
         super(context, DATABASE_NAME, null, 1);

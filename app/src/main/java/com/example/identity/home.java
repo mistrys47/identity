@@ -63,17 +63,10 @@ public class home extends AppCompatActivity
         scan_qr=(ImageButton)findViewById(R.id.Scan);
 
         db1 = db.getWritableDatabase();
-        //boolean x=db.insert11(db1,"email","","guptashubham1798@gmail.com","admin","true","key1");
-
-        // boolean x33=db.insert11(db1,"name","","shubham","admin","true","key3");
+//        boolean x=db.insert11(db1,"email","","guptashubham1798@gmail.com","admin","true","key1","");
+//
+//        boolean x33=db.insert11(db1,"mobile","","9714948994","admin","true","key3","");
         boolean x1=db.checkemail(db1);
-
-        //
-        //Doing manual setting for name(Updating value)
-        //db.updatevalue1(db1,"name","");
-
-
-        //
         FragmentManager fragmentManager=getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.fl1,(Fragment) new user_details_card()).addToBackStack(null).commit();
 
