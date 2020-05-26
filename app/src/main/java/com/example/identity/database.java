@@ -105,7 +105,7 @@ class database extends SQLiteOpenHelper {
         return s1;
     }
     public Cursor getfields(SQLiteDatabase db){
-        Cursor cursor=db.rawQuery("select field_name from userdetails",null);
+        Cursor cursor=db.rawQuery("select field_name,value,expiry_date from userdetails",null);
         return cursor;
     }
     public String gettransaction_id(SQLiteDatabase db,String s){
@@ -142,6 +142,15 @@ class database extends SQLiteOpenHelper {
     }
     public String getverifier_url(SQLiteDatabase db,String s){
         Cursor cursor=db.query(TABLE_NAME1,new String[]{"verifier_url"},"field_name=?",new String[]{s},null,null,null  );
+        String s1="";
+        while(cursor.moveToNext())
+        {
+            s1=cursor.getString(0);
+        }
+        return s1;
+    }
+    public String getlast_verified_value(SQLiteDatabase db,String s){
+        Cursor cursor=db.query(TABLE_NAME1,new String[]{"last_verified_value"},"field_name=?",new String[]{s},null,null,null  );
         String s1="";
         while(cursor.moveToNext())
         {
