@@ -316,6 +316,18 @@ public class home extends AppCompatActivity
                 Toast.makeText(this,""+e,Toast.LENGTH_LONG).show();
             }
         }
+        else if(id== R.id.revert_update)
+        {
+            try {
+                f1.removeAllViews();
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                fragmentManager.beginTransaction().replace(R.id.fl1, (Fragment) new revert_update()).addToBackStack(null).commit();
+            }
+            catch (Exception e)
+            {
+                Toast.makeText(this,""+e,Toast.LENGTH_LONG).show();
+            }
+        }
 
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

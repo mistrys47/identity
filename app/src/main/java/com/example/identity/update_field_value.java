@@ -138,7 +138,7 @@ public class update_field_value extends Fragment {
                     if (b)
                         Toast.makeText(getContext(), "Successful Updatation in last_verified value" + last_verified_value, Toast.LENGTH_LONG).show();
                     if (c)
-                        Toast.makeText(getContext(), "Successful Updatation in new value"+db.getvalue(db1,spinnerArray.get(spinner.getSelectedItemPosition())), Toast.LENGTH_LONG).show();
+                        Toast.makeText(getContext(), "Successful Updatation in new value"+db.getlast_verified_value(db1,spinnerArray.get(spinner.getSelectedItemPosition())), Toast.LENGTH_LONG).show();
 
                 }
             });
