@@ -127,18 +127,18 @@ public class update_field_value extends Fragment {
                     String last_verified_value;
                     if (expiry_dates.get(spinner.getSelectedItemPosition()) == "-1") {
                         last_verified_value = values.get(spinner.getSelectedItemPosition()) + "#";
-                        b = db.update1(db1, "last_verified_value", last_verified_value);
-                        c = db.update1(db1, "value", value.getText().toString());
+                        b = db.update_db1(db1, "last_verified_value", last_verified_value,spinnerArray.get(spinner.getSelectedItemPosition()));
+                        c = db.update_db1(db1, "value", value.getText().toString(),spinnerArray.get(spinner.getSelectedItemPosition()));
                     } else {
                         last_verified_value = values.get(spinner.getSelectedItemPosition()) + "#" + expiry_dates.get(spinner.getSelectedItemPosition());
-                        b = db.update1(db1, "last_verified_value",last_verified_value );
-                        c = db.update1(db1, "value", value.getText().toString());
-                        c = c & db.update1(db1, "expiry_date", expiry.getText().toString());
+                        b = db.update_db1(db1, "last_verified_value",last_verified_value,spinnerArray.get(spinner.getSelectedItemPosition()));
+                        c = db.update_db1(db1, "value", value.getText().toString(),spinnerArray.get(spinner.getSelectedItemPosition()));
+                        c = c & db.update_db1(db1, "expiry_date", expiry.getText().toString(),spinnerArray.get(spinner.getSelectedItemPosition()));
                     }
                     if (b)
                         Toast.makeText(getContext(), "Successful Updatation in last_verified value" + last_verified_value, Toast.LENGTH_LONG).show();
                     if (c)
-                        Toast.makeText(getContext(), "Successful Updatation in new value"+db.getvalue(db1,spinnerArray.get(spinner.getSelectedItemPosition())), Toast.LENGTH_LONG).show();
+                        Toast.makeText(getContext(), "Successful Updatation in new value"+db.getlast_verified_value(db1,spinnerArray.get(spinner.getSelectedItemPosition())), Toast.LENGTH_LONG).show();
 
                 }
             });

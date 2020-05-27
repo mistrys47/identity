@@ -367,10 +367,14 @@ public class add_user_details extends Fragment {
                         {
                             EditText e = (EditText) parent.findViewWithTag("exp0");
                             e.setVisibility(View.VISIBLE);
+                            DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy",Locale.US);
+                            String todate= dateFormat.format(currentdate());
+                            e.setText(todate);
                         }
                         else
                         {
                             EditText e = (EditText) parent.findViewWithTag("exp0");
+                            e.setText("");
                             e.setVisibility(View.GONE);
                         }
                     }

@@ -154,6 +154,10 @@ class database extends SQLiteOpenHelper {
         }
         return s1;
     }
+    public Cursor getrevertfields(SQLiteDatabase db){
+        Cursor cursor=db.query(TABLE_NAME1, new String[]{"field_name","value","expiry_date"}, COL9 + " IS NOT NULL", null, null, null, null);;
+        return cursor;
+    }
     public String getlast_verified_value(SQLiteDatabase db,String s){
         Cursor cursor=db.query(TABLE_NAME1,new String[]{"last_verified_value"},"field_name=?",new String[]{s},null,null,null  );
         String s1="";
@@ -196,6 +200,7 @@ class database extends SQLiteOpenHelper {
         Cursor c=db.rawQuery("select * from " +TABLE_NAME1,null);
         return c;
     }
+
     public boolean insert2(SQLiteDatabase db,String name,String data){
         ContentValues contentValues = new ContentValues();
         contentValues.put(COL22,name);
@@ -237,6 +242,20 @@ class database extends SQLiteOpenHelper {
                 contentValues,
                 "field_name" + " = ? ",
                 new String[]{field});
+        if(re == -1)
+            return false;
+        else
+            return true;
+    }
+    public boolean update_db1(SQLiteDatabase db,String field,String value,String s)
+    {
+        ContentValues contentValues = new ContentValues();
+
+        contentValues.put(field,value);
+        long re=db.update(TABLE_NAME1,
+                contentValues,
+                "field_name" + " = ? ",
+                new String[]{s});
         if(re == -1)
             return false;
         else

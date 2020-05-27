@@ -29,6 +29,10 @@
             android:id="@+id/update_value"
             android:icon="@drawable/ic_menu_gallery"
             android:title="Update Value"/>
+        <item
+            android:id="@+id/revert_update"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="Revert Update"/>
     </group>
 
 
