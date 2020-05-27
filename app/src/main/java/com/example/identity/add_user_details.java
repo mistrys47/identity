@@ -166,7 +166,7 @@ public class add_user_details extends Fragment {
                     jo1.put("reqExpiry",false);
                 else
                     jo1.put("reqExpiry",true);
-                jo1.put("expiry_date",params[2]);
+                jo1.put("expiry",params[2]);
                 jo1.put( "email", params[3]);
                 String s=verifier_url+"add";
                 RequestBody body = RequestBody.create( jo1.toString(),okhttp3.MediaType.parse("application/json; charset=utf-8"));
@@ -367,10 +367,14 @@ public class add_user_details extends Fragment {
                         {
                             EditText e = (EditText) parent.findViewWithTag("exp0");
                             e.setVisibility(View.VISIBLE);
+                            DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy",Locale.US);
+                            String todate= dateFormat.format(currentdate());
+                            e.setText(todate);
                         }
                         else
                         {
                             EditText e = (EditText) parent.findViewWithTag("exp0");
+                            e.setText("");
                             e.setVisibility(View.GONE);
                         }
                     }
