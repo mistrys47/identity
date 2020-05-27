@@ -340,7 +340,7 @@ Integer cnt=0,cnt1=0;
         {
 
             int exist=db.checkfield(db1,all_info[i].field.toLowerCase());
-            if(exist==0) {
+            if(exist==0|| exist==2) {
                 LinearLayout f = new LinearLayout(getActivity());
                 f.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                         (int)(40*getResources().getDisplayMetrics().density)));
@@ -366,7 +366,10 @@ Integer cnt=0,cnt1=0;
                         LinearLayout.LayoutParams.MATCH_PARENT,4));
                 f1.setOrientation(LinearLayout.VERTICAL);
                 Button b1 = new Button(getActivity());
+                if(exist==0)
                 b1.setText("Verification");
+                if(exist==2)
+                    b1.setText("Expired");
                 b1.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT,FrameLayout.LayoutParams.MATCH_PARENT));
                 b1.setGravity(Gravity.CENTER);
                 b1.setBackgroundColor(Color.TRANSPARENT);
@@ -648,11 +651,8 @@ Integer cnt=0,cnt1=0;
         }
         @Override
         protected void onPostExecute(String result) {
-           // res1 = result;
-           // Toast.makeText(getContext(),""+result,Toast.LENGTH_LONG).show();
             try{
             boolean isFound = result.indexOf("true") !=-1? true: false;
-            //Toast.makeText(getContext(),"gsdgh"+result,Toast.LENGTH_LONG).show();
             final database db = new database(getActivity());
             final SQLiteDatabase db1 = db.getWritableDatabase();
 

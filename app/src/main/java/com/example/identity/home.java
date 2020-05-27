@@ -329,9 +329,9 @@ public class home extends AppCompatActivity
         String todays_date = df.format(c);
         db1 = db.getWritableDatabase();
         Cursor results=db.get_all_fields_with_expiry(db1);
-        List<String> Expired = new ArrayList<String>();
+     //   List<String> Expired = new ArrayList<String>();
 
-
+/*
         List<String> checker = new ArrayList<String>();
         String Expiry_date1="11/05/2010";
         Boolean temp=compare_todays_date_with_exp_date(Expiry_date1,todays_date);
@@ -348,24 +348,30 @@ public class home extends AppCompatActivity
         Expiry_date1="11/05/2021";
         temp=compare_todays_date_with_exp_date(Expiry_date1,todays_date);
         checker.add(""+temp+"\n");
+        */
 
+        //if(results)
         while (results.moveToNext()) {
             String field=results.getString(0);
 
             String Expiry_date=results.getString(6);
+            db1 = db.getWritableDatabase();
+            String current_status=results.getString(2);
+            if(!current_status.equals("expired")){
             Boolean s=compare_todays_date_with_exp_date(Expiry_date,todays_date);
-            if(s)
-            Expired.add(field+" exp is :"+Expiry_date);
+            if(s) {
+             //   Expired.add(field + " exp is :" + Expiry_date);
 
+                boolean update_field_to_expired=db.update_field_to_expired(db1,field);
+            }}
         }
-        Toast.makeText(this,todays_date+""+checker.toString(),Toast.LENGTH_LONG).show();
+       // Toast.makeText(this,""+Expired.toString(),Toast.LENGTH_LONG).show();
     }
 
 
     //return true means expired
     Boolean compare_todays_date_with_exp_date(String exp_date,String current_date)
     {
-
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         try {
             Date current_date_d = sdf.parse(current_date);
@@ -375,12 +381,7 @@ public class home extends AppCompatActivity
         {
 
         }
-
         return false;
-       //return  sdf.toString();
-        //Toast.makeText(this,""+exp_day+""+exp_mon+""+exp_yr,Toast.LENGTH_LONG).show();
-
-        //return true;
     }
 
 }
