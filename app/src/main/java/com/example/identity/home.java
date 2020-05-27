@@ -35,7 +35,6 @@ import com.google.zxing.integration.android.IntentResult;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -336,57 +335,49 @@ public class home extends AppCompatActivity
         List<String> checker = new ArrayList<String>();
         String Expiry_date1="11/05/2010";
         Boolean temp=compare_todays_date_with_exp_date(Expiry_date1,todays_date);
-        checker.add(""+exp_day+""+exp_mon+""+""+exp_yr+""+""+current_day+""+current_mon+""+""+current_yr+""+temp+"\n");
+        checker.add(""+temp+"\n");
         Expiry_date1="11/05/2020";
         temp=compare_todays_date_with_exp_date(Expiry_date1,todays_date);
-        checker.add(""+exp_day+""+exp_mon+""+""+exp_yr+""+current_day+""+current_mon+""+""+current_yr+""+temp+"\n");
+        checker.add(""+temp+"\n");
         Expiry_date1="28/01/2020";
         temp=compare_todays_date_with_exp_date(Expiry_date1,todays_date);
-        checker.add(""+exp_day+""+exp_mon+""+""+exp_yr+""+current_day+""+current_mon+""+""+current_yr+""+temp+"\n");
+        checker.add(""+temp+"\n");
         Expiry_date1="28/05/2020";
         temp=compare_todays_date_with_exp_date(Expiry_date1,todays_date);
-        checker.add(""+exp_day+""+exp_mon+""+""+exp_yr+""+current_day+""+current_mon+""+""+current_yr+""+temp+"\n");
+        checker.add(""+temp+"\n");
         Expiry_date1="11/05/2021";
         temp=compare_todays_date_with_exp_date(Expiry_date1,todays_date);
-        checker.add(""+exp_day+""+exp_mon+""+""+exp_yr+""+current_day+""+current_mon+""+""+current_yr+""+temp+"\n");
+        checker.add(""+temp+"\n");
 
         while (results.moveToNext()) {
             String field=results.getString(0);
-            String Expiry_date="11/05/2010";
-            //String Expiry_date=results.getString(6);
-            if(compare_todays_date_with_exp_date(Expiry_date,todays_date))
+
+            String Expiry_date=results.getString(6);
+            Boolean s=compare_todays_date_with_exp_date(Expiry_date,todays_date);
+            if(s)
             Expired.add(field+" exp is :"+Expiry_date);
 
         }
-        Toast.makeText(this,""+checker.toString(),Toast.LENGTH_LONG).show();
+        Toast.makeText(this,todays_date+""+checker.toString(),Toast.LENGTH_LONG).show();
     }
+
+
+    //return true means expired
     Boolean compare_todays_date_with_exp_date(String exp_date,String current_date)
     {
 
-
-        exp_day=Integer.parseInt(exp_date.substring(0,2));
-        exp_mon=Integer.parseInt(exp_date.substring(3,5));
-        exp_yr=Integer.parseInt(exp_date.substring(6,10));
-        current_day=Integer.parseInt(current_date.substring(0,2));
-        current_mon=Integer.parseInt(current_date.substring(3,5));
-        current_yr=Integer.parseInt(current_date.substring(6,10));
-        //true meaning it is valid
-        if(current_yr==exp_yr)
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        try {
+            Date current_date_d = sdf.parse(current_date);
+            Date exp_date_d=sdf.parse(exp_date);
+            return current_date_d.after(exp_date_d);
+        }catch (Exception e)
         {
-            if(current_mon==exp_mon)
-            {
-                if(current_day==exp_day)return true;
-                else if(current_day<exp_day)return true;
-                return false;
 
-            }else if(current_mon<exp_mon) return true;
-            return false;
+        }
 
-        }if(current_yr<exp_yr) return true;
         return false;
-
-
-
+       //return  sdf.toString();
         //Toast.makeText(this,""+exp_day+""+exp_mon+""+exp_yr,Toast.LENGTH_LONG).show();
 
         //return true;

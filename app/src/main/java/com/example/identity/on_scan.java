@@ -120,7 +120,7 @@ Integer cnt=0,cnt1=0;
                 }
                 LinearLayout f = new LinearLayout(getActivity());
                 f.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                        100));
+                        130));
                 f.setOrientation(LinearLayout.HORIZONTAL);
                 LinearLayout f1 = new LinearLayout(getActivity());
                 f1.setLayoutParams(new LinearLayout.LayoutParams(0,
@@ -130,7 +130,7 @@ Integer cnt=0,cnt1=0;
                 TextView t1 = new TextView(getActivity());
                 t1.setText(all_info[i].field);
                 t1.setLayoutParams(new FrameLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
-                        100));
+                        130));
                 t1.setPadding(10, 0, 0, 0);
                 t1.setTextSize(15);
 
@@ -151,7 +151,7 @@ Integer cnt=0,cnt1=0;
                 //Toast.makeText(getContext(),""+val1,Toast.LENGTH_LONG).show();
                 t1.setText(val);
                 t1.setLayoutParams(new FrameLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
-                        100));
+                        130));
                 t1.setPadding(10, 0, 0, 0);
                 t1.setTextSize(15);
                 t1.setTypeface(null, Typeface.BOLD);
@@ -167,7 +167,7 @@ Integer cnt=0,cnt1=0;
                 f1.setOrientation(LinearLayout.VERTICAL);
                 t1 = new TextView(getActivity());
                 if(all_info[i].required) {
-                    t1.setText("True");
+                    t1.setText("Yes");
                     veri="true";
                     try {
 
@@ -186,10 +186,10 @@ Integer cnt=0,cnt1=0;
                 else
                 {
                     veri="false";
-                    t1.setText("False");
+                    t1.setText("No");
                 }
                 t1.setLayoutParams(new FrameLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
-                        100));
+                        130));
                 t1.setPadding(10, 0, 0, 0);
                 t1.setTextSize(15);
                 t1.setTypeface(null, Typeface.BOLD);
@@ -239,7 +239,7 @@ Integer cnt=0,cnt1=0;
                 c1.setGravity(Gravity.CENTER);
                 c1.setId(i);
                 c1.setLayoutParams(new FrameLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
-                        100));
+                        130));
                 f1.addView(c1);
                 f.addView(f1);
                 l1.addView(f);
@@ -256,7 +256,7 @@ Integer cnt=0,cnt1=0;
             {
                 LinearLayout f = new LinearLayout(getActivity());
                 f.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                        100));
+                        130));
                 f.setOrientation(LinearLayout.HORIZONTAL);
                 LinearLayout f1 = new LinearLayout(getActivity());
                 f1.setLayoutParams(new LinearLayout.LayoutParams(0,
@@ -266,7 +266,7 @@ Integer cnt=0,cnt1=0;
                 TextView t1 = new TextView(getActivity());
                 t1.setText(all_info[i].field);
                 t1.setLayoutParams(new FrameLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
-                        100));
+                        130));
                 t1.setPadding(10, 0, 0, 0);
                 t1.setTextSize(15);
 
@@ -307,15 +307,15 @@ Integer cnt=0,cnt1=0;
                 t1 = new TextView(getActivity());
                 if(all_info[i].required) {
 
-                    t1.setText("True");
+                    t1.setText("Yes");
                 }
                 else
                 {
                     cm11--;
-                    t1.setText("False");
+                    t1.setText("No");
                 }
                 t1.setLayoutParams(new FrameLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
-                        100));
+                        130));
                 t1.setPadding(10, 0, 0, 0);
                 t1.setTextSize(15);
                 t1.setTypeface(null, Typeface.BOLD);
@@ -331,7 +331,7 @@ Integer cnt=0,cnt1=0;
                 c1.setEnabled(false);
                 c1.setGravity(Gravity.CENTER);
                 c1.setLayoutParams(new FrameLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
-                        100));
+                        130));
                 f1.addView(c1);
                 f.addView(f1);
                 l1.addView(f);
@@ -353,7 +353,7 @@ Integer cnt=0,cnt1=0;
                 TextView t1 = new TextView(getActivity());
                 t1.setText(all_info[i].field);
                 t1.setLayoutParams(new FrameLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
-                        100));
+                        130));
                 t1.setPadding(10, 0, 0, 0);
                 t1.setTextSize(15);
 
@@ -401,7 +401,7 @@ Integer cnt=0,cnt1=0;
                     t1.setText("False");
                 }
                 t1.setLayoutParams(new FrameLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
-                        100));
+                        130));
                 t1.setPadding(10, 0, 0, 0);
                 t1.setTextSize(15);
                 t1.setTypeface(null, Typeface.BOLD);
@@ -417,7 +417,7 @@ Integer cnt=0,cnt1=0;
                 c1.setEnabled(false);
                 c1.setGravity(Gravity.CENTER);
                 c1.setLayoutParams(new FrameLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
-                        100));
+                        130));
                 f1.addView(c1);
                 f.addView(f1);
                 l1.addView(f);
@@ -458,11 +458,17 @@ Integer cnt=0,cnt1=0;
             c1.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    JSONObject temp = new JSONObject();
+                    try {
+                        temp.put("sid", m1);
 
+                        temp.put("data", jj4.toString());
+                    }catch (Exception e)
+                    {
 
-
-                      //  Toast.makeText(getContext(), ""+jj4.toString(), Toast.LENGTH_LONG).show();
-                         new on_scan.AsyncLogin().execute(jj4.toString(),m1);
+                    }
+                       Toast.makeText(getContext(), ""+temp.toString(), Toast.LENGTH_LONG).show();
+                       //  new on_scan.AsyncLogin().execute(jj4.toString(),m1);
                 }
             });
             Button c2 = new Button(getActivity());
@@ -510,7 +516,7 @@ Integer cnt=0,cnt1=0;
         c1.setText("Submit");
 
         c1.setLayoutParams(new FrameLayout.LayoutParams(0,
-                100,1));
+                130,1));
 
 
                 JSONObject jj3;
@@ -528,9 +534,17 @@ Integer cnt=0,cnt1=0;
         c1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                JSONObject temp = new JSONObject();
+                try {
+                    temp.put("sid", m1);
 
+                    temp.put("data", jj4.toString());
+                }catch (Exception e)
+                {
 
-                new on_scan.AsyncLogin().execute(jj4.toString(),m1);
+                }
+                Toast.makeText(getContext(), ""+temp.toString(), Toast.LENGTH_LONG).show();
+                //new on_scan.AsyncLogin().execute(jj4.toString(),m1);
             }
         });
 
@@ -541,7 +555,7 @@ Integer cnt=0,cnt1=0;
             c2.setGravity(Gravity.CENTER);
             c2.setText("Deny");
             c2.setLayoutParams(new FrameLayout.LayoutParams(0,
-                    100,1));
+                    130,1));
 
             c2.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -572,8 +586,18 @@ Integer cnt=0,cnt1=0;
             jj3=jj1;
         }
         final JSONObject jj4=jj3;
-      //  Toast.makeText(getContext(),jj4.toString(),Toast.LENGTH_LONG).show();
-        new on_scan.AsyncLogin().execute(jj4.toString(),m1);
+
+        JSONObject temp = new JSONObject();
+        try {
+            temp.put("sid", m1);
+
+            temp.put("data", jj4.toString());
+        }catch (Exception e)
+        {
+
+        }
+       Toast.makeText(getContext(),temp.toString(),Toast.LENGTH_LONG).show();
+       // new on_scan.AsyncLogin().execute(jj4.toString(),m1);
 
     }
     private class AsyncLogin extends AsyncTask<String, String, String>
@@ -600,8 +624,9 @@ Integer cnt=0,cnt1=0;
                 JSONObject jo1 = new JSONObject();
 
                 jo1.put( "sid", params[1]);
-                data1=params[0];
+
                 jo1.put( "data", params[0]);
+                data1=params[0];
                 //jo1.put("signup", true);
                 check1111=jo1.toString();
                 server a=new server();

@@ -46,7 +46,7 @@ public class verify_mobile extends AppCompatActivity {
         l2=(EditText)findViewById(R.id.letter2);
         l3=(EditText)findViewById(R.id.letter3);
         l4=(EditText)findViewById(R.id.letter4);
-        b=(Button)findViewById(R.id.verify_email);
+        b=(Button)findViewById(R.id.verify_mobile);
 
 
         l2.setOnKeyListener(new View.OnKeyListener() {
