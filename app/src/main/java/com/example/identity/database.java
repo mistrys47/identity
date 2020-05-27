@@ -84,6 +84,11 @@ class database extends SQLiteOpenHelper {
         {
             return 0;
         }
+        cursor = db.query(TABLE_NAME1,new String[]{"field_name","verified"},"field_name=? AND verified=?",new String[]{s,"expired"},null,null,null  );
+        if(cursor.getCount()>0)
+        {
+            return 2;
+        }
         return -1;
     }
     public String getvalue(SQLiteDatabase db,String s){
@@ -297,6 +302,16 @@ class database extends SQLiteOpenHelper {
     {
         Cursor res = db.rawQuery("select * from "+TABLE_NAME1,null);
         return res;
+    }
+    public boolean update_field_to_expired(SQLiteDatabase db,String field){
+        ContentValues contentValues = new ContentValues();
+
+        contentValues.put(COL3,"expired");
+        long re=db.update(TABLE_NAME1, contentValues, "field_name" + " = ? ", new String[]{field});
+        if(re == -1)
+            return false;
+        else
+            return true;
     }
 }
 
