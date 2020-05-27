@@ -367,7 +367,7 @@ public class add_user_details extends Fragment {
                         {
                             EditText e = (EditText) parent.findViewWithTag("exp0");
                             e.setVisibility(View.VISIBLE);
-                            DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy",Locale.US);
+                            DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy",Locale.US);
                             String todate= dateFormat.format(currentdate());
                             e.setText(todate);
                         }
@@ -413,7 +413,7 @@ public class add_user_details extends Fragment {
                     }
                 });
                 e2.setEnabled(true);
-                DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy",Locale.US);
+                DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy",Locale.US);
                 String todate= dateFormat.format(currentdate());
                 e2.setText(todate);
                 if(expiry_index.contains(0))
@@ -435,7 +435,7 @@ public class add_user_details extends Fragment {
         }
     }
     private void updateLabel() {
-        String myFormat = "dd/MM/yyyy"; //In which you need put here
+        String myFormat = "MM/dd/yyyy"; //In which you need put here
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
         e2.setText(sdf.format(myCalendar.getTime()));
         //Toast.makeText(getContext(),sdf.format(myCalendar.getTime()),Toast.LENGTH_LONG).show();

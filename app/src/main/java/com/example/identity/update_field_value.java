@@ -81,7 +81,7 @@ public class update_field_value extends Fragment {
                 } else
                     expiry_dates.add(c.getString(2));
             }
-            ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, spinnerArray);
+            final ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, spinnerArray);
             spinner.setAdapter(spinnerArrayAdapter);
             try {
                 value.setText(values.get(0));
@@ -125,20 +125,26 @@ public class update_field_value extends Fragment {
                 public void onClick(View view) {
                     Boolean b, c;
                     String last_verified_value;
+                    String field_name = spinnerArray.get(spinner.getSelectedItemPosition());
+                    int verified = db.checkfield(db1,field_name);
                     if (expiry_dates.get(spinner.getSelectedItemPosition()) == "-1") {
                         last_verified_value = values.get(spinner.getSelectedItemPosition()) + "#";
-                        b = db.update_db1(db1, "last_verified_value", last_verified_value,spinnerArray.get(spinner.getSelectedItemPosition()));
-                        c = db.update_db1(db1, "value", value.getText().toString(),spinnerArray.get(spinner.getSelectedItemPosition()));
+                        b = db.update_db1(db1, "last_verified_value", last_verified_value,field_name);
+                        c = db.update_db1(db1, "value", value.getText().toString(),field_name);
+                        c = c & db.update_db1(db1,"verified","false",field_name);
                     } else {
                         last_verified_value = values.get(spinner.getSelectedItemPosition()) + "#" + expiry_dates.get(spinner.getSelectedItemPosition());
-                        b = db.update_db1(db1, "last_verified_value",last_verified_value,spinnerArray.get(spinner.getSelectedItemPosition()));
-                        c = db.update_db1(db1, "value", value.getText().toString(),spinnerArray.get(spinner.getSelectedItemPosition()));
-                        c = c & db.update_db1(db1, "expiry_date", expiry.getText().toString(),spinnerArray.get(spinner.getSelectedItemPosition()));
+                        b = db.update_db1(db1, "last_verified_value",last_verified_value,field_name);
+                        c = db.update_db1(db1, "value", value.getText().toString(),field_name);
+                        c = c & db.update_db1(db1, "expiry_date", expiry.getText().toString(),field_name);
+                        c = c & db.update_db1(db1,"verified","false",field_name);
                     }
+                    if (verified==0 || verified==2) // if verified is false or expired
+                        db.update_db1(db1,"last_verified_value","",field_name);
                     if (b)
                         Toast.makeText(getContext(), "Successful Updatation in last_verified value" + last_verified_value, Toast.LENGTH_LONG).show();
                     if (c)
-                        Toast.makeText(getContext(), "Successful Updatation in new value"+db.getlast_verified_value(db1,spinnerArray.get(spinner.getSelectedItemPosition())), Toast.LENGTH_LONG).show();
+                        Toast.makeText(getContext(), "Successful Updatation in new value"+db.getlast_verified_value(db1,field_name), Toast.LENGTH_LONG).show();
 
                 }
             });
@@ -149,7 +155,7 @@ public class update_field_value extends Fragment {
         }
     }
     private void updateLabel() {
-        String myFormat = "dd/MM/yyyy"; //In which you need put here
+        String myFormat = "MM/dd/yyyy"; //In which you need put here
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
         expiry.setText(sdf.format(myCalendar.getTime()));
         //Toast.makeText(getContext(),sdf.format(myCalendar.getTime()),Toast.LENGTH_LONG).show();

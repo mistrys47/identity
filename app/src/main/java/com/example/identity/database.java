@@ -150,7 +150,7 @@ class database extends SQLiteOpenHelper {
         return s1;
     }
     public Cursor getrevertfields(SQLiteDatabase db){
-        Cursor cursor=db.query(TABLE_NAME1, new String[]{"field_name","value","expiry_date"}, COL9 + " IS NOT NULL", null, null, null, null);;
+        Cursor cursor=db.query(TABLE_NAME1, new String[]{"field_name","value","expiry_date"}, COL9 + " != ?", new String[]{""}, null, null, null);
         return cursor;
     }
     public String getlast_verified_value(SQLiteDatabase db,String s){
