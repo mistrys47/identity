@@ -74,7 +74,7 @@ public class useradapter extends RecyclerView.Adapter<useradapter.MyViewHolder> 
                             SQLiteDatabase db1 = db.getWritableDatabase();
                             String url1 = db.geturl1(db1, i1.getTag().toString());
                             new useradapter.AsyncCheck().execute(url1);
-                           // Toast.makeText(itemView.getContext(), url1 + " ", Toast.LENGTH_LONG).show();
+                            Toast.makeText(itemView.getContext(), url1 + " ", Toast.LENGTH_LONG).show();
                         }
                         catch (Exception e)
                         {
@@ -407,6 +407,10 @@ public class useradapter extends RecyclerView.Adapter<useradapter.MyViewHolder> 
         User_details  tempobj=categoriesList.get(position);
         if(tempobj.getVerified().equals("false")) {
             holder.i1.setImageResource(R.drawable.wrong);
+            holder.i1.setTag(tempobj.getfields());
+        }
+        else if(tempobj.getVerified().equals("expired")){
+            holder.i1.setImageResource(R.drawable.expired);
             holder.i1.setTag(tempobj.getfields());
         }
         else
