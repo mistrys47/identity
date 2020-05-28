@@ -423,9 +423,23 @@ public class useradapter extends RecyclerView.Adapter<useradapter.MyViewHolder> 
             holder.ll1.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    AppCompatActivity activity = (AppCompatActivity) view.getContext();
-                    Fragment myFragment = new update_field_value();
-                    activity.getSupportFragmentManager().beginTransaction().replace(R.id.fl1, myFragment).addToBackStack(null).commit();
+                    final View m1=view;
+                    new AlertDialog.Builder(mContext)
+                            .setTitle("The field has expired")
+                            .setMessage("You need to update the value")
+                            .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    AppCompatActivity activity = (AppCompatActivity) m1.getContext();
+                                    Fragment myFragment = new update_field_value();
+                                    activity.getSupportFragmentManager().beginTransaction().replace(R.id.fl1, myFragment).addToBackStack(null).commit();
+
+
+                                }
+                            })
+                            .setNegativeButton(android.R.string.no, null)
+                            .setIcon(android.R.drawable.ic_dialog_alert)
+                            .show();
+
 
 
                 }
