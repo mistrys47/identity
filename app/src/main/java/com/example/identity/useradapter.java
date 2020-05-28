@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.LinearGradient;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
@@ -65,7 +66,7 @@ public class useradapter extends RecyclerView.Adapter<useradapter.MyViewHolder> 
             this.i1.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if(i1.getTag()!="verified") {
+                    if((i1.getTag()!="verified") && (i1.getTag()!="expired")) {
                         context=itemView.getContext();
                         try {
                         //    Toast.makeText(context,""+view.getId(),Toast.LENGTH_LONG).show();
@@ -83,10 +84,14 @@ public class useradapter extends RecyclerView.Adapter<useradapter.MyViewHolder> 
                     }
                 }
             });
+
+
+
+
             this.ll1.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if(i1.getTag()!="verified") {
+                    if(i1.getTag()!="verified" && i1.getTag()!="expired") {
                         context=itemView.getContext();
                         try {
                          //   Toast.makeText(context, "" + view.getId(), Toast.LENGTH_LONG).show();
@@ -106,6 +111,8 @@ public class useradapter extends RecyclerView.Adapter<useradapter.MyViewHolder> 
                             Toast.makeText(itemView.getContext(), e + "", Toast.LENGTH_LONG).show();
                         }
                     }
+
+
                 }
                 });
         }
@@ -411,7 +418,18 @@ public class useradapter extends RecyclerView.Adapter<useradapter.MyViewHolder> 
         }
         else if(tempobj.getVerified().equals("expired")){
             holder.i1.setImageResource(R.drawable.expired);
-            holder.i1.setTag(tempobj.getfields());
+            holder.i1.setTag("expired");
+           // final Feed item = mFeeds.get(position);
+            holder.ll1.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    AppCompatActivity activity = (AppCompatActivity) view.getContext();
+                    Fragment myFragment = new update_field_value();
+                    activity.getSupportFragmentManager().beginTransaction().replace(R.id.fl1, myFragment).addToBackStack(null).commit();
+
+
+                }
+            });
         }
         else
         {
@@ -433,6 +451,7 @@ public class useradapter extends RecyclerView.Adapter<useradapter.MyViewHolder> 
     public int getItemCount() {
         return categoriesList.size();
     }
+
 
 
 }
