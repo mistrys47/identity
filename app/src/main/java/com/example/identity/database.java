@@ -100,6 +100,15 @@ class database extends SQLiteOpenHelper {
         }
         return s1;
     }
+    public String getkey(SQLiteDatabase db,String s){
+        Cursor cursor=db.query(TABLE_NAME1,new String[]{"transaction_id"},"field_name=?",new String[]{s},null,null,null  );
+        String s1="";
+        while(cursor.moveToNext())
+        {
+            s1=cursor.getString(0);
+        }
+        return s1;
+    }
     public String getexpiry(SQLiteDatabase db,String s){
         Cursor cursor=db.query(TABLE_NAME1,new String[]{"expiry_date"},"field_name=?",new String[]{s},null,null,null  );
         String s1="";

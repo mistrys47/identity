@@ -37,27 +37,12 @@ public class revert_update extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_revert_update);
-        revert_update_adapter1 = new revert_update_adapter(update_detailsList,getActivity());
+        revert_update_adapter1 = new revert_update_adapter(update_detailsList,getContext());
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(revert_update_adapter1);
 
-        recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getActivity(),
-                recyclerView, new ClickListener() {
-
-            @Override
-            public void onClick(View view, final int position) {
-                Boolean b = change((String) view.getTag());
-                Toast.makeText(getContext(),"reverted back",Toast.LENGTH_LONG).show();
-                FragmentManager fragmentManager = getFragmentManager();
-                fragmentManager.beginTransaction().replace(R.id.fl1,new user_details_card()).addToBackStack(null).commit();
-            }
-            @Override
-            public void onLongClick(View view, int position) {
-
-            }
-        }));
 
         database db = new database(getActivity());
         SQLiteDatabase db1 = db.getWritableDatabase();
@@ -75,23 +60,6 @@ public class revert_update extends Fragment {
         }
 
     }
-    public boolean change(String s){
-        database db = new database(getActivity());
-        SQLiteDatabase db1 = db.getWritableDatabase();
-        String whole = db.getlast_verified_value(db1,s);
-        String value = whole.substring(0,whole.indexOf('#'));
-        String expiry;
-        if(whole.length()==value.length()+1)
-            expiry = "";
-        else
-            expiry = whole.substring(whole.indexOf('#')+1);
-        Toast.makeText(getContext(),value+"..."+expiry,Toast.LENGTH_LONG).show();
-        Boolean b;
-        b = db.update_db1(db1,"last_verified_value","",s);
-        b = b & db.update_db1(db1,"value",value,s);
-        b = b & db.update_db1(db1,"expiry_date",expiry,s);
-        b = b & db.update_db1(db1,"verified","true",s);
-        return b;
-    }
+
 
 }
