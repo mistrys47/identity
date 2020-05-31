@@ -46,8 +46,10 @@ public class update_field_value extends Fragment {
 
     EditText value,expiry;
     String value1,expiry1;
-    String verified_value,verified_expiry;
-    String field_name;
+    String verified_value,verified_expiry,id;
+    String old_verifier_url;
+    int verified;
+    String field_name,email;
     Spinner spinner;
     Button submit;
     ArrayList<String> spinnerArray = new ArrayList<String>();
@@ -92,11 +94,11 @@ public class update_field_value extends Fragment {
             final SQLiteDatabase db1 = db.getWritableDatabase();
             Cursor c = db.getfields(db1);
             while (c.moveToNext()) {
+                if(c.getString(0).equals("email") || c.getString(0).equals("mobile"))
+                    continue;
                 spinnerArray.add(c.getString(0));
                 values.add(c.getString(1));
-
                 if (c.getString(2).equals("")) {
-                    //Toast.makeText(getContext(),c.getString(2)+":",Toast.LENGTH_LONG).show();
                     expiry_dates.add("-1");
                 } else
                     expiry_dates.add(c.getString(2));
@@ -113,6 +115,8 @@ public class update_field_value extends Fragment {
                 }
             } catch (Exception e) {
                 Toast.makeText(getContext(), "No Fields", Toast.LENGTH_LONG).show();
+                FragmentManager fragmentManager = getFragmentManager();
+                fragmentManager.beginTransaction().replace(R.id.fl1,new user_details_card()).addToBackStack(null).commit();
             }
             spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                   @Override
@@ -236,9 +240,13 @@ public class update_field_value extends Fragment {
                             database db = new database(getActivity());
                             SQLiteDatabase db1 = db.getWritableDatabase();
                             String key = db.getkey(db1, field_name);
-                            //check key
-                            Toast.makeText(getContext(), value1 + expiry1 + key, Toast.LENGTH_LONG).show();
-                            new update_field_value.Asyncupdate().execute(value1, expiry1, key);
+                            email = db.getvalue(db1, "email");
+                            id = db.getverifier_url(db1,field_name);
+                            old_verifier_url = getoldurl(id);
+                            id = getid(id);
+                            verified = db.checkfield(db1,field_name);
+                            Toast.makeText(getContext(),id+":"+old_verifier_url,Toast.LENGTH_LONG).show();
+                            new update_field_value.Asyncupdate().execute(value1, expiry1, key, email, field_name);
                             dialog.dismiss();
                         }
                         catch (Exception e)
@@ -275,7 +283,14 @@ public class update_field_value extends Fragment {
                 jo1.put( "value", params[0]);
                 jo1.put( "expiry", params[1]);
                 jo1.put("key",params[2]);
-                String s=verifier_url+"update";
+                jo1.put("email",params[3]);
+                jo1.put("type",params[4]);
+                jo1.put("id",id);
+                String s;
+                if(verified!=0)
+                    s = verifier_url+ "update";
+                else
+                    s = old_verifier_url + "remove";
                 RequestBody body = RequestBody.create( jo1.toString(),okhttp3.MediaType.parse("application/json; charset=utf-8"));
                 Request request = new Request.Builder()
                         .url(s)
@@ -292,32 +307,128 @@ public class update_field_value extends Fragment {
         }
         @Override
         protected void onPostExecute(String result) {
-            Boolean b, c;
-            String last_verified_value;
-            database db = new database(getActivity());
-            SQLiteDatabase db1 = db.getWritableDatabase();
-            int verified = db.checkfield(db1,field_name);
-            if (verified_expiry == "") {
-                last_verified_value = verified_value + "#";
-                if(verified==1)
-                c = db.update_db1(db1, "last_verified_value", last_verified_value,field_name);
-                c = db.update_db1(db1, "value", value1,field_name);
-                c = c & db.update_db1(db1,"verified","updated",field_name);
-                c = c & db.update_db1(db1,"verifier_url",result,field_name);
-            } else {
-                last_verified_value = verified_value + "#" + verified_expiry;
-                if(verified==1)
-                c = db.update_db1(db1, "last_verified_value",last_verified_value,field_name);
-                c = db.update_db1(db1, "value", value1,field_name);
-                c = c & db.update_db1(db1, "expiry_date", expiry1,field_name);
-                c = c & db.update_db1(db1,"verified","updated",field_name);
-                c = c & db.update_db1(db1,"verifier_url",result,field_name);
+            if(verified==0)
+            {
+                pdLoading.dismiss();
+                new update_field_value.Asyncadd().execute(field_name,value1,expiry1,email);
             }
-            if (c)
-                Toast.makeText(getContext(), "Successful Update", Toast.LENGTH_LONG).show();
-            FragmentManager fragmentManager = getFragmentManager();
-            fragmentManager.beginTransaction().replace(R.id.fl1,new user_details_card()).addToBackStack(null).commit();
-            pdLoading.dismiss();
+            else{
+                Boolean b, c;
+                String last_verified_value;
+                database db = new database(getActivity());
+                SQLiteDatabase db1 = db.getWritableDatabase();
+                int verified = db.checkfield(db1, field_name);
+                if (verified_expiry == "") {
+                    last_verified_value = verified_value + "#";
+                    if (verified == 1)
+                        c = db.update_db1(db1, "last_verified_value", last_verified_value, field_name);
+                    c = db.update_db1(db1, "value", value1, field_name);
+                    c = c & db.update_db1(db1,"verified_by",verifier_name,field_name);
+                    c = c & db.update_db1(db1, "verified", "updated", field_name);
+                    c = c & db.update_db1(db1, "verifier_url", result, field_name);
+                } else {
+                    last_verified_value = verified_value + "#" + verified_expiry;
+                    if (verified == 1)
+                        c = db.update_db1(db1, "last_verified_value", last_verified_value, field_name);
+                    c = db.update_db1(db1, "value", value1, field_name);
+                    c = c & db.update_db1(db1,"verified_by",verifier_name,field_name);
+                    c = c & db.update_db1(db1, "expiry_date", expiry1, field_name);
+                    c = c & db.update_db1(db1, "verified", "updated", field_name);
+                    c = c & db.update_db1(db1, "verifier_url", result, field_name);
+                }
+                if (c)
+                    Toast.makeText(getContext(), "Successful Update", Toast.LENGTH_LONG).show();
+                FragmentManager fragmentManager = getFragmentManager();
+                fragmentManager.beginTransaction().replace(R.id.fl1, new user_details_card()).addToBackStack(null).commit();
+                pdLoading.dismiss();
+            }
         }
+    }
+    private class Asyncadd extends AsyncTask<String, String, String>
+    {
+        ProgressDialog pdLoading = new ProgressDialog(getContext());
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            pdLoading.setMessage("\tSending Update Request 2");
+            pdLoading.setCancelable(false);
+            pdLoading.show();
+        }
+        @Override
+        protected String doInBackground(String... params) {
+            try {
+                OkHttpClient client = new OkHttpClient().newBuilder().build();
+                JSONObject jo1 = new JSONObject();
+                jo1.put( "type", params[0]);
+                jo1.put( "value", params[1]);
+                if(params[2].equals(""))
+                    jo1.put("reqExpiry",false);
+                else
+                    jo1.put("reqExpiry",true);
+                jo1.put("expiry",params[2]);
+                jo1.put( "email", params[3]);
+                String s = verifier_url+"add";
+                RequestBody body = RequestBody.create( jo1.toString(),okhttp3.MediaType.parse("application/json; charset=utf-8"));
+                Request request = new Request.Builder()
+                        .url(s)
+                        .method("POST", body)
+                        .addHeader("Content-Type", "application/x-www-form-urlencoded")
+                        .build();
+                Response response = client.newCall(request).execute();
+                return response.body().string();
+            }
+            catch (Exception e)
+            {
+                return "error"+e;
+            }
+        }
+        @Override
+        protected void onPostExecute(String result) {
+
+                Boolean b, c;
+                String last_verified_value;
+                database db = new database(getActivity());
+                SQLiteDatabase db1 = db.getWritableDatabase();
+                int verified = db.checkfield(db1, field_name);
+                if (verified_expiry == "") {
+                    last_verified_value = verified_value + "#";
+                    if (verified == 1)
+                        c = db.update_db1(db1, "last_verified_value", last_verified_value, field_name);
+                    c = db.update_db1(db1, "value", value1, field_name);
+                    c = c & db.update_db1(db1,"verified_by",verifier_name,field_name);
+                    if(verified != 0)
+                        c = c & db.update_db1(db1, "verified", "updated", field_name);
+                    else
+                        c = c & db.update_db1(db1, "verified", "false", field_name);
+                    c = c & db.update_db1(db1, "verifier_url", result, field_name);
+                } else {
+                    last_verified_value = verified_value + "#" + verified_expiry;
+                    if (verified == 1)
+                        c = db.update_db1(db1, "last_verified_value", last_verified_value, field_name);
+                    c = db.update_db1(db1, "value", value1, field_name);
+                    c = c & db.update_db1(db1,"verified_by",verifier_name,field_name);
+                    c = c & db.update_db1(db1, "expiry_date", expiry1, field_name);
+                    if(verified != 0)
+                        c = c & db.update_db1(db1, "verified", "updated", field_name);
+                    else
+                        c = c & db.update_db1(db1, "verified", "false", field_name);
+                    c = c & db.update_db1(db1, "verifier_url", result, field_name);
+                }
+                if (c)
+                    Toast.makeText(getContext(), "Successful 2nd phase", Toast.LENGTH_LONG).show();
+                FragmentManager fragmentManager = getFragmentManager();
+                fragmentManager.beginTransaction().replace(R.id.fl1, new user_details_card()).addToBackStack(null).commit();
+                pdLoading.dismiss();
+        }
+    }
+    public String getid(String s)
+    {
+        int k = s.indexOf('=');
+        return s.substring(k+1);
+    }
+    public String getoldurl(String s)
+    {
+        int k = s.indexOf("/status");
+        return s.substring(0,k)+"/";
     }
 }
