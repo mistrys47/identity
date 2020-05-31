@@ -290,7 +290,7 @@ class database extends SQLiteOpenHelper {
     public boolean update2(SQLiteDatabase db,String field,String value)
     {
         ContentValues contentValues = new ContentValues();
-
+        contentValues.put(COL9,"");
         contentValues.put(COL5,value);
         long re=db.update(TABLE_NAME1,
                 contentValues,

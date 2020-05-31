@@ -22,6 +22,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.JsonObject;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -39,6 +41,8 @@ public class useradapter extends RecyclerView.Adapter<useradapter.MyViewHolder> 
     private Context context;
     public String im,old_url,old_id;
     public List<String> lm1;
+    public Integer count=0,call_count=0;
+    ProgressDialog pdLoadingm ;
     private OnItemClickListner mlistner;
     public String verifier_url,verifier_name,old_verifier_url,old_verifier_name;
     public interface OnItemClickListner{
@@ -69,14 +73,15 @@ public class useradapter extends RecyclerView.Adapter<useradapter.MyViewHolder> 
                     if((i1.getTag()!="verified") && (i1.getTag()!="expired")) {
                         context=itemView.getContext();
                         try {
-                        //    Toast.makeText(context,""+view.getId(),Toast.LENGTH_LONG).show();
+                            //    Toast.makeText(context,""+view.getId(),Toast.LENGTH_LONG).show();
                             database db = new database(context);
                             im=i1.getTag().toString();
                             SQLiteDatabase db1 = db.getWritableDatabase();
                             String url1 = db.geturl1(db1, i1.getTag().toString());
-
-
-                            new useradapter.AsyncCheck().execute(url1);
+                            if(ll1.getTag().equals("updated")){
+                                new useradapter.AsyncUpdate().execute(url1);
+                            }else
+                                new useradapter.AsyncCheck().execute(url1);
                             Toast.makeText(itemView.getContext(), url1 + " ", Toast.LENGTH_LONG).show();
                         }
                         catch (Exception e)
@@ -96,7 +101,7 @@ public class useradapter extends RecyclerView.Adapter<useradapter.MyViewHolder> 
                     if(i1.getTag()!="verified" && i1.getTag()!="expired") {
                         context=itemView.getContext();
                         try {
-                         //   Toast.makeText(context, "" + view.getId(), Toast.LENGTH_LONG).show();
+                            //   Toast.makeText(context, "" + view.getId(), Toast.LENGTH_LONG).show();
                             database db = new database(context);
                             im = i1.getTag().toString();
                             try{
@@ -116,7 +121,7 @@ public class useradapter extends RecyclerView.Adapter<useradapter.MyViewHolder> 
 
 
                 }
-                });
+            });
         }
 
     }
@@ -152,7 +157,7 @@ public class useradapter extends RecyclerView.Adapter<useradapter.MyViewHolder> 
 
                 Response response = client.newCall(request).execute();
                 if(response.code()==200)
-                return response.body().string();
+                    return response.body().string();
                 else
                     return "Not Found";
 
@@ -164,7 +169,7 @@ public class useradapter extends RecyclerView.Adapter<useradapter.MyViewHolder> 
         }
         @Override
         protected void onPostExecute(String result) {
-           // Toast.makeText(context,""+result,Toast.LENGTH_LONG).show();
+            // Toast.makeText(context,""+result,Toast.LENGTH_LONG).show();
             boolean isFound = result.indexOf("Not Found") !=-1? true: false;
 
             if(!isFound)
@@ -244,10 +249,41 @@ public class useradapter extends RecyclerView.Adapter<useradapter.MyViewHolder> 
                     String url=serviceprovider.getString(3);
                     String data=serviceprovider.getString(2);
                     boolean checker=data.indexOf(im) !=-1? true: false;
-                    if(checker)
-                    {
-                        Toast.makeText(context,""+im,Toast.LENGTH_LONG).show();
+                    if(checker){
+                        count++;
                     }
+                }
+                serviceprovider=db.get_all_service_providers(db1);
+                while(serviceprovider.moveToNext())
+                {
+                    String url=serviceprovider.getString(3);
+                    String data=serviceprovider.getString(2);
+                    boolean checker=data.indexOf(im) !=-1? true: false;
+                    if(checker){
+                        String emailval = db.getvalue(db1, "email");
+                        String emailkey=db.gettransaction_id(db1,"email");
+                        JSONObject send_obj = new JSONObject();
+
+                        try {
+                            send_obj.put("field", im);
+                            JSONObject email_obj = new JSONObject();
+                            email_obj.put("key", emailkey);
+                            email_obj.put("value", emailval);
+                            send_obj.put("email", email_obj);
+                            JSONObject field_obj = new JSONObject();
+                            field_obj.put("value", db.getvalue(db1, im));
+                            field_obj.put("key", db.gettransaction_id(db1, im));
+                            field_obj.put("expiry", db.getexpiry(db1, im));
+                            send_obj.put(im, field_obj);
+                            //
+
+                            new useradapter.AsyncService().execute(url, send_obj.toString());
+
+                        }catch (Exception e)
+                        {
+
+                        }}
+
                 }
 
             }
@@ -261,7 +297,58 @@ public class useradapter extends RecyclerView.Adapter<useradapter.MyViewHolder> 
 
 
 
+    private class AsyncService extends AsyncTask<String, String, String>
+    {
 
+
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+            //this method will be running on UI thread
+            if(call_count==0) {
+                pdLoadingm = new ProgressDialog(mContext);
+                pdLoadingm.setMessage("\tSending Updates...");
+                pdLoadingm.setCancelable(false);
+                pdLoadingm.show();
+            }
+        }
+        @Override
+        protected String doInBackground(String... params) {
+            try {
+
+                OkHttpClient client = new OkHttpClient().newBuilder().build();
+                // MediaType mediaType = MediaType.parse("application/x-www-form-urlencoded");
+                server a=new server();
+                String urll=params[0];
+                RequestBody body = RequestBody.create( params[1],okhttp3.MediaType.parse("application/json; charset=utf-8"));
+
+                //use s var
+                Request request = new Request.Builder()
+                        .url(urll)
+                        .method("POST", body)
+                        .addHeader("Content-Type", "application/x-www-form-urlencoded")
+                        .build();
+                Response response = client.newCall(request).execute();
+                return response.body().string();
+
+            }catch (Exception e)
+            {
+                return "error"+e;
+            }
+
+        }
+        @Override
+        protected void onPostExecute(String result) {
+            Toast.makeText(context,""+result,Toast.LENGTH_LONG).show();
+            call_count++;
+            if(call_count==count)
+            {
+                pdLoadingm.dismiss();
+            }
+        }
+    }
 
 
 
@@ -510,11 +597,12 @@ public class useradapter extends RecyclerView.Adapter<useradapter.MyViewHolder> 
         else if(tempobj.getVerified().equals("updated")) {
             holder.i1.setImageResource(R.drawable.update);
             holder.i1.setTag(tempobj.getfields());
+            holder.ll1.setTag("updated");
         }
         else if(tempobj.getVerified().equals("expired")){
             holder.i1.setImageResource(R.drawable.expired);
             holder.i1.setTag("expired");
-           // final Feed item = mFeeds.get(position);
+            // final Feed item = mFeeds.get(position);
             holder.ll1.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
