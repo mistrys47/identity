@@ -74,6 +74,8 @@ public class useradapter extends RecyclerView.Adapter<useradapter.MyViewHolder> 
                             im=i1.getTag().toString();
                             SQLiteDatabase db1 = db.getWritableDatabase();
                             String url1 = db.geturl1(db1, i1.getTag().toString());
+
+
                             new useradapter.AsyncCheck().execute(url1);
                             Toast.makeText(itemView.getContext(), url1 + " ", Toast.LENGTH_LONG).show();
                         }
@@ -179,6 +181,95 @@ public class useradapter extends RecyclerView.Adapter<useradapter.MyViewHolder> 
             pdLoading.dismiss();
         }
     }
+
+
+
+    private class AsyncUpdate extends AsyncTask<String, String, String>
+    {
+        ProgressDialog pdLoading = new ProgressDialog(context);
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+            //this method will be running on UI thread
+            pdLoading.setMessage("\tLoading...");
+            pdLoading.setCancelable(false);
+            pdLoading.show();
+
+        }
+        @Override
+        protected String doInBackground(String... params) {
+            try {
+
+                OkHttpClient client = new OkHttpClient().newBuilder()
+                        .build();
+
+                MediaType mediaType = MediaType.parse("application/x-www-form-urlencoded");
+
+                Request request = new Request.Builder()
+                        .url(params[0])
+                        .header("Accept", "application/json")
+                        .header("Content-Type", "application/json")
+                        .build();
+
+
+
+                Response response = client.newCall(request).execute();
+                if(response.code()==200)
+                    return response.body().string();
+                else
+                    return "Not Found";
+
+            }catch (Exception e)
+            {
+                return "error"+e;
+            }
+
+        }
+        @Override
+        protected void onPostExecute(String result) {
+            // Toast.makeText(context,""+result,Toast.LENGTH_LONG).show();
+            boolean isFound = result.indexOf("Not Found") !=-1? true: false;
+
+            if(!isFound)
+            {
+                database db = new database(context);
+                SQLiteDatabase db1 = db.getWritableDatabase();
+                db.update1(db1,im,"true");
+                db.update2(db1,im,result);
+
+                Cursor serviceprovider=db.get_all_service_providers(db1);
+                while(serviceprovider.moveToNext())
+                {
+                    String url=serviceprovider.getString(3);
+                    String data=serviceprovider.getString(2);
+                    boolean checker=data.indexOf(im) !=-1? true: false;
+                    if(checker)
+                    {
+                        Toast.makeText(context,""+im,Toast.LENGTH_LONG).show();
+                    }
+                }
+
+            }
+            FragmentManager fragmentManager = ((AppCompatActivity)context).getSupportFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.fl1,new user_details_card()).addToBackStack(null).commit();
+            // res1 = result;
+            // Toast.makeText(context,"background",Toast.LENGTH_LONG).show();
+            pdLoading.dismiss();
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
     private class AsyncVerifier extends AsyncTask<String, String, String>
     {
         ProgressDialog pdLoading = new ProgressDialog(mContext);
@@ -414,6 +505,10 @@ public class useradapter extends RecyclerView.Adapter<useradapter.MyViewHolder> 
         User_details  tempobj=categoriesList.get(position);
         if(tempobj.getVerified().equals("false")) {
             holder.i1.setImageResource(R.drawable.wrong);
+            holder.i1.setTag(tempobj.getfields());
+        }
+        else if(tempobj.getVerified().equals("updated")) {
+            holder.i1.setImageResource(R.drawable.update);
             holder.i1.setTag(tempobj.getfields());
         }
         else if(tempobj.getVerified().equals("expired")){

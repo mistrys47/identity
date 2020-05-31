@@ -312,6 +312,12 @@ class database extends SQLiteOpenHelper {
         Cursor res = db.rawQuery("select * from "+TABLE_NAME1,null);
         return res;
     }
+    public Cursor get_all_service_providers(SQLiteDatabase db)
+    {
+        Cursor res = db.rawQuery("select * from "+TABLE_NAME2,null);
+        return res;
+    }
+
     public boolean update_field_to_expired(SQLiteDatabase db,String field){
         ContentValues contentValues = new ContentValues();
 

@@ -4,7 +4,7 @@ public class server {
     String server_name;
     public server()
     {
-        server_name="https://76b1a09c5411.ngrok.io";
+        server_name="https://db8941e5ae33.ngrok.io";
     }
     public String getServer_name() {
         return server_name;

@@ -471,7 +471,7 @@ Integer cnt=0,cnt1=0;
 
                     }
                        Toast.makeText(getContext(), ""+temp.toString(), Toast.LENGTH_LONG).show();
-                       //  new on_scan.AsyncLogin().execute(jj4.toString(),m1);
+                         new on_scan.AsyncLogin().execute(jj4.toString(),m1);
                 }
             });
             Button c2 = new Button(getActivity());
@@ -547,7 +547,7 @@ Integer cnt=0,cnt1=0;
 
                 }
                 Toast.makeText(getContext(), ""+temp.toString(), Toast.LENGTH_LONG).show();
-                //new on_scan.AsyncLogin().execute(jj4.toString(),m1);
+                new on_scan.AsyncLogin().execute(jj4.toString(),m1);
             }
         });
 
@@ -600,7 +600,7 @@ Integer cnt=0,cnt1=0;
 
         }
        Toast.makeText(getContext(),temp.toString(),Toast.LENGTH_LONG).show();
-       // new on_scan.AsyncLogin().execute(jj4.toString(),m1);
+        new on_scan.AsyncLogin().execute(jj4.toString(),m1);
 
     }
     private class AsyncLogin extends AsyncTask<String, String, String>
