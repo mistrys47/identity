@@ -210,9 +210,10 @@ class database extends SQLiteOpenHelper {
         return c;
     }
 
-    public boolean insert2(SQLiteDatabase db,String name,String data){
+    public boolean insert2(SQLiteDatabase db,String name,String url,String data){
         ContentValues contentValues = new ContentValues();
         contentValues.put(COL22,name);
+        contentValues.put(COL23,url);
         contentValues.put("data",data);
         long x = db.insert(TABLE_NAME2,null,contentValues);
         if(x==-1)
@@ -304,7 +305,7 @@ class database extends SQLiteOpenHelper {
     public void delete_table2(SQLiteDatabase db)
     {
         db.execSQL("DROP TABLE IF EXISTS "+TABLE_NAME2);
-        db.execSQL("CREATE TABLE " + TABLE_NAME2 +" (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT,data TEXT)");
+        db.execSQL("CREATE TABLE " + TABLE_NAME2 +" (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT,data TEXT,url TEXT)");
     }
 
     public Cursor get_all_fields_with_expiry(SQLiteDatabase db)
@@ -312,11 +313,17 @@ class database extends SQLiteOpenHelper {
         Cursor res = db.rawQuery("select * from "+TABLE_NAME1,null);
         return res;
     }
-    public Cursor get_all_service_providers(SQLiteDatabase db)
+    public Cursor get_all_service_providers_url(SQLiteDatabase db)
     {
-        Cursor res = db.rawQuery("select * from "+TABLE_NAME2,null);
+        Cursor res = db.rawQuery("select data,url from "+TABLE_NAME2,null);
         return res;
     }
+    public Cursor get_all_service_providers_data(SQLiteDatabase db)
+    {
+        Cursor res = db.rawQuery("select data from "+TABLE_NAME2,null);
+        return res;
+    }
+
 
     public boolean update_field_to_expired(SQLiteDatabase db,String field){
         ContentValues contentValues = new ContentValues();

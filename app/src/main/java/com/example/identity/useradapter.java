@@ -79,10 +79,16 @@ public class useradapter extends RecyclerView.Adapter<useradapter.MyViewHolder> 
                             SQLiteDatabase db1 = db.getWritableDatabase();
                             String url1 = db.geturl1(db1, i1.getTag().toString());
                             if(ll1.getTag().equals("updated")){
-                                new useradapter.AsyncUpdate().execute(url1);
+                                try {
+                                    //Toast.makeText(context,"here"+url1,Toast.LENGTH_LONG).show();
+                                    new useradapter.AsyncUpdate().execute(url1);
+                                }catch (Exception e)
+                                {
+                                    Toast.makeText(context,""+e,Toast.LENGTH_LONG).show();
+                                }
                             }else
                                 new useradapter.AsyncCheck().execute(url1);
-                            Toast.makeText(itemView.getContext(), url1 + " ", Toast.LENGTH_LONG).show();
+                            //Toast.makeText(itemView.getContext(), url1 + " ", Toast.LENGTH_LONG).show();
                         }
                         catch (Exception e)
                         {
@@ -197,7 +203,7 @@ public class useradapter extends RecyclerView.Adapter<useradapter.MyViewHolder> 
             super.onPreExecute();
 
             //this method will be running on UI thread
-            pdLoading.setMessage("\tLoading...");
+            pdLoading.setMessage("\tLoading Updates...");
             pdLoading.setCancelable(false);
             pdLoading.show();
 
@@ -233,9 +239,9 @@ public class useradapter extends RecyclerView.Adapter<useradapter.MyViewHolder> 
         }
         @Override
         protected void onPostExecute(String result) {
-            // Toast.makeText(context,""+result,Toast.LENGTH_LONG).show();
+             Toast.makeText(context,"here in update"+result,Toast.LENGTH_LONG).show();
             boolean isFound = result.indexOf("Not Found") !=-1? true: false;
-
+            try{
             if(!isFound)
             {
                 database db = new database(context);
@@ -243,21 +249,22 @@ public class useradapter extends RecyclerView.Adapter<useradapter.MyViewHolder> 
                 db.update1(db1,im,"true");
                 db.update2(db1,im,result);
 
-                Cursor serviceprovider=db.get_all_service_providers(db1);
+                Cursor serviceprovider=db.get_all_service_providers_data(db1);
                 while(serviceprovider.moveToNext())
                 {
-                    String url=serviceprovider.getString(3);
-                    String data=serviceprovider.getString(2);
+                  //  String url=serviceprovider.getString(3);
+                    String data=serviceprovider.getString(0);
                     boolean checker=data.indexOf(im) !=-1? true: false;
                     if(checker){
                         count++;
                     }
                 }
-                serviceprovider=db.get_all_service_providers(db1);
-                while(serviceprovider.moveToNext())
+                Cursor serviceprovider1=db.get_all_service_providers_url(db1);
+                Toast.makeText(context,"here in  before service provider update"+result,Toast.LENGTH_LONG).show();
+                while(serviceprovider1.moveToNext())
                 {
-                    String url=serviceprovider.getString(3);
-                    String data=serviceprovider.getString(2);
+                    String url=serviceprovider1.getString(1);
+                    String data=serviceprovider1.getString(0);
                     boolean checker=data.indexOf(im) !=-1? true: false;
                     if(checker){
                         String emailval = db.getvalue(db1, "email");
@@ -282,10 +289,16 @@ public class useradapter extends RecyclerView.Adapter<useradapter.MyViewHolder> 
                         }catch (Exception e)
                         {
 
+                                Toast.makeText(context,""+e,Toast.LENGTH_LONG).show();
+
                         }}
 
                 }
 
+            }}
+            catch (Exception e)
+            {
+                Toast.makeText(context,""+e,Toast.LENGTH_LONG).show();
             }
             FragmentManager fragmentManager = ((AppCompatActivity)context).getSupportFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.fl1,new user_details_card()).addToBackStack(null).commit();
@@ -307,11 +320,15 @@ public class useradapter extends RecyclerView.Adapter<useradapter.MyViewHolder> 
             super.onPreExecute();
 
             //this method will be running on UI thread
+            try{
             if(call_count==0) {
                 pdLoadingm = new ProgressDialog(mContext);
                 pdLoadingm.setMessage("\tSending Updates...");
                 pdLoadingm.setCancelable(false);
                 pdLoadingm.show();
+            }}catch (Exception e)
+            {
+                Toast.makeText(context,""+e,Toast.LENGTH_LONG).show();
             }
         }
         @Override
@@ -341,11 +358,15 @@ public class useradapter extends RecyclerView.Adapter<useradapter.MyViewHolder> 
         }
         @Override
         protected void onPostExecute(String result) {
-            Toast.makeText(context,""+result,Toast.LENGTH_LONG).show();
+            Toast.makeText(context,"here in service provider"+result,Toast.LENGTH_LONG).show();
+            try{
             call_count++;
             if(call_count==count)
             {
                 pdLoadingm.dismiss();
+            }}catch (Exception e)
+            {
+                Toast.makeText(context,""+e,Toast.LENGTH_LONG).show();
             }
         }
     }
@@ -593,6 +614,7 @@ public class useradapter extends RecyclerView.Adapter<useradapter.MyViewHolder> 
         if(tempobj.getVerified().equals("false")) {
             holder.i1.setImageResource(R.drawable.wrong);
             holder.i1.setTag(tempobj.getfields());
+            holder.ll1.setTag("false");
         }
         else if(tempobj.getVerified().equals("updated")) {
             holder.i1.setImageResource(R.drawable.update);

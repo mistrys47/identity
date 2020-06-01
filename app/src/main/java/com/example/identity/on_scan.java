@@ -40,7 +40,7 @@ public class on_scan extends Fragment {
 TextView t1;
 LinearLayout l1,l2,l3,l4;
 String URL1;
-String data1;
+String data1,web_name;
 String b4,emailmmm,emailkey;
     Boolean bm1;
     qr_code_data json;
@@ -85,7 +85,9 @@ Integer cnt=0,cnt1=0;
         json = gson.fromJson(strtext,qr_code_data.class);
         t1.setText(t1.getText().toString()+" "+json.url);
         bm1=db.check_serviceprovider(db1,json.url);
-        URL1=json.url;
+        URL1=json.updateUrl;
+        web_name=json.name;
+        Toast.makeText(getContext(),web_name+""+URL1,Toast.LENGTH_LONG).show();
 
 
         emailmmm = db.getvalue(db1, "email");
@@ -660,7 +662,7 @@ Integer cnt=0,cnt1=0;
             {
                 if(!bm1)
                 {
-                     boolean m1=db.insert2(db1,URL1,data1);
+                     boolean m1=db.insert2(db1,web_name,URL1,data1);
 
                    if(m1) {
                         Toast.makeText(getContext(), "Signed Up" , Toast.LENGTH_LONG).show();
