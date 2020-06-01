@@ -7,19 +7,19 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/profile"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="Show Profile" />
+            android:icon="@drawable/ic_user_details"
+            android:title="Profile" />
         <item
             android:id="@+id/details"
-            android:icon="@drawable/ic_menu_gallery"
+            android:icon="@drawable/ic_add_details"
             android:title="Add Details" />
         <item
             android:id="@+id/scan_qr1"
-            android:icon="@drawable/ic_menu_gallery"
+            android:icon="@drawable/ic_scan"
             android:title="Scan QR" />
         <item
             android:id="@+id/Showdetails1"
-            android:icon="@drawable/ic_menu_gallery"
+            android:icon="@drawable/allowed_websites"
             android:title="Show allowed Websites"/>
         <item
             android:id="@+id/Delete"
@@ -27,11 +27,11 @@
             android:title="Delete signedup  websites"/>
         <item
             android:id="@+id/update_value"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="Update Value"/>
+            android:icon="@drawable/ic_update"
+            android:title="Update"/>
         <item
             android:id="@+id/revert_update"
-            android:icon="@drawable/ic_menu_gallery"
+            android:icon="@drawable/ic_revert_update"
             android:title="Revert Update"/>
     </group>
 
