@@ -42,7 +42,7 @@ public class useradapter extends RecyclerView.Adapter<useradapter.MyViewHolder> 
     public String im,old_url,old_id;
     public List<String> lm1;
     public Integer count=0,call_count=0;
-    ProgressDialog pdLoadingm ;
+    //ProgressDialog pdLoadingm ;
     private OnItemClickListner mlistner;
     public String verifier_url,verifier_name,old_verifier_url,old_verifier_name;
     public interface OnItemClickListner{
@@ -320,16 +320,7 @@ public class useradapter extends RecyclerView.Adapter<useradapter.MyViewHolder> 
             super.onPreExecute();
 
             //this method will be running on UI thread
-            try{
-            if(call_count==0) {
-                pdLoadingm = new ProgressDialog(mContext);
-                pdLoadingm.setMessage("\tSending Updates...");
-                pdLoadingm.setCancelable(false);
-                pdLoadingm.show();
-            }}catch (Exception e)
-            {
-                Toast.makeText(context,""+e,Toast.LENGTH_LONG).show();
-            }
+
         }
         @Override
         protected String doInBackground(String... params) {
@@ -358,16 +349,8 @@ public class useradapter extends RecyclerView.Adapter<useradapter.MyViewHolder> 
         }
         @Override
         protected void onPostExecute(String result) {
-            Toast.makeText(context,"here in service provider"+result,Toast.LENGTH_LONG).show();
-            try{
-            call_count++;
-            if(call_count==count)
-            {
-                pdLoadingm.dismiss();
-            }}catch (Exception e)
-            {
-                Toast.makeText(context,""+e,Toast.LENGTH_LONG).show();
-            }
+          //  Toast.makeText(context,"here in service provider"+result,Toast.LENGTH_LONG).show();
+
         }
     }
 
