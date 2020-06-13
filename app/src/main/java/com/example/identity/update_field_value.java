@@ -157,7 +157,7 @@ public class update_field_value extends Fragment {
                         verified_expiry = "";
                         expiry1 = "";
                     }
-                    if(value1==verified_value && expiry1==verified_expiry)
+                    if(value1.equals(verified_value) && expiry1.equals(verified_expiry))
                     {
                         Toast.makeText(getContext(),"No changes made",Toast.LENGTH_LONG).show();
                     }
