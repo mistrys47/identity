@@ -229,7 +229,7 @@ public class verify_mobile extends AppCompatActivity {
         }
         @Override
         protected void onPostExecute(String result) {
-            Toast.makeText(verify_mobile.this,"hello"+result,Toast.LENGTH_LONG).show();
+            //Toast.makeText(verify_mobile.this,"hello"+result,Toast.LENGTH_LONG).show();
             //this method will be running on UI thread
             String s="";
             try {
