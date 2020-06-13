@@ -132,7 +132,7 @@ TextView t1,t2,t3,t4;
         @Override
         protected void onPostExecute(String result) {
 
-            Toast.makeText(MainActivity.this,"hello"+result,Toast.LENGTH_LONG).show();
+            //Toast.makeText(MainActivity.this,"hello"+result,Toast.LENGTH_LONG).show();
             //this method will be running on UI thread
             pdLoading.dismiss();
         }

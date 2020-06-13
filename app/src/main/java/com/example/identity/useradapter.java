@@ -239,7 +239,7 @@ public class useradapter extends RecyclerView.Adapter<useradapter.MyViewHolder> 
         }
         @Override
         protected void onPostExecute(String result) {
-             Toast.makeText(context,"here in update"+result,Toast.LENGTH_LONG).show();
+             //Toast.makeText(context,"here in update"+result,Toast.LENGTH_LONG).show();
             boolean isFound = result.indexOf("Not Found") !=-1? true: false;
             try{
             if(!isFound)
@@ -260,7 +260,7 @@ public class useradapter extends RecyclerView.Adapter<useradapter.MyViewHolder> 
                     }
                 }
                 Cursor serviceprovider1=db.get_all_service_providers_url(db1);
-                Toast.makeText(context,"here in  before service provider update"+result,Toast.LENGTH_LONG).show();
+                //Toast.makeText(context,"here in  before service provider update"+result,Toast.LENGTH_LONG).show();
                 while(serviceprovider1.moveToNext())
                 {
                     String url=serviceprovider1.getString(1);
@@ -512,7 +512,7 @@ public class useradapter extends RecyclerView.Adapter<useradapter.MyViewHolder> 
             {
                 if(x12)
                 {
-                    Toast.makeText(context,"db update",Toast.LENGTH_LONG).show();
+                    //Toast.makeText(context,"db updated successfully",Toast.LENGTH_LONG).show();
                 }
             }
             //Toast.makeText(context,"post adding",Toast.LENGTH_LONG).show();
@@ -569,7 +569,7 @@ public class useradapter extends RecyclerView.Adapter<useradapter.MyViewHolder> 
             //Toast.makeText(context,result,Toast.LENGTH_LONG).show();
             if(isFound)
             {
-                Toast.makeText(context,"updated",Toast.LENGTH_LONG).show();
+                Toast.makeText(context,"updated successfully",Toast.LENGTH_LONG).show();
             }
             else
             {

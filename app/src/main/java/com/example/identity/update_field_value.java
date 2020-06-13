@@ -245,7 +245,7 @@ public class update_field_value extends Fragment {
                             old_verifier_url = getoldurl(id);
                             id = getid(id);
                             verified = db.checkfield(db1,field_name);
-                            Toast.makeText(getContext(),id+":"+old_verifier_url,Toast.LENGTH_LONG).show();
+                            //Toast.makeText(getContext(),id+":"+old_verifier_url,Toast.LENGTH_LONG).show();
                             new update_field_value.Asyncupdate().execute(value1, expiry1, key, email, field_name);
                             dialog.dismiss();
                         }
@@ -350,7 +350,7 @@ public class update_field_value extends Fragment {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            pdLoading.setMessage("\tSending Update Request 2");
+            pdLoading.setMessage("\tSending Update Request");
             pdLoading.setCancelable(false);
             pdLoading.show();
         }
@@ -415,7 +415,7 @@ public class update_field_value extends Fragment {
                     c = c & db.update_db1(db1, "verifier_url", result, field_name);
                 }
                 if (c)
-                    Toast.makeText(getContext(), "Successful 2nd phase", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), "Successful update", Toast.LENGTH_LONG).show();
                 FragmentManager fragmentManager = getFragmentManager();
                 fragmentManager.beginTransaction().replace(R.id.fl1, new user_details_card()).addToBackStack(null).commit();
                 pdLoading.dismiss();

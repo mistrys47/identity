@@ -124,7 +124,7 @@ public class add_user_details extends Fragment {
                             db.insert1(db1, item, "", value, "admin", "true", "");
                         }
                     } catch (Exception e1) {
-                        Toast.makeText(getContext(), "First Item Clicked" + e1, Toast.LENGTH_LONG).show();
+                        //Toast.makeText(getContext(), "First Item Clicked" + e1, Toast.LENGTH_LONG).show();
                     }
                 }
                 else
@@ -151,7 +151,7 @@ public class add_user_details extends Fragment {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            pdLoading.setMessage("\tGetting Verifier list...");
+            pdLoading.setMessage("\tAdding Details");
             pdLoading.setCancelable(false);
             pdLoading.show();
         }

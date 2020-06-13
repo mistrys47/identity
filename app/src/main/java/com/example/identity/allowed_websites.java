@@ -64,7 +64,7 @@ public class allowed_websites extends Fragment {
             usera.setOnItemClickListner(new allowed_website_adapter.OnItemClickListner() {
                 @Override
                 public void onItemClick(int position) {
-                    Toast.makeText(getContext(),""+position,Toast.LENGTH_LONG).show();
+                  //  Toast.makeText(getContext(),""+position,Toast.LENGTH_LONG).show();
                 }
             });
 

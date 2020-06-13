@@ -130,7 +130,7 @@ EditText num;
                 startActivity(newact1);
                 pdLoading.dismiss();}
             else{
-                Toast.makeText(mobile_number.this,"hello"+result,Toast.LENGTH_LONG).show();
+              //  Toast.makeText(mobile_number.this,"hello"+result,Toast.LENGTH_LONG).show();
              //   Toast.makeText(mobile_number.this,"some error occured",Toast.LENGTH_LONG).show();
 
                 pdLoading.dismiss();

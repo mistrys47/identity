@@ -87,7 +87,7 @@ Integer cnt=0,cnt1=0;
         bm1=db.check_serviceprovider(db1,json.name);
         URL1=json.updateUrl;
         web_name=json.name;
-        Toast.makeText(getContext(),web_name+""+URL1,Toast.LENGTH_LONG).show();
+        //Toast.makeText(getContext(),web_name+""+URL1,Toast.LENGTH_LONG).show();
 
 
         emailmmm = db.getvalue(db1, "email");
@@ -472,7 +472,7 @@ Integer cnt=0,cnt1=0;
                     {
 
                     }
-                       Toast.makeText(getContext(), ""+temp.toString(), Toast.LENGTH_LONG).show();
+                       //Toast.makeText(getContext(), ""+temp.toString(), Toast.LENGTH_LONG).show();
                          new on_scan.AsyncLogin().execute(jj4.toString(),m1);
                 }
             });
@@ -548,7 +548,7 @@ Integer cnt=0,cnt1=0;
                 {
 
                 }
-                Toast.makeText(getContext(), ""+temp.toString(), Toast.LENGTH_LONG).show();
+                //Toast.makeText(getContext(), ""+temp.toString(), Toast.LENGTH_LONG).show();
                 new on_scan.AsyncLogin().execute(jj4.toString(),m1);
             }
         });
@@ -601,7 +601,7 @@ Integer cnt=0,cnt1=0;
         {
 
         }
-       Toast.makeText(getContext(),temp.toString(),Toast.LENGTH_LONG).show();
+       //Toast.makeText(getContext(),temp.toString(),Toast.LENGTH_LONG).show();
         new on_scan.AsyncLogin().execute(jj4.toString(),m1);
 
     }
